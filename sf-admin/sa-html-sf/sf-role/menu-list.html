@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	    <title>菜单分配</title>
+         <!-- 所有的 css 资源 -->
+		<link rel="stylesheet" href="https://unpkg.com/element-ui@2.13.0/lib/theme-chalk/index.css">
+		<link rel="stylesheet" href="../../static/sa.css"> 
+		<script src="https://unpkg.com/vue@2.6.10/dist/vue.min.js"></script>
+		<script src="https://unpkg.com/element-ui@2.13.0/lib/index.js"></script>
+		<script src="https://unpkg.com/jquery@3.4.1/dist/jquery.min.js"></script>
+		<script src="https://www.layuicdn.com/layer-v3.1.1/layer.js"></script>
+		<script src="../../static/sa.js"></script>
+        <style>
+			body,.el-tree{
+				background-color: #F5F5F5;
+			}
+			.el-tree-node{margin: 0.15em 0 !important;}
+			/* 悬浮时颜色更深一点 */
+			.el-tree-node__content:hover{background-color: #CFE8FC !important;}
+        </style>
+	</head>
+	<body>
+		<div class="vue-box">
+			<!-- 表格 -->
+			<div style="padding: 2em;">
+				<div class="c-title">菜单预览</div>
+		        <!-- 树插件 -->
+				<el-tree
+					ref="tree"
+					:data="dataList"
+					node-key="id"
+					:default-expand-all="true"
+					>
+					<span class="custom-tree-node" slot-scope="s">
+						<span style="color: #2D8CF0;" v-if="s.data.is_show == undefined || s.data.is_show == true">{{ s.data.name }}</span>
+						<span style="color: #666;" v-if="s.data.is_show == false">{{ s.data.name }} <!-- (隐藏) --></span>
+						<span style="color: #aaa;" v-if="s.data.info">&emsp;———— {{s.data.info}} </span>
+					</span>
+				</el-tree>
+			</div>
+		</div>
+		
+		<!-- 模拟数据 -->
+		<script src="../../sa-resources/menu-list.js"></script>
+		<script src="../../sa-resources/menu-list-sf.js"></script>
+		<script src="../../sa-resources/index/admin-util.js"></script>
+        <script>
+			var role_id = sa.p('role_id');
+			var app = new Vue({
+				el: '.vue-box',
+				data: {
+					dataList: [],	// 数据集合 
+				},
+				methods: {
+					
+				},
+				created: function(){
+					
+					sa.loading('正在努力加载...');
+					setTimeout(function() {
+						sa.hideLoading();
+						menuList = sa_admin_code_util.arrayToTree(menuList);	// 一维转tree 
+						menuList = sa_admin_code_util.refMenuList(menuList);	// 属性处理 
+						this.dataList = menuList;	// 数据  
+					}.bind(this), 500);
+					
+				}
+			})
+		</script>
+	</body>
+</html>

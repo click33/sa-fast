@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pj.project4sf.apilog.SfApilogMapper">
+
+	
+	<!-- 保存入库 -->
+	<insert id="saveObj">
+		insert into 
+		sf_apilog (
+			req_id, req_ip, req_api, req_parame, req_type, req_token, user_id, admin_id, start_time,
+			res_code, res_msg, res_string, end_time, cost_time) 
+		values (
+			#{req_id}, #{req_ip}, #{req_api}, #{req_parame}, #{req_type}, #{req_token}, #{user_id}, #{admin_id}, #{start_time},
+			#{res_code}, #{res_msg}, #{res_string}, #{end_time}, #{cost_time}) 
+	</insert>
+	
+	
+	<!-- 增 -->
+	<insert id="add">
+		insert into 
+		sf_apilog (req_id, req_ip, req_api, req_parame, req_token, user_id, admin_id, start_time) 
+		values (#{req_id}, #{req_ip}, #{req_api}, #{req_parame}, #{req_token}, #{user_id}, #{admin_id}, now(3)) 
+	</insert>
+
+	<!-- 删 -->
+	<delete id="delete">
+		delete from sf_apilog 
+		where id = #{id}
+	</delete>
+	
+	<!-- 改 -->
+	<update id="update">
+		update sf_apilog set
+		res_code = #{res_code}, 
+		res_msg = #{res_msg}, 
+		res_string = #{res_string}, 
+		end_time = now(3), 
+		cost_time = #{cost_time} 
+		where req_id = #{req_id}
+	</update>
+	
+	<!-- ================================== 查询相关 ================================== -->
+	
+	<!-- 通用映射 -->
+	<resultMap id="model" autoMapping="true" type="com.pj.project4sf.apilog.SfApilog"></resultMap>
+	
+	<!-- 公共查询sql片段 -->
+	<sql id="select_sql">
+		select * from sf_apilog 
+	</sql>
+	
+	<!-- 查询，根据条件(参数为null或0时默认忽略此条件) -->
+	<select id="getList" resultMap="model" >
+		<include refid="select_sql"></include>
+		where 1 = 1 
+		<if test=' this.isNotNull("id")  '>
+			and id = #{id} 
+		</if>
+		<if test=' this.isNotNull("req_id")  '>
+			and req_id = #{req_id} 
+		</if>
+		<if test=' this.isNotNull("req_ip")  '>
+			and req_ip = #{req_ip} 
+		</if>
+		<if test=' this.isNotNull("req_api")  '>
+			and req_api = #{req_api} 
+		</if>
+		<if test=' this.isNotNull("res_code")  '>
+			and res_code = #{res_code} 
+		</if>
+		<if test=' this.isNotNull("user_id")  '>
+			and user_id = #{user_id} 
+		</if>
+		<if test=' this.isNotNull("admin_id")  '>
+			and admin_id = #{admin_id} 
+		</if>
+		<if test=' this.isNotNull("s_time")  '>
+			and start_time &gt;= #{s_time} 
+		</if>
+		<if test=' this.isNotNull("e_time")  '>
+			and start_time &lt;= #{e_time} 
+		</if>
+		order by 
+		<choose>
+			<when test='sort_type == 0'>id desc</when> 
+			<when test='sort_type == 1'>start_time desc, id desc</when> 
+			<when test='sort_type == 2'>cost_time desc, id desc</when> 
+		 	<otherwise>id desc</otherwise>
+		 </choose>
+	</select>
+
+
+</mapper>

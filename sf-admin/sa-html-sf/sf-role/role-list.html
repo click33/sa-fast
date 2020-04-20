@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>角色列表</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<!-- 所有的 css & js 资源 -->
+		<link rel="stylesheet" href="https://unpkg.com/element-ui@2.13.0/lib/theme-chalk/index.css">
+		<link rel="stylesheet" href="../../static/sa.css"> 
+		<script src="https://unpkg.com/vue@2.6.10/dist/vue.min.js"></script>
+		<script src="https://unpkg.com/element-ui@2.13.0/lib/index.js"></script>
+		<script src="https://unpkg.com/jquery@3.4.1/dist/jquery.min.js"></script>
+		<script src="https://www.layuicdn.com/layer-v3.1.1/layer.js"></script>
+		<script src="../../static/sa.js"></script>
+	</head>
+	<body>
+		<!-- 防止margin向下击穿 -->
+		<div style="margin-top: -1em;"><br></div>
+		<div class="vue-box">
+			<!-- 参数栏 -->
+			<div class="c-panel">
+				<div class="c-title">检索参数</div>
+				<div class="c-item">
+					<label class="c-label">角色昵称：</label>
+					<el-input size="mini" v-model="p.role_name" placeholder="模糊搜索" @keyup.native.enter="f5()"></el-input>
+				</div>
+				<div class="c-item" style="min-width: 0px;">
+					<el-button type="primary" icon="el-icon-search" size="mini" @click="f5()">查询</el-button>
+				</div>
+			</div>
+			<!-- 数据栏 -->
+			<div class="c-panel c-table">
+				<div class="c-title">列表<span>（编辑完成后点击修改按钮即可）</span></div>
+				<el-table :data="dataList" size="mini">
+					<el-table-column label="编号" prop="id" width="70px" > </el-table-column>
+					<el-table-column label="角色名称">
+						<template slot-scope="s">
+							<el-input size="mini" v-model="s.row.role_name" @input="s.row.is_update = true"></el-input>
+						</template>
+					</el-table-column>
+					<el-table-column label="责任描述">
+						<template slot-scope="s">
+							<el-input size="mini" v-model="s.row.role_info" @input="s.row.is_update = true"></el-input>
+						</template>
+					</el-table-column>
+					<el-table-column label="是否锁定" title="锁定的角色为系统维持正常运行的重要角色，不可删除">
+						<template slot-scope="scope">
+							{{scope.row.is_lock == 1 ? '是' : '否'}}
+						</template>
+					</el-table-column>
+					<el-table-column label="创建日期">
+						<template slot-scope="scope">
+							{{sa.forDate(scope.row.create_time)}}
+						</template>
+					</el-table-column>
+					<el-table-column prop="address" label="操作" width="220px">
+						<template slot-scope="scope">
+							<span @click="update(scope.row)">
+								<el-button type="text" size="mini" >
+									<span :style="scope.row.is_update ? 'color: red;' : ''">修改</span>
+								</el-button>
+							</span>
+							<span @click="del(scope.row)">
+								<el-button type="text" size="mini">删除</el-button>
+							</span>
+							<!-- <el-button type="text" size="mini" @click="menu_setup(scope.row)">分配权限</el-button> -->
+							<span @click="menu_setup(scope.row)">
+								<el-button type="text" size="mini">分配权限</el-button>
+							</span>
+						</template>
+					</el-table-column>
+				</el-table>
+			</div>
+			
+			<br><br><br><br><br>
+			<!-- 添加 -->
+			<div class="c-panel">
+				<h4 class="c-title">添加<span>（注：id和名称不要与已有角色重复）</span></h4>
+				<el-table class="c-add-table" :data="[{}]" size="mini">
+					<el-table-column prop="id" label="编号" width="90px" >
+						<template slot-scope="scope">
+							<el-input size="mini" v-model="addData.id"></el-input>
+						</template>
+					</el-table-column>
+					<el-table-column label="名称">
+						<template slot-scope="scope">
+							<el-input size="mini" v-model="addData.role_name"></el-input>
+						</template>
+					</el-table-column>
+					<el-table-column label="责任描述">
+						<template slot-scope="scope">
+							<el-input size="mini" v-model="addData.role_info"></el-input>
+						</template>
+					</el-table-column>
+					<el-table-column label="是否锁定" title="锁定的角色为系统维持正常运行的重要角色，不可删除">
+						<template slot-scope="scope">
+							{{scope.row.is_lock == 1 ? '是' : '否'}}
+						</template>
+					</el-table-column>
+					<el-table-column prop="address" label="操作">
+						<template slot-scope="scope">
+							<span @click="add">
+								<el-button type="text" size="mini">添加</el-button>
+							</span>
+						</template>
+					</el-table-column>
+				</el-table>
+				<br>
+			</div>
+
+			
+		</div>
+		
+
+        <script>
+
+			var app = new Vue({
+				el: '.vue-box',
+				data: {
+					sa: sa, 	// 超级对象
+					p: {	// 查询参数 
+						role_name: '',
+					},
+					dataList: [],	// 数据集合
+					addData: {		// 添加信息
+						id: 0, 
+						role_name: '',
+						role_info: '',
+						is_lock: 2,
+					}
+				},
+				methods: {
+					// 数据刷新
+					f5: function() {
+						sa.ajax('/role/getList', this.p, function(res) {
+							this.dataList = sa.listAU(res.data);
+						}.bind(this))
+					},
+					// 删除
+					del: function (data) {
+						if(data.is_lock == 1){
+							return layer.alert('此角色是维持系统正常运行的重要角色，已被锁定，不可删除');
+						};
+						sa.confirm('是否删除，此操作不可撤销', function(){
+							sa.ajax('/role/delete', {id: data.id},function(res){
+								sa.arrayDelete(app.dataList, data);
+								sa.ok('删除成功');
+							})
+						});
+					},
+					// 修改
+					update: function (data) {
+						var data2 = sa.copyJSON(data);
+						data2.create_time = undefined;
+						sa.ajax('/role/update', data2, function(res){
+							sa.ok('修改成功');
+							data.is_update = false;
+						})
+					},
+					// 添加
+					add: function () {
+						var data = sa.copyJSON(this.addData);
+						sa.ajax('/role/add', data, function(res){
+							sa.alert('添加成功', function(){
+								app.f5();
+							});
+						})
+					}, 
+					// 修改菜单
+					menu_setup: function(data){
+						var title = '为 ['+data.role_name+'] 分配权限';
+						sa.showIframe(title, 'menu-setup.html?role_id=' + data.id, '700px', '600px');
+					}
+				},
+				created: function(){
+					this.f5();
+				}
+			})
+			
+			
+			// // 监控.c-table input，改变值时有些变化
+			// $('.c-table').bind('input', function(){
+			// 	var i = $(document.activeElement).parents('tr').index();
+	  //       	app.dataList[i].is_update = true;
+			// })
+
+			
+		
+		</script>
+	
+	</body>
+</html>
