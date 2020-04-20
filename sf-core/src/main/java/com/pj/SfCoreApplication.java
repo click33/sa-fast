@@ -24,7 +24,7 @@ public class SfCoreApplication {
 //					// 重写创建 getFieldName  
 //					public String getFieldName(){
 //						String columnName = this.getColumnName();
-//						return SUtil.wordEachBig_fs(columnName);// 下划线转小驼峰  
+//						return SUtil.wordEachBig_fs(columnName);// 下划线转小驼峰 ，需注意，此功能需要打开yml配置文件的 map-underscore-to-camel-case=true 选项 
 //					}
 //				};
 //			}

@@ -70,6 +70,7 @@
 						}
 						// 开始增加或修改
 						this.m.create_time = undefined;	
+						this.m.createTime = undefined;	
 						if(this.id == 0) {	// 添加
 							sa.ajax('/${t.mkNameBig}/add', this.m, function(res){
 								sa.alert('增加成功', function() {
