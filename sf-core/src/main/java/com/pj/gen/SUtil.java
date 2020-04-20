@@ -122,6 +122,14 @@ public class SUtil {
 		}
 		return newStr;
 	}
+	// 返回下划线转小驼峰形式
+	public static String wordEachBig_fs(String str){
+		return wordFirstSmall(wordEachBig(str));
+	}
+	
+//	public static void main(String[] args) {
+//		System.out.println();
+//	}
 	
 	// 下划线转中划线
 	public static String xia_2_zhong(String str) {

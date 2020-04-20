@@ -14,6 +14,22 @@ public class SfCoreApplication {
 	public static void main(String[] args) {
 
 		SpringApplication.run(SfCoreApplication.class, args); // run-->x
+		
+		// 你可以重写一些内部逻辑，填充一些功能 ==================，例如 以下代码代表实体类的字段名由下划线 转小驼峰模式 ================= 
+		// 重写一些逻辑
+//		DbModelManager.manager = new DbModelManager() {
+//			// 重写创建 DbColumn 
+//			public DbColumn getDbColumn() {
+//				return new DbColumn() {
+//					// 重写创建 getFieldName  
+//					public String getFieldName(){
+//						String columnName = this.getColumnName();
+//						return SUtil.wordEachBig_fs(columnName);// 下划线转小驼峰  
+//					}
+//				};
+//			}
+//		};
+		// 你可以重写一些内部逻辑，填充一些功能 ==================，例如 以上代码  ================= 
 
 		// 一些全局设置 
 		GenCfgManager.cfg
