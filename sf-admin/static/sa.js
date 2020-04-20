@@ -149,6 +149,7 @@ var sa = {
 		}
 		// 几个默认配置 
 		cfg = cfg || {};
+		cfg.baseUrl = (url.indexOf('http') === 0 ? '' : sa.cfg.api_url);	// 父url，拼接在url前面
 		// 设定一个默认的提示文字 
 		if(cfg.msg == undefined || cfg.msg == null || cfg.msg == '') {
 			cfg.msg = '正在努力加载...';
@@ -165,9 +166,16 @@ var sa = {
 		}
 		// 开始loding 
 		sa.loading(cfg.msg);
+		
+		// 打印请求地址和参数, 以便调试 
+		console.log("======= 模拟ajax =======");
+		console.log("请求地址：" + cfg.baseUrl + url);
+		console.log("请求参数：" + JSON.stringify(data));
+		
 		// 模拟ajax的延时 
 		setTimeout(function() {
 			sa.hideLoading();	// 隐藏掉转圈圈 
+			console.log('返回数据：', cfg.res);
 			success200(cfg.res);
 		}, cfg.sleep)
 	};
