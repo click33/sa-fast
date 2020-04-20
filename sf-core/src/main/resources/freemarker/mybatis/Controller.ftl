@@ -53,8 +53,9 @@ public class ${t.mkNameBig}Controller {
 	@RequestMapping("getList")
 	AjaxJson getList() { 
 		// StpUtil.checkPermission("");	// 鉴权 
-		SoMap so = SoMapUtil.getSoMap();
-		List<${t.modelName}> list = FC.${t.varName}Mapper.getList(so.startPage());
+		SoMap so = SoMapUtil.getSoMap();	// 获取本次查询参数 
+		so.startPage();	// 开启分页
+		List<${t.modelName}> list = FC.${t.varName}Mapper.getList(so);
 		return AjaxJson.getPageData(so.endPage(), list);
 	}
 	
