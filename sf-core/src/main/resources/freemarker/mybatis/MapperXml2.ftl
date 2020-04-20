@@ -47,7 +47,7 @@
 		where 1 = 1 
 		<#list t.columnList as c>
 		<if test=' this.isNotNull("${c.fieldName}")  '>
-			and ${c.fieldName} = <#noparse>#</#noparse>{${c.fieldName}} 
+			and ${c.columnName} = <#noparse>#</#noparse>{${c.fieldName}} 
 		</if>
 		</#list>
 		order by 
