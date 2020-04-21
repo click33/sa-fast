@@ -1,8 +1,7 @@
 package com.pj.project4sf.admin4login;
 
 import org.apache.ibatis.annotations.Mapper;
-
-import io.lettuce.core.dynamic.annotation.Param;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 账号相关 
