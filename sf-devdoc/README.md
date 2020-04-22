@@ -31,10 +31,13 @@
 4. 导入服务端
 	- 在后端ide中导入项目 `sf-server`，此为接口服务端代码基架
 	- 配置好redis环境后，启动运行 
+	- （有关project4sf下的代码都是sa-fast内置代码，最好别动，你的模块包都写在project包下即可）
 	
 5. 导入后台管理
 	- 在前端ide中导入 `sf-admin`, 此为后台管理代码基架
 	- 启动运行 
+	- （有关sa-html-sf下的代码都时sa-fast内置代码，最好别动）
+	- （menu-list-sf.js是内置菜单文件，不要动，如果要添加路由，请在menu-list.js里添加（如果找不到，请新建，和menu-list-sf.js目录同级））
 	
 6. 导入代码生成器
 	- 在后端ide中导入项目 `sf-core`，此为代码生成器
