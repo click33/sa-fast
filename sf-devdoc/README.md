@@ -36,7 +36,7 @@
 5. 导入后台管理
 	- 在前端ide中导入 `sf-admin`, 此为后台管理代码基架
 	- 启动运行 
-	- （有关sa-html-sf下的代码都时sa-fast内置代码，最好别动）
+	- （有关sa-html-sf下的代码都时sa-fast内置代码，最好别动, 你的代码写在sa-html\文件夹下）
 	- （menu-list-sf.js是内置菜单文件，不要动，如果要添加路由，请在menu-list.js里添加（如果找不到，请新建，和menu-list-sf.js目录同级））
 	
 6. 导入代码生成器
