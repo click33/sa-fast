@@ -40,6 +40,8 @@ public class SfCoreApplication {
 	        .setAuthor("kong")								// 代码作者 
             .setAdminPath("E:\\work\\project-yun\\sa-fast\\sf-admin\\")		// 后台管理端项目地址   
             .setAdminCodePath("sa-html\\")						// 后台管理代码存放目录 
+            .setApidocPath("E:\\work\\project-yun\\sa-fast\\sf-apidoc\\")		// 接口文档项目地址    
+            .setApidocCodePath("project\\")						// 接口文档存放目录  
             .addTableAll()		// 添加所有表 (要生成的表)
             .removeTableName("sf_role", "sf_role_permission", "sf_admin", "sf_apilog")	// 移除这些内置的表，不必生成代码   
             ;
@@ -51,6 +53,7 @@ public class SfCoreApplication {
 		GenUtil.doRead();	// 读取数据 
 		GenUtil.doOutMyBatis();	// 输出 - mybatis版本 
 		GenUtil.doOutAdminHtml();	// 输出 admin后台管理代码 
+		GenUtil.doOutApidoc();	// 输出 接口文档代码 
 		System.out.println("\n\n * * * * * * * * * * * *  完结撒花 * * * * * * * * * * * * \n\n");
 		
 	}

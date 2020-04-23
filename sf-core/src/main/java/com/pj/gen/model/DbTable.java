@@ -156,9 +156,13 @@ public class DbTable {
 	public String getServerIoPath() {
 		return GenCfgManager.cfg.getServerIoPath() + this.getPackageModules() + "\\";
 	}
-	// 返回
+	// 返回后台管理应该写入哪个文件夹
 	public String getAdminIoPath() {
 		return GenCfgManager.cfg.getAdminIoPath() + this.getKebabName() + "\\";
+	}
+	// 返回接口文档应该写入哪个文件夹
+	public String getApidocIoPath() {
+		return GenCfgManager.cfg.getApidocIoPath() + "\\";
 	}
 	
 	

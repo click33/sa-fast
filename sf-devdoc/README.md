@@ -6,6 +6,7 @@
 - 接口服务端基于springboot架构，集成常用功能，如：文件上传、角色授权、集成redis等等 
 - 后台管理基于sa-admin：[http://sa-admin.dev33.cn/](http://sa-admin.dev33.cn/)
 - 权限验证基于sa-token：[http://sa-token.dev33.cn/](http://sa-token.dev33.cn/)
+- 接口文档基于sa-doc：[http://sa-doc.dev33.cn/](http://sa-doc.dev33.cn/)
 - 内置代码生成器，快速CRUD，可自定义生成模板，方便灵活 
 - ...... 
 
@@ -20,7 +21,8 @@
 	- sf-core：代码生成器
 	- sf-admin：后台管理
 	- sf-server：接口服务端
-	- sf-devdoc：使用文档
+	- sf-apidoc：api接口文档 
+	- sf-devdoc：框架使用文档
 	- doc：其它文件，例如：sql脚本
 
 3. 创建数据库
@@ -46,7 +48,12 @@
 	- 主要的注意点为：服务端代码-存放路径、后台管理端项目地址、代码作者等等（这些可直接设置为`sf-server`和`sf-admin`项目所在路径）
 	- 详细可查看代码注释
 
-7. 注意点
+7. 导入接口文档
+	- 在前端ide中导入 `sf-apidoc`, 此为接口文档基架
+	- 启动运行 
+	- 基于markdown格式编写接口文档，菜单树定义在 `_sidebar.md`，详细可参考：[http://sa-doc.dev33.cn/](http://sa-doc.dev33.cn/)
+
+8. 注意点
 	- 在项目代码生成之后，可以直接重启运行
 	- 生成的代码都是非常粗糙的，仅能维持基本功能点的运行，如果要作为正式项目开发，你是需要在生成代码的基础上再次修修补补的 
 	- 另外一定要注意一点：**尽量不要将代码生成地址配置成你正在开发的项目地址，否则可能会在不小心的情况下，覆盖掉你二次修改后的代码**。

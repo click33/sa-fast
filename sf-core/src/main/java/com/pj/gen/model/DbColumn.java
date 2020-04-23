@@ -13,7 +13,8 @@ public class DbColumn {
 	// private String fieldName;			// 对应的java名字   【只读字段】
 	// private String getset;			// 对应的getset形式   【只读字段】
 	private String fieldType;			// 对应的java类型
-	
+
+//	private String defaultValue;			// 数据类型对应的java默认值 
 	
 	public DbColumn() {
 	}
@@ -33,6 +34,11 @@ public class DbColumn {
 	}
 	public String getColumnComment() {
 		return columnComment;
+	}public String getColumnComment2() {	// 去空格版 
+		if(columnComment == null) {
+			return "";
+		}
+		return columnComment.replaceAll(" ", "");
 	}
 	public void setColumnComment(String columnComment) {
 		this.columnComment = columnComment;
@@ -59,7 +65,14 @@ public class DbColumn {
 		this.fieldType = fieldType;
 	}
 	
-	
+	// 返回默认值 
+	public String getDefaultValue() {
+		String str = "\"\"";
+		if("long".equals(fieldType) || "int".equals(fieldType) ) {
+			str = "0";
+		}
+		return str;
+	}
 
 
 	/* (non-Javadoc)

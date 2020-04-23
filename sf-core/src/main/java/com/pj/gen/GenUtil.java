@@ -90,19 +90,19 @@ public class GenUtil {
 			String xxxListPath = t.getAdminIoPath() + t.getKebabName() + "-list.html";			// 路径 
 			String xxxListContent = FreeMarkerUtil.getResult("admin/xxx-list.ftl", "t", t);			// 内容 
 			SUtil.outFile(xxxListPath, xxxListContent);
-			System.out.println(t.getModelName() + "-list.html 写入成功：\t\t\t" + xxxListPath);
+			System.out.println(t.getKebabName() + "-list.html 写入成功：\t\t\t" + xxxListPath);
 
 			// 增 
 			String xxxAddPath = t.getAdminIoPath() + t.getKebabName() + "-add.html";			// 路径 
 			String xxxAddContent = FreeMarkerUtil.getResult("admin/xxx-add.ftl", "t", t);			// 内容 
 			SUtil.outFile(xxxAddPath, xxxAddContent);
-			System.out.println(t.getModelName() + "-add.html 写入成功：\t\t\t" + xxxAddPath);
+			System.out.println(t.getKebabName() + "-add.html 写入成功：\t\t\t" + xxxAddPath);
 			
 			// 详情 
 			String xxxInfoPath = t.getAdminIoPath() + t.getKebabName() + "-info.html";			// 路径 
 			String xxxInfoContent = FreeMarkerUtil.getResult("admin/xxx-info.ftl", "t", t);			// 内容 
 			SUtil.outFile(xxxInfoPath, xxxInfoContent);
-			System.out.println(t.getModelName() + "-info.html 写入成功：\t\t\t" + xxxInfoPath);
+			System.out.println(t.getKebabName() + "-info.html 写入成功：\t\t\t" + xxxInfoPath);
 			
 			// 多打印一行，模块之间有个间隔 
 			System.out.println();	
@@ -113,6 +113,28 @@ public class GenUtil {
 		String menuListContent = FreeMarkerUtil.getResult("admin/menu-list.ftl", "abc", 123);		// 内容 
 		SUtil.outFile(menuListPath, menuListContent);
 		System.out.println("menu-list.js 菜单列表, 写入成功：\t\t" + menuListPath);
+		
+	}
+
+	// 开始生成接口文档地址 
+	public static void doOutApidoc() {
+		// 模块
+		for (DbTable t : GenCfgManager.cfg.tableList) {
+			// 接口文档 
+			String xxxMdPath = t.getApidocIoPath() + t.getKebabName() + ".md";			// 路径 
+			String xxxMdContent = FreeMarkerUtil.getResult("apidoc/xxx-md.ftl", "t", t);			// 内容 
+			SUtil.outFile(xxxMdPath, xxxMdContent);
+			System.out.println(t.getKebabName() + ".md 写入成功：\t\t\t" + xxxMdPath);
+
+			// 多打印一行，模块之间有个间隔 
+			System.out.println();	
+		}
+		
+		// sidebar.md 菜单列表 
+		String sidebarPath = GenCfgManager.cfg.getApidocPath() + "_sidebar.md";						// 路径  
+		String sidebarContent = FreeMarkerUtil.getResult("apidoc/sidebar.ftl", "abc", 123);		// 内容 
+		SUtil.outFile(sidebarPath, sidebarContent);
+		System.out.println("_sidebar.js 接口文档目录树, 写入成功：\t\t" + sidebarPath);
 		
 	}
 	

@@ -34,7 +34,10 @@ public class GenCfg {
 	// 后台相关 
 	public String adminPath = "";	// 后台管理项目地址
 	public String adminCodePath = "";	// 后台管理代码存放目录 
-	
+
+	// 接口文档相关
+	public String apidocPath = "";	// 接口文档项目地址
+	public String apidocCodePath = "";	// 接口文档存放目录 
 	
 	
 	
@@ -55,7 +58,13 @@ public class GenCfg {
 				adminCodePath + "\\";
 		return new File(path).getAbsolutePath() + "\\";
 	}
-	
+	// 返会apidoc后台管理的IO的主目录
+	public String getApidocIoPath() {
+		String path = apidocPath + "\\" + 
+				apidocCodePath + "\\";
+		return new File(path).getAbsolutePath() + "\\";
+	}
+		
 	
 	// 返回文档写入地址
 	public String getDocIOPath() {
@@ -195,6 +204,32 @@ public class GenCfg {
 	}
 	public GenCfg setPackage_utils(String package_utils) {
 		this.package_utils = package_utils;
+		return this;
+	}
+	/**
+	 * @return apidocPath
+	 */
+	public String getApidocPath() {
+		return apidocPath;
+	}
+	/**
+	 * @param apidocPath 要设置的 apidocPath
+	 */
+	public GenCfg setApidocPath(String apidocPath) {
+		this.apidocPath = apidocPath;
+		return this;
+	}
+	/**
+	 * @return apidocCodePath
+	 */
+	public String getApidocCodePath() {
+		return apidocCodePath;
+	}
+	/**
+	 * @param apidocCodePath 要设置的 apidocCodePath
+	 */
+	public GenCfg setApidocCodePath(String apidocCodePath) {
+		this.apidocCodePath = apidocCodePath;
 		return this;
 	}
 
