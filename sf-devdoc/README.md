@@ -51,7 +51,7 @@
 7. 导入接口文档
 	- 在前端ide中导入 `sf-apidoc`, 此为接口文档基架
 	- 启动运行 
-	- 基于markdown格式编写接口文档，菜单树定义在 `_sidebar.md`，详细可参考：[http://sa-doc.dev33.cn/](http://sa-doc.dev33.cn/)
+	- 基于markdown格式编写接口文档，菜单树定义在 `_sidebar.md`，你可以新建`project`文件夹书写接口文档，详细可参考：[http://sa-doc.dev33.cn/](http://sa-doc.dev33.cn/)
 
 8. 注意点
 	- 在项目代码生成之后，可以直接重启运行
