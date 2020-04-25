@@ -3,6 +3,8 @@ target/
 .classpath
 .settings
 
+.idea/
+
 node_modules/
 bin/
 .settings/
