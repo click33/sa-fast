@@ -95,6 +95,21 @@
 
 	<!-- 构建配置 -->
     <build>
+        <!-- 配置资源目录  -->
+    	<resources>
+			<resource>
+				<directory>src/main/Java</directory>
+				<excludes>
+					<exclude>**/*.*</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**/*.* </include>
+				</includes>
+			</resource>
+		</resources>
         <plugins>
             <!-- 打包jar文件时，配置manifest文件，加入lib包的jar依赖 -->
             <plugin>
