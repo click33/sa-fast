@@ -34,6 +34,7 @@
 	- 在后端ide中导入项目 `sf-server`，此为接口服务端代码基架
 	- 配置好redis环境后，启动运行 
 	- （有关project4sf下的代码都是sa-fast内置代码，最好别动，你的模块包都写在project包下即可）
+	- idea启动报错，无效绑定mapper，参考解决方案(方式2)：[https://blog.csdn.net/b515833/article/details/100009981](https://blog.csdn.net/b515833/article/details/100009981)
 	
 5. 导入后台管理
 	- 在前端ide中导入 `sf-admin`, 此为后台管理代码基架
