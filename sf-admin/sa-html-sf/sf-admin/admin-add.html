@@ -32,7 +32,8 @@
 					<br /> -->
 					<div class="c-item">
 						<label class="c-label">头像：</label>
-						<img :src="m.avatar" style="width: 3em; height: 3em;" v-if="m.avatar != '' ">
+						<img :src="m.avatar" style="width: 3em; height: 3em; cursor: pointer;" 
+							@click="sa.showImage(m.avatar, '400px', '400px')" v-if="m.avatar != '' ">
 						<a href="javascript:;" @click="$refs.up_file.click()" > 选择</a>
 						<input type="file" style="display: none;" ref='up_file' @change="file_change" title="用于文件上传" />
 					</div>
