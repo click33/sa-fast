@@ -107,7 +107,7 @@
 							<span @click="updateName(s.row)">
 								<el-button type="primary" class="c-btn" icon="el-icon-edit">改名称</el-button>
 							</span>
-							<span @click="curr_m=s.row; $refs.up_file.click();">
+							<span @click="updateAvatar(s.row)">
 								<el-button type="primary" class="c-btn" icon="el-icon-edit">改头像</el-button>
 							</span>
 							<span @click="updatePassword(s.row)">
@@ -143,8 +143,6 @@
 				</div>
 			</div>
 			
-			<!-- 用于文件上传 -->
-			<input type="file" style="display: none;" accept="image/*" ref='up_file' @change="file_change" title="用于文件上传" />
 			
 		</div>
         <script>
@@ -191,14 +189,14 @@
 						});
 					},
 					// 修改头像 
-					file_change: function(evt) {
-						startUploadImage(evt.target.files[0], function(src) {
-							var p = {id: this.curr_m.id, avatar: src};
+					updateAvatar: function(data) {
+						sa.uploadImage(function(src) {
+							var p = {id: data.id, avatar: src};
 							sa.ajax('/admin/updateAvatar', p, function(res) {
 								sa.msg('上传成功');
-								this.curr_m.avatar = src;  
+								data.avatar = src;  
 							}.bind(this));
-						}.bind(this))
+						})
 					},
 					// 修改密码
 					updatePassword: function(data) {

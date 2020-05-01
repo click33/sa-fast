@@ -34,8 +34,8 @@
 						<label class="c-label">头像：</label>
 						<img :src="m.avatar" style="width: 3em; height: 3em; cursor: pointer;" 
 							@click="sa.showImage(m.avatar, '400px', '400px')" v-if="m.avatar != '' ">
-						<a href="javascript:;" @click="$refs.up_file.click()" > 选择</a>
-						<input type="file" style="display: none;" ref='up_file' @change="file_change" title="用于文件上传" />
+						<a href="javascript:;" @click="upload_avatar()" > 选择</a>
+						<!-- <a href="javascript:;" @click="sa.uploadImage(src => m.avatar = src)" > 选择(js-lambda写法)</a> -->
 					</div>
 					<div style="height: 0px; overflow: hidden;">
 						<el-input size="mini"></el-input>
@@ -90,11 +90,11 @@
 					roleList: []
 				},
 				methods: {
-					// 上传文件
-					file_change: function(evt) {
-						startUploadImage(evt.target.files[0], function(src) {
-							sa.msg('上传成功');
-							this.m.avatar = src;  
+					// 上传文件 
+					upload_avatar: function() {
+						sa.uploadImage(function(src) {
+							this.m.avatar = src;	
+							sa.ok2('上传成功');
 						}.bind(this));
 					},
 					// 修改

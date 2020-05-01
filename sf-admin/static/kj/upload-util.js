@@ -1,7 +1,7 @@
 // ======================= upload-util.js 公共方法 ===========================
 // 依赖库：jquery   
-// 本代码更新于：2019-1-6 
-// 新增apk支持
+// 本代码更新于：2019-5-1 
+// 新增更简单的写法 
 
 // 相关配置 
 var upload_cfg = {
@@ -10,6 +10,44 @@ var upload_cfg = {
 	upload_audio_url: sa.cfg.api_url + '/upload/audio',	// 音频上传地址
 	upload_apk_url: sa.cfg.api_url + '/upload/apk',	// apk安装包上传地址
 }
+
+
+// 将方法挂载到sa对象上
+window.sa = window.sa || {};
+
+// 上传图片   
+sa.uploadImage = function(successCB) {
+	sa.uploadFile(upload_cfg.upload_image_url, successCB);
+}
+// 上传视频   
+sa.uploadVideo = function(successCB) {
+	sa.uploadFile(upload_cfg.upload_video_url, successCB);
+}
+// 上传音频  
+sa.uploadAudio = function(successCB) {
+	sa.uploadFile(upload_cfg.upload_audio_url, successCB);
+}
+// 上传apk 
+sa.uploadApk = function(successCB) {
+	sa.uploadFile(upload_cfg.upload_apk_url, successCB);
+}
+// 上传文件  (要上传到的地址，成功的回调)
+sa.uploadFile = function(url, successCB) {
+	// 创建input 
+	var fileInput = document.createElement("input"); //创建input
+	fileInput.type = "file"; //设置类型为file
+	fileInput.id = 'uploadfile';
+	fileInput.style.display = 'none';
+	fileInput.onchange = function(evt) {
+		startUpload(evt.target.files[0], url, successCB);
+	}
+	// 添加到body，并触发其点击事件 
+	document.body.appendChild(fileInput);
+	document.querySelector('#' + fileInput.id).click();
+}
+
+
+// ======================= 以下方法为过时的旧方法 =========================== 
 
 // 开始上传，图片版
 function startUploadImage(file, successCB) {
@@ -29,14 +67,6 @@ function startUploadAudio(file, successCB) {
 function startUploadApk(file, successCB) {
 	startUpload(file, upload_cfg.upload_apk_url, successCB);
 }
-
-
-
-// 开始上传 --- 上传一个音乐
-function startUploadAudio2(file, successCB) {
-	startUpload(file, sa.cfg.api_url + '/userSongs/backAddSongs', successCB);
-}
-
 
 // 开始上传
 function startUpload(file, url, successCB) {
