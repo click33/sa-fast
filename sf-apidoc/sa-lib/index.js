@@ -65,22 +65,10 @@ function refMd_p2table(content) {
 		var canArr = canStr.split('\n') || [];	// 按行切割 
 		
 		// 开始逐行转换为tr 
-		canArr.forEach(function(can) {
+		canArr.forEach(function(canStr) {
 			
-			// 切割成两份, 使其成为： i0=参数，i1=说明 
-			var canArray = can.split(/[\s\t\n]/) || [];	
-			canArray = arrayTrimSpace(canArray); 
-			// 如果开发者写的不规范，使其超过2个元素，则强制改为2个元素  
-			if(canArray.length > 2) {
-				var str = '';
-				for (var i = 0; i < canArray.length; i++) {
-					if(i != canArray.length - 1) {
-						str += canArray[i];
-					}
-				}
-				canArray[0] = str;
-				canArray[1] = canArray[canArray.length - 1];
-			}
+			// 去除空格 
+			canStr = canStr.trim();
 			
 			// 声明四大变量的值   
 			let name = '';		// 参数名子 
@@ -88,22 +76,63 @@ function refMd_p2table(content) {
 			let default_value = '';	// 默认值 
 			let remrak = '';		// 参数说明 
 			
-			// 开始计算
-			name = canArray[0] || ''; 	// 参数部分
-			remrak = canArray[1] || ''; 	// 说明部分 
-			// 如果带默认值 
-			if(name.indexOf('=') > -1) {
-				let dyArr = name.split('=');	// 按照=分割 
-				name = dyArr[0];
-				default_value = dyArr[1];
-			}
 			// 如果带有数据类型 
-			if(name.indexOf('{') > -1 && name.indexOf('}') > -1) {
-				name = name.replace('{', '');	// 去除掉前{
-				let sjArr = name.split('}');	// 按照}分割 
-				type = sjArr[0];
-				name = sjArr[1];
+			if(canStr.indexOf('{') > -1 && canStr.indexOf('}') > -1) {
+				canStr = canStr.replace('{', '');	// 去除掉前{
+				let sjArr = canStr.split('}');	// 按照}分割 
+				type = sjArr[0].trim();
+				canStr = sjArr[1].trim();
 			}
+			
+			// 切割成数组 
+			var canArray = canStr.split(/[\s\t\n]/) || [];	
+			// canArray = arrayTrimSpace(canArray); 	// 去除空格元素  
+			// 如果开发者写的不规范，使其超过2个元素，则强制改为2个元素  
+			if(canArray.length == 0) {
+				return;
+			}
+			if(canArray.length == 1) {
+				canArray.push('');
+			}
+			
+			// =========== 开始判断 5种情况 ==================
+			let one = canArray[0];
+			let two = canArray[1];
+			
+			// 情况1   id=1  xxxx 
+			if(one.indexOf('=') > -1 && one.indexOf('=') < one.length - 1) {
+				name = one.split('=')[0];
+				default_value = one.split('=')[1];
+				canArray.splice(0, 1);
+			}
+			// 情况2   id= 1  xxxx 
+			else if(one.indexOf('=') == one.length - 1) {
+				name = one.split('=')[0];
+				default_value = two;
+				canArray.splice(0, 2);
+			}
+			// 情况3   id =1  xxxx 
+			else if(one.indexOf('=') == -1 && two.indexOf('=') == 0 && two.length > 1) {
+				name = one;
+				default_value = two.split('=')[1];
+				canArray.splice(0, 2);
+			}
+			// 情况4   id = 1  xxxx 
+			else if(one.indexOf('=') == -1 && two == '=') {
+				name = one;
+				default_value = canArray[2] || '';
+				canArray.splice(0, 3);
+			}
+			// 情况5 	id 	1	xxxx   或其它 
+			// else if(one.indexOf('=') == -1 && two.indexOf('=') != 0) {
+			else {
+				name = one;
+				canArray.splice(0, 1);
+			}
+			
+			// 剩下的元素，都拼接remrak
+			remrak = canArray.join('');
+			
 			// 添加到表格 
 			table += getTrMd(name, type, default_value, remrak);
 		})
