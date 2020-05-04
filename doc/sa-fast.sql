@@ -74,6 +74,7 @@ CREATE TABLE `sf_apilog` (
   `req_parame` text COMMENT '请求参数',
   `req_type` varchar(50) DEFAULT NULL COMMENT '请求类型（GET、POST...）',
   `req_token` varchar(50) DEFAULT NULL COMMENT '请求token',
+  `req_header` text DEFAULT NULL COMMENT '请求header',
   `res_code` varchar(50) DEFAULT NULL COMMENT '返回-状态码',
   `res_msg` text COMMENT '返回-信息描述',
   `res_string` text COMMENT '返回-整个信息字符串形式',

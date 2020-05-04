@@ -21,6 +21,7 @@ public class SfApilog implements Serializable {
 	private String req_parame;		// 请求参数 
 	private String req_type;		// 请求方式
 	private String req_token;		// 请求token
+	private String req_header;		// 请求header
 	
 	private int res_code;		// 返回-状态码 
 	private String res_msg;		// 返回-信息描述 

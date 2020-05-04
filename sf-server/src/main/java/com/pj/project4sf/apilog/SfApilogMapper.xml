@@ -7,10 +7,10 @@
 	<insert id="saveObj">
 		insert into 
 		sf_apilog (
-			req_id, req_ip, req_api, req_parame, req_type, req_token, user_id, admin_id, start_time,
+			req_id, req_ip, req_api, req_parame, req_type, req_token, req_header, user_id, admin_id, start_time,
 			res_code, res_msg, res_string, end_time, cost_time) 
 		values (
-			#{req_id}, #{req_ip}, #{req_api}, #{req_parame}, #{req_type}, #{req_token}, #{user_id}, #{admin_id}, #{start_time},
+			#{req_id}, #{req_ip}, #{req_api}, #{req_parame}, #{req_type}, #{req_token}, #{req_header}, #{user_id}, #{admin_id}, #{start_time},
 			#{res_code}, #{res_msg}, #{res_string}, #{end_time}, #{cost_time}) 
 	</insert>
 	
@@ -58,6 +58,9 @@
 		</if>
 		<if test=' this.isNotNull("req_id")  '>
 			and req_id = #{req_id} 
+		</if>
+		<if test=' this.isNotNull("req_token")  '>
+			and req_token = #{req_token} 
 		</if>
 		<if test=' this.isNotNull("req_ip")  '>
 			and req_ip = #{req_ip} 
