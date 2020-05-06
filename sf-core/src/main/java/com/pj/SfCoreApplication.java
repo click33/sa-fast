@@ -54,7 +54,8 @@ public class SfCoreApplication {
 		GenUtil.doOutMyBatis();	// 输出 - mybatis版本 
 		GenUtil.doOutAdminHtml();	// 输出 admin后台管理代码 
 		GenUtil.doOutApidoc();	// 输出 接口文档代码 
-		System.out.println("\n\n * * * * * * * * * * * *  完结撒花 * * * * * * * * * * * * \n\n");
+		System.out.println("\n\n * * * * * * * * * * * *  完结撒花   * * * * * * * * * * * *");
+		System.out.println("sa-fast快速开发平台： https://github.com/click33/sa-fast\n\n");
 		
 	}
 	
