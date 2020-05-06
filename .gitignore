@@ -24,8 +24,8 @@ hs_err_pid*
 
 .idea/
 
-sf-server/src/main/java/com/pj/project/
+sf-server/src/main/java/com/pj/project/*
 sf-admin/sa-resources/menu-list.js
-sf-admin/sa-html/
-sf-apidoc/project/
+sf-admin/sa-html/*
+sf-apidoc/project/*
 sf-apidoc/_sidebar.md
