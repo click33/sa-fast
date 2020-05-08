@@ -16,7 +16,7 @@ import cn.dev33.satoken.spring.SaTokenSetup;
 public class SfServerApplication {
 	
 	public static void main(String[] args) {
-		SpringApplication.run(SfServerApplication.class, args); // run-->  
+		SpringApplication.run(SfServerApplication.class, args); // run-->    
 	}
 
 }

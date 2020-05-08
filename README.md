@@ -3,10 +3,10 @@
 一个基于springboot架构的快速开发平台，内置代码生成器
 
 ### 功能架构 
-- 接口服务端基于springboot架构，集成常用功能，如：文件上传、角色授权、集成redis等等 
-- 后台管理基于sa-admin：[http://sa-admin.dev33.cn/](http://sa-admin.dev33.cn/)
 - 权限验证基于sa-token：[http://sa-token.dev33.cn/](http://sa-token.dev33.cn/)
+- 后台管理基于sa-admin：[http://sa-admin.dev33.cn/](http://sa-admin.dev33.cn/)
 - 接口文档基于sa-doc：[http://sa-doc.dev33.cn/](http://sa-doc.dev33.cn/)
+- 接口服务端基于springboot架构，集成常用功能，如：文件上传、角色授权、集成redis等等 
 - 内置代码生成器，快速CRUD，可自定义生成模板，方便灵活 
 - ...... 
 
