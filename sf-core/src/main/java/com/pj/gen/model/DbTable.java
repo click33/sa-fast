@@ -24,6 +24,11 @@ public class DbTable {
 	// private boolean is_import_util;					// 判断是否需要导入 util包 （根据所有字段里是否有Date数据类型）;   -- 【只读字段】
 	// private String kebabName;					// 转换成kebab-case形式     -- 【只读字段】
 	
+	// private boolean has_date;					// 此表内是否包含date类型字段【只读字段】
+	// private boolean has_img;					// 此表内是否包含img类型字段【只读字段】
+	// private boolean has_richtext;					// 此表内是否包含richtext类型字段【只读字段】
+	
+	
 	private List<DbColumn> columnList;			// 列集合 
 
 	
@@ -132,6 +137,21 @@ public class DbTable {
 		return is_flag;
 	}
 	
+	// 是否包含指定表单  类型 
+	public boolean hasFo(String foType) {
+		boolean is_flag = false;
+		for (DbColumn dbColumn : getColumnList()) {
+			if(dbColumn.getFoType().equals(foType)) {
+				is_flag = true;
+			}
+		}
+		return is_flag;
+	}
+
+	// private boolean has_date;					// 此表内是否包含date类型字段【只读字段】
+	// private boolean has_img;					// 此表内是否包含img类型字段【只读字段】
+	// private boolean has_richtext;					// 此表内是否包含richtext类型字段【只读字段】
+	
 	
 	// 列集合 
 	public List<DbColumn> getColumnList() {
@@ -139,6 +159,17 @@ public class DbTable {
 	}
 	public void setColumnList(List<DbColumn> columnList) {
 		this.columnList = columnList;
+	}
+	
+	// 返回列集合 - 所有不需要add/update的列
+	public List<DbColumn> getColumnListByNotAdd() {
+		List<DbColumn> list = new ArrayList<DbColumn>();
+		for (DbColumn c : this.columnList) {
+			if(c.getFoType().equals("date")) {
+				list.add(c);
+			}
+		}
+		return list;
 	}
 	
 	
@@ -162,7 +193,7 @@ public class DbTable {
 	}
 	// 返回接口文档应该写入哪个文件夹
 	public String getApidocIoPath() {
-		return GenCfgManager.cfg.getApidocIoPath() + "\\";
+		return GenCfgManager.cfg.getApidocIoPath();// + "\\";
 	}
 	
 	

@@ -18,9 +18,13 @@
 	<!-- 改【G】 -->
 	<update id="update">
 		update ${t.tableName} set
-		<#list t.columnList as c>
-		${c.columnName} = <#noparse>#</#noparse>{${c.fieldName}}<#if c_index != t.columnList?size - 1>,</#if> 
-		</#list>
+<#list t.columnList as c>
+	<#if c.foType == 'no' || c.foType == 'date'>
+	<#else>
+		${c.columnName} = <#noparse>#</#noparse>{${c.fieldName}},
+	</#if>
+</#list>
+		${t.primaryKey.columnName} = ${t.primaryKey.columnName} 
 		where ${t.primaryKey.columnName} = <#noparse>#</#noparse>{${t.primaryKey.fieldName}}
 	</update>
 	

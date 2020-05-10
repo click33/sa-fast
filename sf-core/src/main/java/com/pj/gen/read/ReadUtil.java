@@ -94,7 +94,8 @@ public class ReadUtil {
 		if (cType.equals("java.lang.Integer")) {
 			return "int";
 		} else if (cType.equals("java.sql.Timestamp") || cType.equals("java.sql.Date")) {
-			return "Date";
+//			return "Date";
+			return "String";
 		} else if (cType.equals("java.lang.Double")) {
 			return "double";
 		} else if (cType.equals("java.lang.Long")) {

@@ -127,7 +127,7 @@ public class GenUtil {
 			System.out.println(t.getKebabName() + ".md 写入成功：\t\t\t" + xxxMdPath);
 
 			// 多打印一行，模块之间有个间隔 
-			System.out.println();	
+//			System.out.println();	
 		}
 		
 		// sidebar.md 菜单列表 

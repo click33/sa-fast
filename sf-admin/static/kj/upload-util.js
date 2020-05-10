@@ -36,7 +36,7 @@ sa.uploadFile = function(url, successCB) {
 	// 创建input 
 	var fileInput = document.createElement("input"); //创建input
 	fileInput.type = "file"; //设置类型为file
-	fileInput.id = 'uploadfile';
+	fileInput.id = 'uploadfile-' + sa.randomString(12);
 	fileInput.style.display = 'none';
 	fileInput.onchange = function(evt) {
 		startUpload(evt.target.files[0], url, successCB);
@@ -44,6 +44,33 @@ sa.uploadFile = function(url, successCB) {
 	// 添加到body，并触发其点击事件 
 	document.body.appendChild(fileInput);
 	document.querySelector('#' + fileInput.id).click();
+}
+// 上传多张图片   
+sa.uploadImageList = function(successCB) {
+	// 创建input
+	var fileInput = document.createElement("input"); //创建input
+	fileInput.type = "file"; // 设置类型为file
+	fileInput.multiple = "multiple"; // 多选 
+	fileInput.id = 'uploadfile-' + sa.randomString(12);
+	fileInput.style.display = 'none';
+	fileInput.onchange = function(evt) {
+		// 开始上传 
+		var files = evt.target.files;
+		for (var i = 0; i < files.length; i++) {
+			let ii = i;
+			startUploadImage(files[i], function(src) {
+				successCB(src);
+			}.bind(this));
+		}
+	}
+	// 添加到body，并触发其点击事件 
+	document.body.appendChild(fileInput);
+	document.querySelector('#' + fileInput.id).click();
+	
+	
+	
+	
+	
 }
 
 

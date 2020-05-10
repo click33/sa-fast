@@ -14,27 +14,85 @@
 		<script src="../../static/sa.js"></script>
 		<style type="text/css">
 			.c-panel .c-label{width: 8em;}
+			
+		<#if t.hasFo('img_list') >
+			/* 图集照片样式 */
+			.image-box{width: 700px; padding-left: 4px;}
+			.image-box-2{width: 90px; height: 90px; cursor: pointer; float: left;}
+			.image-box-2 img{width: 90px; height: 90px; border-radius: 2px; box-shadow: 0 0 1px #aaa;}
+			.image-box-2{display: inline-block; margin-right: 5px; margin-bottom: 5px;}
+		</#if>
+		
+		<#if t.hasFo('richtext') >
+			/* 富文本样式 */
+			.content-box{width: 700px; min-height: 100px; border: 1px #ddd solid; padding: 1em; transition: all 0.2s;overflow: hidden;}
+			.content-box img{max-width: 200px !important;}
+		</#if>
+			
 		</style>
 	</head>
 	<body>
-		<div style="margin-top: -1em;" title="防止margin向下击穿"><br></div>
-		<div class="vue-box" style="display: none;" :style="'display: block;'">
-			<!-- 参数栏 -->
-			<div class="c-panel" v-if="m">
-				<el-form>	
-					<!-- ---------------------- 基础信息 ---------------------- -->
-					<h4 class="c-title">基础信息</h4>
-	<#list t.columnList as c>
-					<div class="c-item br">
-						<label class="c-label">${c.columnComment}：</label>
-						<span>{{m.${c.fieldName}}}</span>
-					</div>
-	</#list>
-					<div class="c-item br">
-						<label class="c-label"></label>
-						<el-button type="success" icon="el-icon-plus" size="mini" @click="sa.closeCurrIframe()">确定</el-button>
-					</div>
-				</el-form>
+		<div class="vue-box s-bot-btn" style="display: none;" :style="'display: block;'">
+			<!-- ------- 内容部分 ------- -->
+			<div class="s-body">
+				<div class="c-panel" v-if="m">
+					<el-form size="mini" v-if="m">
+<#list t.columnList as c>
+	<#if c.foType == 'text'>	
+						<div class="c-item br">
+							<label class="c-label">${c.columnComment3}：</label>
+							<span>{{m.${c.fieldName}}}</span>
+						</div>
+	<#elseif c.foType == 'richtext'>
+						<div class="c-item br">
+							<label class="c-label" style="float: left;">${c.columnComment3}：</label>
+							<div class="content-box" style="float: left;">
+								<div v-html="m.${c.fieldName}"></div>
+							</div>
+						</div>
+						<div style="clear: both;"></div>
+	<#elseif c.foType == 'enum'>
+						<div class="c-item br">
+							<label class="c-label">${c.columnComment3}：</label>
+		<#list c.jvList?keys as jv>
+							<span v-if="m.${c.fieldName} == ${jv}">${c.jvList[jv]}</span>
+		</#list>
+						</div>
+	<#elseif c.foType == 'img'>
+						<div class="c-item br">
+							<label class="c-label" style="vertical-align: top;">${c.columnComment3}：</label>
+							<img :src="m.${c.fieldName}" style="width: 3em; height: 3em; cursor: pointer;" 
+								@click="sa.showImage(m.${c.fieldName}, '400px', '400px')" v-if="m.${c.fieldName} != '' ">
+						</div>
+	<#elseif c.foType == 'img_list'>
+						<div class="c-item br">
+							<label class="c-label" style="float: left;">${c.columnComment3}：</label>
+							<div class="image-box" style="float: left;">
+								<div class="image-box-2" v-for="image in sa.JSONParse(m.${c.fieldName}, [])">
+									<img :src="image" @click="sa.showImage(image, '500px', '400px')" />
+								</div>
+							</div>
+						</div>
+						<div style="clear: both;"></div>
+	<#elseif c.foType == 'date'>
+						<div class="c-item br">
+							<label class="c-label">${c.columnComment3}：</label>
+							<span>{{sa.forDate(m.${c.fieldName}, 2)}}</span>
+						</div>
+	<#else>
+						<div class="c-item br">
+							<label class="c-label">${c.columnComment3}：</label>
+							<span>{{m.${c.fieldName}}}</span>
+						</div>
+	</#if>
+</#list>
+					</el-form>
+				</div>
+			</div>
+			<!-- ------- 底部按钮 ------- -->
+			<div class="s-foot" v-if = "id != 0">
+				<el-button size="mini" type="success" @click="sa.closeCurrIframe()">确定</el-button>
+				<el-button size="mini" @click="sa.closeCurrIframe()">取消</el-button>
 			</div>
 		</div>
 		<script>

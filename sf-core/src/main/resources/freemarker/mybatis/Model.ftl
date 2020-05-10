@@ -1,7 +1,7 @@
 package ${t.packagePath};
 
 import java.io.Serializable;
-<#if t.is_import_util>import java.util.*;</#if>
+<#if t.hasFo("date") >import java.util.*;</#if>
 
 import lombok.Data;
 

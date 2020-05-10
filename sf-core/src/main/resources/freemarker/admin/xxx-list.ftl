@@ -21,10 +21,35 @@
 				<div class="c-title">检索参数</div>
 				<el-form @submit.native.prevent>
 <#list t.columnList as c>
+	<#if c.foType == 'text' || c.foType == 'textarea' || c.foType == 'richtext'>
 					<div class="c-item">
-						<label class="c-label">${c.columnComment}：</label>
+						<label class="c-label">${c.columnComment3}：</label>
 						<el-input size="mini" v-model="p.${c.fieldName}"></el-input>
 					</div>
+	<#elseif c.foType == 'num'>
+					<div class="c-item">
+						<label class="c-label">${c.columnComment3}：</label>
+						<el-input size="mini" v-model="p.${c.fieldName}" type="number" ></el-input>
+					</div>
+	<#elseif c.foType == 'enum'>
+					<div class="c-item">
+						<label class="c-label">${c.columnComment3}：</label>
+						<el-radio-group v-model="p.${c.fieldName}" class="s-radio-text">
+							<el-radio :label="0">不限</el-radio>
+		<#list c.jvList?keys as jv>
+							<el-radio :label="${jv}">${c.jvList[jv]}</el-radio>
+		</#list>
+						</el-radio-group>
+					</div>
+	<#elseif c.foType == 'img'>
+	<#elseif c.foType == 'img_list'>
+	<#elseif c.foType == 'date'>
+	<#else>
+					<div class="c-item">
+						<label class="c-label">${c.columnComment3}：</label>
+						<el-input size="mini" v-model="p.${c.fieldName}"></el-input>
+					</div>
+	</#if>
 </#list>
 					<div class="c-item" style="min-width: 0px;">
 						<el-button size="mini" type="primary" icon="el-icon-search" @click="p.pageNo = 1; f5()">查询</el-button>
@@ -41,12 +66,47 @@
 				<!--------------- 数据列表 --------------->
 				<div class="c-title">数据列表</div>
 				<el-table :data="dataList" size="mini">
-					<#list t.columnList as c>
-					<el-table-column label="${c.columnComment}" prop="${c.fieldName}" ></el-table-column>
-					</#list>
-					<!-- <el-table-column label="创建时间" width="150px">
-						<template slot-scope="s"><span>{{sa.forDate(s.row.create_time, 2)}}</span></template>
-					</el-table-column> -->
+<#list t.columnList as c>
+	<#if c.foType == 'text' || c.foType == 'textarea' || c.foType == 'num' >
+					<el-table-column label="${c.columnComment3}" prop="${c.fieldName}" ></el-table-column>
+	<#elseif c.foType == 'richtext'>
+					<el-table-column label="${c.columnComment3}" min-width="150px">
+						<template slot-scope="s"><span>{{sa.maxLength(sa.text(s.row.${c.fieldName}), 100)}}</span></template>
+					</el-table-column>
+	<#elseif c.foType == 'date'>
+					<el-table-column label="${c.columnComment3}" width="150px">
+						<template slot-scope="s"><span>{{sa.forDate(s.row.${c.fieldName}, 2)}}</span></template>
+					</el-table-column>
+	<#elseif c.foType == 'img'>
+					<el-table-column label="${c.columnComment3}">
+						<template slot-scope="s">
+							<img :src="s.row.${c.fieldName}" style="width: 3em; height: 3em; border-radius: 3px; cursor: pointer;" 
+								@click="sa.showImage(s.row.${c.fieldName}, '400px', '400px')" />
+						</template>
+					</el-table-column>
+	<#elseif c.foType == 'img_list'>
+					<el-table-column label="${c.columnComment3}">
+						<template slot-scope="s">
+							<div @click="sa.showImageList(s.row.${c.fieldName})" style="cursor: pointer;" >
+								<img :src="sa.JSONParse(s.row.${c.fieldName})[0]" style="width: 3em; height: 3em; border-radius: 3px; cursor: pointer;" />
+								<span style="color: #999; padding-left: 0.5em;">点击预览</span>
+							</div>
+						</template>
+					</el-table-column>
+	<#elseif c.foType == 'enum'>
+					<el-table-column label="${c.columnComment3}">
+						<template slot-scope="s">
+		<#list c.jvList?keys as jv>
+							<p v-if="s.row.${c.fieldName} == ${jv}">${c.jvList[jv]}</p>
+		</#list>
+						</template>
+					</el-table-column>
+		
+		
+	<#else>
+					<el-table-column label="${c.columnComment3}" prop="${c.fieldName}" ></el-table-column>
+	</#if>
+</#list>
 					<el-table-column label="操作" width="240px">
 						<template slot-scope="s">
 							<el-button class="c-btn" type="success" icon="el-icon-view" @click="get(s.row)">查看</el-button>
@@ -74,9 +134,13 @@
 				el: '.vue-box',
 				data: {
 					p: { // 查询参数  
-						<#list t.columnList as c>
-						${c.fieldName}: '',
-						</#list>
+				<#list t.columnList as c>
+					<#if c.foType == 'enum'>
+						${c.fieldName}: 0,		// ${c.columnComment} 
+					<#else>
+						${c.fieldName}: '',		// ${c.columnComment} 
+					</#if>
+				</#list>
 						pageNo: 1,		// 当前页 
 						pageSize: 10,	// 页大小 
 						sort_type: 0	// 排序方式 
@@ -94,11 +158,11 @@
 					},
 					// 查看
 					get: function(data) {
-						sa.showIframe('数据详情', '${t.kebabName}-info.html?id=' + data.id);
+						sa.showIframe('数据详情', '${t.kebabName}-info.html?id=' + data.id, '1000px', '90%');
 					},
 					// 修改
 					update: function(data) {
-						sa.showIframe('修改数据', '${t.kebabName}-add.html?id=' + data.id);
+						sa.showIframe('修改数据', '${t.kebabName}-add.html?id=' + data.id, '1000px', '90%');
 					},
 					// 删除
 					del: function(data) {
