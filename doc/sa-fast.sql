@@ -88,7 +88,6 @@ CREATE TABLE `sf_apilog` (
 ) ENGINE=InnoDB AUTO_INCREMENT=10001 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='api请求记录表';
 
 
--- ======================================== 测试库 ====================================  
 
 
 
