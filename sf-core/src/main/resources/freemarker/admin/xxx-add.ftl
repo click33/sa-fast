@@ -18,44 +18,43 @@
 	<#if t.hasFo('richtext') >
 		<script src="../../static/kj/wangEditor.up.js"></script>
 	</#if>
-			<style type="text/css">
-				.c-panel .el-form .c-label{width: 8em !important;}
-				.c-panel .el-form .el-input,
-				.c-panel .el-form .el-textarea__inner{width: 250px;}
-			<#if t.hasFo('img_list') >
-				/* ==== wang图集照片样式 ==== */
-				.image-box{max-width: 700px; padding-left: 4px;}
-				.image-box-2{width: 90px; height: 125px; cursor: pointer; float: left;}
-				.image-box-2 img{width: 90px; height: 90px; border-radius: 2px;}
-				.image-box-2{display: inline-block; margin-right: 5px; margin-bottom: 5px;}
-				.image-box-2 p{text-align: center; color: #999; margin-top: -10px;}
-				.up_img{text-align: center; background-color: #f8f8f8; height: 90px;}
-				.up_img img{width: 40px; height: 40px; margin-top: 25px;}
-			</#if>
-			<#if t.hasFo('richtext') >
-				/* ==== wang富文本编辑器 ==== */
-				.editor-item{width: 100%; height: auto;}
-				.editor-item .c-label{float: left;}
-				.editor-item .editor-box{float: left; width: 80%; margin-top: 0px; margin-left: 5px; transition: all 0.2s;} 
-				.editor-item #editor{min-height: 300px; background-color: #FFF;}
-				.editor-item .w-e-toolbar{padding-top: 5px !important;}
-				/* 尽量小点 */
-				.editor-item .editor-box{float: left; width: 700px;} 
-				.editor-item .editor-box img{max-width: 200px !important;}
-				/* .editor-box img{margin-left: -1em;}
-				.editor-box img{margin-top: -5px;} */
-				/* 仿移动端样式兼容 */
-				/* .editor-item .editor-box{float: left; width: 400px;} 
-				.editor-item .w-e-toolbar{width: 400px; flex-wrap: wrap; } */
-				.fold{height: 100px !important; overflow: hidden;}
-				.el-select-dropdown{z-index: 9999999 !important;}
-				/*  一起变长  */
-				.c-panel .el-form .el-input,
-				.c-panel .el-form .el-textarea__inner{width: 700px;}
-			</#if>
-				
-				
-			</style>
+		<style type="text/css">
+			.c-panel .el-form .c-label{width: 8em !important;}
+			.c-panel .el-form .el-input,
+			.c-panel .el-form .el-textarea__inner{width: 250px;}
+		<#if t.hasFo('img_list') >
+			/* ==== wang图集照片样式 ==== */
+			.image-box{max-width: 700px; padding-left: 4px;}
+			.image-box-2{width: 90px; height: 125px; cursor: pointer; float: left;}
+			.image-box-2 img{width: 90px; height: 90px; border-radius: 2px;}
+			.image-box-2{display: inline-block; margin-right: 5px; margin-bottom: 5px;}
+			.image-box-2 p{text-align: center; color: #999; margin-top: -10px;}
+			.up_img{text-align: center; background-color: #f8f8f8; height: 90px;}
+			.up_img img{width: 40px; height: 40px; margin-top: 25px;}
+		</#if>
+		<#if t.hasFo('richtext') >
+			/* ==== wang富文本编辑器 ==== */
+			.editor-item{width: 100%; height: auto;}
+			.editor-item .c-label{float: left;}
+			.editor-item .editor-box{float: left; width: 80%; margin-top: 0px; margin-left: 5px; transition: all 0.2s;} 
+			.editor-item #editor{min-height: 300px; background-color: #FFF;}
+			.editor-item .w-e-toolbar{padding-top: 5px !important;}
+			/* 尽量小点 */
+			.editor-item .editor-box{float: left; width: 700px;} 
+			.editor-item .editor-box img{max-width: 200px !important;}
+			/* .editor-box img{margin-left: -1em;}
+			.editor-box img{margin-top: -5px;} */
+			/* 仿移动端样式兼容 */
+			/* .editor-item .editor-box{float: left; width: 400px;} 
+			.editor-item .w-e-toolbar{width: 400px; flex-wrap: wrap; } */
+			.fold{height: 100px !important; overflow: hidden;}
+			.el-select-dropdown{z-index: 9999999 !important;}
+			/*  一起变长  */
+			.c-panel .el-form .el-input,
+			.c-panel .el-form .el-textarea__inner{width: 700px;}
+		</#if>
+		
+		</style>
 	</head>
 	<body>
 		<div class="vue-box s-bot-btn" style="display: none;" :style="'display: block;'">
