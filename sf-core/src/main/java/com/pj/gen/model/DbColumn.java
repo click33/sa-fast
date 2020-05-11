@@ -1,5 +1,6 @@
 package com.pj.gen.model;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -23,7 +24,7 @@ public class DbColumn {
 	
 	
 	private String foType = "text";		// 表单类型 
-	private Map<String, String> jvList;	// 如果是枚举类型，则代表所有枚举类型 
+	private Map<String, String> jvList = new HashMap<String, String>();	// 如果是枚举类型，则代表所有枚举类型 
 	
 	
 	public DbColumn() {
