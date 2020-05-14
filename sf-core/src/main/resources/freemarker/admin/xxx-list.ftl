@@ -87,8 +87,8 @@
 	<#elseif c.foType == 'img_list'>
 					<el-table-column label="${c.columnComment3}">
 						<template slot-scope="s">
-							<div @click="sa.showImageList(s.row.${c.fieldName})" style="cursor: pointer;" >
-								<img :src="sa.JSONParse(s.row.${c.fieldName})[0]" style="width: 3em; height: 3em; border-radius: 3px; cursor: pointer;" />
+							<div @click="sa.showImageList(s.row.${c.fieldName}.split(','))" style="cursor: pointer;" >
+								<img :src="s.row.${c.fieldName}.split(',')[0]" style="width: 3em; height: 3em; border-radius: 3px; cursor: pointer;" />
 								<span style="color: #999; padding-left: 0.5em;">点击预览</span>
 							</div>
 						</template>

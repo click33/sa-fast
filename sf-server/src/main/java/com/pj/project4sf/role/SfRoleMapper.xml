@@ -28,7 +28,13 @@
 
 
 	<!-- 通用映射 -->
-	<resultMap id="model" autoMapping="true" type="com.pj.project4sf.role.SfRole"></resultMap>
+	<resultMap id="model" type="com.pj.project4sf.role.SfRole">
+		<result property="id" column="id" />
+		<result property="role_name" column="role_name" />
+		<result property="role_info" column="role_info" />
+		<result property="is_lock" column="is_lock" />
+		<result property="create_time" column="create_time" />
+	</resultMap>
 
 	<!-- 查 -->
 	<select id="getById" resultMap="model" >

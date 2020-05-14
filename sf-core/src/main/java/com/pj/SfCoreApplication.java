@@ -11,6 +11,7 @@ import com.pj.gen.cfg.GenCfgManager;
 @SpringBootApplication
 public class SfCoreApplication {
 	
+	// 然后直接运行代码生成器
 	public static void main(String[] args) {
 
 		SpringApplication.run(SfCoreApplication.class, args); // run-->x

@@ -68,7 +68,7 @@
 						<div class="c-item br">
 							<label class="c-label" style="float: left;">${c.columnComment3}：</label>
 							<div class="image-box" style="float: left;">
-								<div class="image-box-2" v-for="image in sa.JSONParse(m.${c.fieldName}, [])">
+								<div class="image-box-2" v-for="image in m.${c.fieldName}.split(',')">
 									<img :src="image" @click="sa.showImage(image, '500px', '400px')" />
 								</div>
 							</div>

@@ -14,7 +14,7 @@ import cn.dev33.satoken.spring.SaTokenSetup;
 @SpringBootApplication // springboot本尊
 @EnableTransactionManagement // 启动注解事务管理
 public class SfServerApplication {
-	
+
 	public static void main(String[] args) {
 		SpringApplication.run(SfServerApplication.class, args); // run-->    
 	}

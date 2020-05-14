@@ -34,7 +34,22 @@
 	<!-- =================== 查询相关 =================== -->
 
 	<!-- 通用映射 -->
-	<resultMap id="model" autoMapping="true" type="com.pj.project4sf.admin.SfAdmin"></resultMap>
+	<resultMap id="model" type="com.pj.project4sf.admin.SfAdmin">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="avatar" column="avatar" />
+		<result property="password" column="password" />
+		<result property="pw" column="pw" />
+		<result property="phone" column="phone" />
+		<result property="role_id" column="role_id" />
+		<result property="status" column="status" />
+		<result property="create_by_aid" column="create_by_aid" />
+		<result property="create_time" column="create_time" />
+		<result property="login_time" column="login_time" />
+		<result property="login_ip" column="login_ip" />
+		<result property="login_count" column="login_count" />
+		<result property="role_name" column="role_name" />
+	</resultMap>
 	
 	<!-- 查询sql -->
 	<sql id="select_sql">

@@ -60,7 +60,7 @@ public class GenUtil {
 
 			// Controller
 			String controllerPath = t.getServerIoPath() + t.getMkNameBig() + "Controller.java";	// 路径 
-			String controllerContent = FreeMarkerUtil.getResult("mybatis/Controller.ftl", "t", t);		// 内容 
+			String controllerContent = FreeMarkerUtil.getResult("mybatis/Controller2.ftl", "t", t);		// 内容 
 			SUtil.outFile(controllerPath, controllerContent);
 			System.out.println(t.getModelName() + "Controller 写入成功：\t\t" + controllerPath);
 			

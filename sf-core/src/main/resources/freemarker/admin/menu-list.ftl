@@ -18,13 +18,13 @@
 var menuList =	[
 <#list cfg.tableList as t>
 	{
-		id: '${t_index+111}',
+		id: '${t.kebabName}',
 		name: '${t.tableComment}',
 		icon: 'el-icon-setting',
 		info: '${t.tableComment}表数据的维护',
 		childList: [
-			{id: '${t_index+111}-1', name: '${t.tableComment}-列表', url: 'sa-html/${t.kebabName}/${t.kebabName}-list.html'},
-			{id: '${t_index+111}-2', name: '${t.tableComment}-添加', url: 'sa-html/${t.kebabName}/${t.kebabName}-add.html'},
+			{id: '${t.kebabName}-list', name: '${t.tableComment}-列表', url: 'sa-html/${t.kebabName}/${t.kebabName}-list.html'},
+			{id: '${t.kebabName}-add', name: '${t.tableComment}-添加', url: 'sa-html/${t.kebabName}/${t.kebabName}-add.html'},
 		]
 	},
 </#list>

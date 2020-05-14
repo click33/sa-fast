@@ -226,7 +226,7 @@
 						// 验证 
 				<#list t.columnList as c>
 					<#if c.foType == 'img_list'>
-						this.m.${c.fieldName} = JSON.stringify(this.m.${c.fieldName}_arr);	// 图片数组转字符串 
+						this.m.${c.fieldName} = this.m.${c.fieldName}_arr.join(',');	// 图片数组转字符串 
 					</#if>
 					<#if c.foType == 'richtext'>
 						this.m.${c.fieldName} = editor.txt.html();	// 获取富文本值 
@@ -266,7 +266,7 @@
 						sa.ajax('/${t.mkNameBig}/getById?id=' + this.id, function(res) {
 					<#list t.columnList as c>
 						<#if c.foType == 'img_list'>
-							res.data.${c.fieldName}_arr = sa.JSONParse(res.data.${c.fieldName}, []);		// ${c.columnComment} 字符串转数组 
+							res.data.${c.fieldName}_arr = res.data.${c.fieldName}.split(',');		// ${c.columnComment} 字符串转数组 
 						</#if>
 					</#list>
 							this.m = res.data;
