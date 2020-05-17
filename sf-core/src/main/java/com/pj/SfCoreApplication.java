@@ -43,6 +43,7 @@ public class SfCoreApplication {
             .setAdminCodePath("sa-html\\")						// 后台管理代码存放目录 
             .setApidocPath("E:\\work\\project-yun\\sa-fast\\sf-apidoc\\")		// 接口文档项目地址    
             .setApidocCodePath("project\\")						// 接口文档存放目录  
+            // .addTableName("sys_user")	// 添加要生成的表 
             .addTableAll()		// 添加所有表 (要生成的表)
             .removeTableName("sf_role", "sf_role_permission", "sf_admin", "sf_apilog")	// 移除这些内置的表，不必生成代码   
             ;
@@ -56,7 +57,8 @@ public class SfCoreApplication {
 		GenUtil.doOutAdminHtml();	// 输出 admin后台管理代码 
 		GenUtil.doOutApidoc();	// 输出 接口文档代码 
 		System.out.println("\n\n * * * * * * * * * * * *  完结撒花   * * * * * * * * * * * *");
-		System.out.println("sa-fast快速开发平台： https://github.com/click33/sa-fast\n\n");
+		System.out.println("sa-fast快速开发平台,  当前版本v1.5.0，更新于2020-5-18 ");
+		System.out.println("项目开源地址： https://github.com/click33/sa-fast\n\n");
 		
 	}
 	

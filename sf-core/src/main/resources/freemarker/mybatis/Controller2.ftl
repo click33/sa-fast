@@ -48,7 +48,7 @@ public class ${t.mkNameBig}Controller {
 	// 查  
 	@RequestMapping("getById")
 	AjaxJson getById(${t.primaryKey.fieldType} ${t.primaryKey.fieldName}){
-		StpUtil.checkPermission("${t.kebabName}");	// 鉴权 
+		// StpUtil.checkPermission("${t.kebabName}");	// 鉴权 
 		${t.modelName} ${t.varNameSimple} = ${t.varName}Mapper.getById(${t.primaryKey.fieldName});
 		return AjaxJson.getSuccessData(${t.varNameSimple});
 	}
@@ -56,7 +56,7 @@ public class ${t.mkNameBig}Controller {
 	// 查 - 集合（参数为null或0时默认忽略此条件）  
 	@RequestMapping("getList")
 	AjaxJson getList() { 
-		StpUtil.checkPermission("${t.kebabName}");	// 鉴权 
+		// StpUtil.checkPermission("${t.kebabName}");	// 鉴权 
 		SoMap so = SoMapUtil.getSoMap();	// 获取本次查询参数 
 		so.startPage();	// 开启分页
 		List<${t.modelName}> list = ${t.varName}Mapper.getList(so);	// 查询数据 

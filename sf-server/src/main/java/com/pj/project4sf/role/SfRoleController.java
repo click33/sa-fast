@@ -27,7 +27,7 @@ public class SfRoleController {
 	// 增  
 	@RequestMapping("add")
 	AjaxJson add(SfRole s, HttpServletRequest request){
-		 StpUtil.checkPermission(AuthConst.p101_1);	// 鉴权
+		 StpUtil.checkPermission(AuthConst.p_role_list);	// 鉴权
 		// 检验
 		if(SF.sfRoleMapper.getById(s.getId()) != null) {
 			return AjaxJson.getError("此id已存在，请更换");
@@ -41,7 +41,7 @@ public class SfRoleController {
 	@RequestMapping("delete")
 	AjaxJson delete(long id, HttpServletRequest request){
 		StpUtil.checkPermission(AuthConst.r1);	// 鉴权
-		StpUtil.checkPermission(AuthConst.p101_1);	// 鉴权
+		StpUtil.checkPermission(AuthConst.p_role_list);	// 鉴权
 		int line = SF.sfRoleMapper.delete(id);
 		return AjaxJson.getByLine(line);
 	}
@@ -50,7 +50,7 @@ public class SfRoleController {
 	@RequestMapping("update")
 	AjaxJson update(SfRole s){
 		StpUtil.checkPermission(AuthConst.r1);	// 鉴权
-		StpUtil.checkPermission(AuthConst.p101_1);	// 鉴权
+		StpUtil.checkPermission(AuthConst.p_role_list);	// 鉴权
 		SfRoleUtil.checkRoleThrow(s);
 		int line = SF.sfRoleMapper.update(s);
 		return AjaxJson.getByLine(line);

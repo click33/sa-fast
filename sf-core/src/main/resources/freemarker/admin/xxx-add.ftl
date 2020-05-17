@@ -125,7 +125,20 @@
 						</div>
 						<div style="clear: both;"></div>
 	<#elseif c.foType == 'date'>
-						<!-- date字段： m.${c.fieldName} - ${c.columnComment3} -->
+						<div class="c-item br">
+							<label class="c-label">${c.columnComment3}：</label>
+							<el-date-picker size="mini" v-model="m.${c.fieldName}" type="datetime" value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
+						</div>
+	<#elseif c.foType == 'date-create' || c.foType == 'date-update'>
+						<!-- ${c.foType}字段： m.${c.fieldName} - ${c.columnComment3} -->
+	<#elseif c.foType == 'fk-1'>
+					<div class="c-item">
+						<label class="c-label">${c.fkPkConcatComment}：</label>
+						<el-select size="mini" v-model="m.${c.fieldName}">
+							<el-option label="不限" :value="0"></el-option>
+							<el-option v-for="${c.fkPkTableName} in ${c.fkPkTableName}List" :label="${c.fkPkTableName}.${c.fkPkConcatName}" :value="${c.fkPkTableName}.${c.fkPkFieldName}" :key="${c.fkPkTableName}.${c.fkPkFieldName}"></el-option>
+						</el-select>
+					</div>
 	<#elseif c.foType == 'no'>
 						<!-- no字段： m.${c.fieldName} - ${c.columnComment3} -->
 	<#else>
@@ -154,7 +167,7 @@
 			function create_m() {
 				return {
 			<#list t.columnList as c>
-				<#if c.foType == 'no' || c.foType == 'date'>
+				<#if c.foType == 'no' || c.foType == 'date-create' || c.foType == 'date-update'>
 					// ${c.fieldName}: '',		// ${c.columnComment} 
 				<#elseif c.foType == 'img_list'>
 					${c.fieldName}: '',		// ${c.columnComment} 
@@ -202,14 +215,17 @@
 				el: '.vue-box',
 				data: {
 					id: sa.p('id', 0),		// 获取超链接中的id参数（0=添加，非0=修改） 
-					m: null		// 实体对象 
+					m: null,		// 实体对象 
+				<#list t.getColumnListBy('fk-1') as c>
+					${c.fkPkTableName}List: [],		// ${c.fkPkConcatComment}
+				</#list>
 				},
 				methods: {
 					// 表单验证
 					submit_check: function() {
 						var m = this.m; 
 				<#list t.columnList as c>
-					<#if c.foType == 'no' || c.foType == 'date'>
+					<#if c.isFoType('no', 'date-create', 'date-update')>
 						// if(sa.isNull(m.${c.fieldName})) {
 						// 	return sa.error('请输入${c.columnComment3}');
 						// }
@@ -230,6 +246,9 @@
 					</#if>
 					<#if c.foType == 'richtext'>
 						this.m.${c.fieldName} = editor.txt.html();	// 获取富文本值 
+					</#if>
+					<#if c.foType == 'date'>
+						this.m.${c.fieldName} = sa.forDate(this.m.${c.fieldName}, 2);	// 日期格式转换 
 					</#if>
 				</#list>
 						if(this.submit_check() != 'ok') {
@@ -259,12 +278,17 @@
 					// 初始化数据 
 					if(this.id == 0) {	
 						this.m = create_m();
+					<#if t.hasFo('richtext')>
 						this.$nextTick(function() {
 							create_editor('');
 						})
+					</#if>
 					} else {	
 						sa.ajax('/${t.mkNameBig}/getById?id=' + this.id, function(res) {
 					<#list t.columnList as c>
+						<#if c.foType == 'date'>
+							res.data.${c.fieldName} = new Date(res.data.${c.fieldName});		// ${c.columnComment} 日期格式转换 
+						</#if>
 						<#if c.foType == 'img_list'>
 							res.data.${c.fieldName}_arr = res.data.${c.fieldName}.split(',');		// ${c.columnComment} 字符串转数组 
 						</#if>
@@ -279,6 +303,16 @@
 					</#list>
 						}.bind(this))
 					}
+			<#if t.getColumnListBy('fk-1')?size != 0>
+				
+					// ============ 加载所需外键列表 ============
+				<#list t.getColumnListBy('fk-1') as c>
+					// 加载 ${c.fkPkConcatComment}
+					sa.ajax('/${c.fkPkTableMkName}/getList?pageSize=1000', function(res) {
+						this.${c.fkPkTableName}List = res.data; // 数据集合 
+					}.bind(this), {msg: null});
+				</#list>
+			</#if>
 				}
 			})
 			

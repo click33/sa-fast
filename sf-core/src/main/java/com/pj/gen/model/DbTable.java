@@ -138,11 +138,13 @@ public class DbTable {
 	}
 	
 	// 是否包含指定表单  类型 
-	public boolean hasFo(String foType) {
+	public boolean hasFo(String ... foType) {
 		boolean is_flag = false;
-		for (DbColumn dbColumn : getColumnList()) {
-			if(dbColumn.getFoType().equals(foType)) {
-				is_flag = true;
+		for (String ft : foType) {
+			for (DbColumn dbColumn : getColumnList()) {
+				if(dbColumn.getFoType().equals(ft)) {
+					is_flag = true;
+				}
 			}
 		}
 		return is_flag;
@@ -165,12 +167,39 @@ public class DbTable {
 	public List<DbColumn> getColumnListByNotAdd() {
 		List<DbColumn> list = new ArrayList<DbColumn>();
 		for (DbColumn c : this.columnList) {
-			if(c.getFoType().equals("date")) {
+			if(c.getFoType().equals("date-create") || c.getFoType().equals("date-update")) {
 				list.add(c);
 			}
 		}
 		return list;
 	}
+	
+	// 返回列集合 - 所有外键列 
+	public List<DbColumn> getColumnListByFk() {
+		List<DbColumn> list = new ArrayList<DbColumn>();
+		for (DbColumn c : this.columnList) {
+			if(c.getFoType().equals("fk-1") || c.getFoType().equals("fk-2")) {
+				list.add(c);
+			}
+		}
+		return list;
+	}
+
+	// 返回列集合 - 指定foType的 
+	public List<DbColumn> getColumnListBy(String ...foType) {
+		List<DbColumn> list = new ArrayList<DbColumn>();
+		for (DbColumn c : this.columnList) {
+			for (String f : foType) {
+				if(c.getFoType().equals(f)) {
+					list.add(c);
+				}
+			}
+		}
+		return list;
+	}
+	
+	
+	
 	
 	
 	// 返回Dao名

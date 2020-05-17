@@ -25,7 +25,7 @@ public class SfAdminController {
 	// 增  
 	@RequestMapping("add")
 	AjaxJson add(SfAdmin admin){
-		StpUtil.checkPermission(AuthConst.p101_3);	// 鉴权
+		StpUtil.checkPermission(AuthConst.p_admin_list);	// 鉴权
 		long id = SF.sfAdminService.add(admin);
 		return AjaxJson.getSuccessData(id);
 	}
@@ -33,7 +33,7 @@ public class SfAdminController {
 	// 删  
 	@RequestMapping("delete")
 	AjaxJson delete(long id){
-		StpUtil.checkPermission(AuthConst.p101_3);	// 鉴权
+		StpUtil.checkPermission(AuthConst.p_admin_list);	// 鉴权
 		// 不能自己删除自己
 		if(StpUtil.getLoginId_asLong() == id) {
 			return AjaxJson.getError("不能自己删除自己");
@@ -45,7 +45,7 @@ public class SfAdminController {
 	// 改  -  name
 	@RequestMapping("update")
 	AjaxJson update(SfAdmin obj){
-		StpUtil.checkPermission(AuthConst.p101_3);	// 鉴权
+		StpUtil.checkPermission(AuthConst.p_admin_list);	// 鉴权
 		SfAdminUtil.checkName(obj.getId(), obj.getName());
 		int line = SF.sfAdminMapper.update(obj);
 		return AjaxJson.getByLine(line);
@@ -54,7 +54,7 @@ public class SfAdminController {
 	// 查  
 	@RequestMapping("getById")
 	AjaxJson getById(long id){
-		StpUtil.checkPermission(AuthConst.p101_3);	// 鉴权
+		StpUtil.checkPermission(AuthConst.p_admin_list);	// 鉴权
 		Object data = SF.sfAdminMapper.getById(id);
 		return AjaxJson.getSuccessData(data);
 	}
@@ -62,7 +62,7 @@ public class SfAdminController {
 	// 查 - 集合（参数为null或0时默认忽略此条件）  
 	@RequestMapping("getList")
 	AjaxJson getList(){
-		StpUtil.checkPermission(AuthConst.p101_3);	// 鉴权
+		StpUtil.checkPermission(AuthConst.p_admin_list);	// 鉴权
 		SoMap so = SoMapUtil.getSoMap();
 		List<SfAdmin> list = SF.sfAdminMapper.getList(so.startPage());
 		return AjaxJson.getPageData(so.endPage(), list);
@@ -71,7 +71,7 @@ public class SfAdminController {
 	// 改密码
 	@RequestMapping("updatePassword")
 	AjaxJson updatePassword(long id, String password){
-		StpUtil.checkPermission(AuthConst.p101_3);	// 鉴权
+		StpUtil.checkPermission(AuthConst.p_admin_list);	// 鉴权
 		int line = SF.sfAdminPasswordService.updatePassword(id, password);
 		return AjaxJson.getByLine(line);
 	}
@@ -80,7 +80,7 @@ public class SfAdminController {
 	// 改头像 
 	@RequestMapping("updateAvatar")
 	AjaxJson updateAvatar(long id, String avatar){
-		StpUtil.checkPermission(AuthConst.p101_3);	// 鉴权
+		StpUtil.checkPermission(AuthConst.p_admin_list);	// 鉴权
 		int line = SF.publicMapper.updateColumnById("sf_admin", "avatar", avatar, id);
 		return AjaxJson.getByLine(line);
 	}

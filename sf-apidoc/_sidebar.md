@@ -9,7 +9,7 @@
 	- [商品表](/project/ser-goods)
 	- [公告表](/project/sys-notice)
 	- [兑换码表](/project/sys-redeem)
-	- [分类表](/project/sys-type)
+	- [商品分类表](/project/sys-type)
 	- [用户表](/project/sys-user)
 	- [版本更新表](/project/sys-version)
 

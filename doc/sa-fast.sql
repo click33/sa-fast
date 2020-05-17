@@ -61,7 +61,7 @@ CREATE TABLE `sf_admin` (
 ) ENGINE=InnoDB AUTO_INCREMENT=10001 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='系统管理员表';
 
 INSERT INTO `sf_admin`(`id`, `name`, `avatar`, `password`, `pw`, `role_id`, create_time) 
-VALUES (10001, 'sa', '../../sa-resources/admin-logo.png', 'E4EF2A290589A23EFE1565BB698437F5', '123456', 1, now()); 
+VALUES (10001, 'sa', '', 'E4EF2A290589A23EFE1565BB698437F5', '123456', 1, now()); 
 
 
 -- 系统api请求记录表 
@@ -80,12 +80,18 @@ CREATE TABLE `sf_apilog` (
   `res_string` text COMMENT '返回-整个信息字符串形式',
   `user_id` bigint(20) DEFAULT NULL COMMENT 'user_id',
   `admin_id` bigint(20) DEFAULT NULL COMMENT 'admin_id',
-  `start_time` datetime(3) DEFAULT NULL COMMENT '请求开始时间',
-  `end_time` datetime(3) DEFAULT NULL COMMENT '请求结束时间',
+  `start_time` datetime DEFAULT NULL COMMENT '请求开始时间',
+  `end_time` datetime DEFAULT NULL COMMENT '请求结束时间',
   `cost_time` bigint(20) DEFAULT NULL COMMENT '花费时间，单位ms',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `req_id` (`req_id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=10001 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='api请求记录表';
+
+
+
+
+
+
 
 
 

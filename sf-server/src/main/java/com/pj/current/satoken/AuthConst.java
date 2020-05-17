@@ -18,12 +18,12 @@ public final class AuthConst {
 	
 	
 	// 所有权限码 
-	public static final String p101 = "101";		//  权限管理  
-	public static final String p101_1 = "101-1";		//  权限管理  - 角色管理 
-	public static final String p101_2 = "101-2";		//  权限管理  - 菜单列表
-	public static final String p101_3 = "101-3";		//  权限管理  - 管理员列表
-	public static final String p101_4 = "101-4";		//  权限管理  - 管理员添加
-	public static final String p101_5 = "101-5";		//  权限管理  - 请求日志监控 
+	public static final String p_auth = "auth";		//  权限管理  
+	public static final String p_role_list = "role-list";		//  权限管理  - 角色管理 
+	public static final String p_menu_list = "menu-list";		//  权限管理  - 菜单列表
+	public static final String p_admin_list = "admin-list";		//  权限管理  - 管理员列表
+	public static final String p_admin_add = "admin-add";		//  权限管理  - 管理员添加
+	public static final String p_apilog_list = "apilog-list";		//  权限管理  - 请求日志监控 
 	
 	
 	

@@ -59,7 +59,8 @@
 						<el-input v-model="p.req_token"></el-input>
 					</el-form-item>
 					<el-form-item label="请求时间：">
-						<el-date-picker v-model="p.s_time" type="datetime" value-format="yyyy-MM-dd HH:mm:ss" placeholder="开始日期"></el-date-picker> - 
+						<el-date-picker v-model="p.s_time" type="datetime" value-format="yyyy-MM-dd HH:mm:ss" placeholder="开始日期"></el-date-picker>
+						-
 						<el-date-picker v-model="p.e_time" type="datetime" value-format="yyyy-MM-dd HH:mm:ss" placeholder="结束日期"></el-date-picker>
 					</el-form-item>
 					<br />
@@ -74,7 +75,7 @@
 				<!-- 数据列表 -->
 				<div class="c-title">数据列表</div>
 				<el-table :data="dataList" size="mini">
-					<el-table-column label="记录id" prop="id" width="80px" ></el-table-column>
+					<el-table-column label="记录id" prop="id" width="80px"></el-table-column>
 					<el-table-column label="请求ip" width="130px">
 						<template slot-scope="s">
 							<span class="req-ip">{{(s.row.req_ip)}}</span>
@@ -91,8 +92,9 @@
 					</el-table-column>
 					<el-table-column label="请求接口" width="250px">
 						<template slot-scope="s">
-							<p class="req-api"><span>{{sa.maxLength(s.row.req_api)}}</bspan></p>
-							<span class="req-p" @click="sa.msg(s.row.req_parame)">{{sa.maxLength(s.row.req_parame, 70)}}</span>
+							<p class="req-api"><span>{{sa.maxLength(s.row.req_api)}}</bspan>
+							</p>
+							<span class="req-p" @click="see_req_parame(s.row)">{{sa.maxLength(s.row.req_parame, 70)}}</span>
 						</template>
 					</el-table-column>
 					<el-table-column label="请求返回" min-width="370px">
@@ -101,7 +103,7 @@
 								<b style="color: green;" v-if="s.row.res_code == 200">{{s.row.res_code}} - {{s.row.res_msg}}</b>
 								<b style="color: red;" v-else>{{s.row.res_code}} - {{s.row.res_msg}}</b>
 							</p>
-							<p class="req-string" @click="sa.msg(s.row.res_string)">
+							<p class="req-string" @click="see_res_string(s.row)">
 								{{sa.maxLength(s.row.res_string, 80)}}
 							</p>
 						</template>
@@ -109,9 +111,11 @@
 					<el-table-column label="请求账号" width="150px">
 						<template slot-scope="s">
 							<p v-if="s.row.user_id == 0">user_id：&nbsp;&nbsp;&nbsp;0</p>
-							<p v-else>user_id：&nbsp;&nbsp;&nbsp;<el-link @click="sa.alert(s.row.user_id)">{{s.row.user_id}}</el-link></p>
+							<p v-else>user_id：&nbsp;&nbsp;&nbsp;<el-link @click="sa.alert(s.row.user_id)">{{s.row.user_id}}</el-link>
+							</p>
 							<p v-if="s.row.admin_id == 0">admin_id：0</p>
-							<p v-else>admin_id：<el-link @click="sa.$page.openAdminInfo(s.row.admin_id)">{{s.row.admin_id}}</el-link></p>
+							<p v-else>admin_id：<el-link @click="sa.$page.openAdminInfo(s.row.admin_id)">{{s.row.admin_id}}</el-link>
+							</p>
 						</template>
 					</el-table-column>
 					<el-table-column label="请求token" width="150px" v-if="!sa.isNull(p.req_token) ">
@@ -122,16 +126,16 @@
 					<el-table-column label="请求时间" width="280px">
 						<template slot-scope="s">
 							<p>
-								开始：{{sa.forDate(s.row.start_time, 'yyyy-MM-dd HH:mm:ss.ms')}} - 
+								开始：{{sa.forDate(s.row.start_time, 'yyyy-MM-dd HH:mm:ss.ms')}} -
 								<b>{{sa.isNull(sa.forDate2(s.row.start_time), '无')}}</b>
 							</p>
 							<p>
-								结束：{{sa.forDate(s.row.end_time, 'yyyy-MM-dd HH:mm:ss.ms')}} - 
+								结束：{{sa.forDate(s.row.end_time, 'yyyy-MM-dd HH:mm:ss.ms')}} -
 								<b style="color: green;">耗时：{{(s.row.cost_time + 0.0) / 1000}}s</b>
 							</p>
 						</template>
 					</el-table-column>
-					<el-table-column label="操作" width="120px" >
+					<el-table-column label="操作" width="120px">
 						<template slot-scope="s">
 							<el-button type="text" size="mini" @click="copy(s.row)">复制</el-button>
 							<el-button type="text" size="mini" @click="del(s.row)" v-if="way == 1">删除</el-button>
@@ -140,14 +144,9 @@
 				</el-table>
 				<!-- 分页 -->
 				<div class="page-box">
-					<el-pagination background
-						layout="total, prev, pager, next, sizes, jumper" 
-						:current-page.sync="p.pageNo" 
-						:page-size.sync="p.pageSize" 
-						:total="dataCount" 
-						:page-sizes="[1, 5, 10, 20, 30, 40, 50, 100]" 
-						@current-change="f5()" 
-						@size-change="f5()">
+					<el-pagination background layout="total, prev, pager, next, sizes, jumper" :current-page.sync="p.pageNo"
+					 :page-size.sync="p.pageSize" :total="dataCount" :page-sizes="[1, 5, 10, 20, 30, 40, 50, 100]" @current-change="f5()"
+					 @size-change="f5()">
 					</el-pagination>
 				</div>
 			</div>
@@ -171,7 +170,7 @@
 						e_time: '',
 						sort_type: 0
 					},
-					way: sa.p('way', 2),
+					way: sa.p('way', 1),
 					dataCount: 0,
 					dataList: [], // 数据集合
 				},
@@ -183,11 +182,43 @@
 							this.dataCount = res.dataCount; // 数据总数 
 						}.bind(this));
 					},
-					// 查看 
+					// 复制 
 					copy: function(data) {
 						// sa.showIframe('数据详情', 'api-log-info.html?id=' + data.id);
 						sa.copyText(JSON.stringify(data));
-						sa.ok('已成功复制到剪贴板');
+						sa.ok2('已成功复制到剪贴板');
+					},
+					// 查看：访问参数 
+					see_req_parame: function(data) {
+						var jsonStr = data.req_parame;
+						jsonStr = JSON.stringify(JSON.parse(jsonStr), null, "\t");
+						layer.prompt({
+							title: '请求参数',
+							shadeClose: true,	// 点击遮罩关闭 
+							formType: 2,		// 多行输入 
+							value: jsonStr,		// 要显示的字符串
+							maxlength: 9999999999,	// 最大输入字符长度
+							area: ['600px', '400px'],	// 弹窗尺寸
+							yes: function(index, layero){
+							    layer.close(index); //如果设定了yes回调，需进行手工关闭
+							}
+						})
+					},
+					// 查看：返回参数  
+					see_res_string: function(data) {
+						var jsonStr = data.res_string;
+						jsonStr = JSON.stringify(JSON.parse(jsonStr), null, "\t");
+						layer.prompt({
+							title: '返回参数',
+							shadeClose: true,	// 点击遮罩关闭 
+							formType: 2,		// 多行输入 
+							value: jsonStr,		// 要显示的字符串
+							maxlength: 9999999999,	// 最大输入字符长度
+							area: ['600px', '400px'],	// 弹窗尺寸
+							yes: function(index, layero){
+							    layer.close(index); //如果设定了yes回调，需进行手工关闭
+							}
+						})
 					},
 					// 删除  
 					del: function(data) {
@@ -198,7 +229,7 @@
 							}.bind(this))
 						}.bind(this));
 					},
-					
+
 				},
 				created: function() {
 					this.f5();

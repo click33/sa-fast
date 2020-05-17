@@ -27,7 +27,7 @@ public class SfRolePermissionController {
 	@RequestMapping("getPcodeByRid")
     public AjaxJson getPcodeByRid(@RequestParam(defaultValue="0") long role_id){
 		StpUtil.checkPermission(AuthConst.r1);	// 鉴权
-		StpUtil.checkPermission(AuthConst.p101_1);	// 鉴权 
+		StpUtil.checkPermission(AuthConst.p_role_list);	// 鉴权 
 		if(role_id == 0){
 			return AjaxJson.getError("role_id不能为null或0");		// 防止拉出全部 	
 		}
@@ -49,7 +49,7 @@ public class SfRolePermissionController {
 	@RequestMapping("updatePcodeByRid")
 	public AjaxJson updatePcodeByRid(long role_id, String[] code){
 		StpUtil.checkPermission(AuthConst.r1);	// 鉴权
-		StpUtil.checkPermission(AuthConst.p101_1);	// 鉴权 
+		StpUtil.checkPermission(AuthConst.p_role_list);	// 鉴权 
 		return AjaxJson.getSuccess("ok", SF.sfRolePermissionService.updateRoleMenu(role_id, code));
 	}
 	

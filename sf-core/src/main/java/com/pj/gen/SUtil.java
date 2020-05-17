@@ -3,9 +3,11 @@ package com.pj.gen;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.Writer;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * String处理工具包
+ * String处理工具类
  * @author kongyongshun
  *
  */
@@ -129,6 +131,43 @@ public class SUtil {
 	
 //	public static void main(String[] args) {
 //		System.out.println();
+//	}
+	
+	
+	// 将类似 name=张三, age=18 样式的字符串, 转换为map
+	public static Map<String, String> txStringToMap(String tx_str) {
+		Map<String, String> map = new HashMap<String, String>();
+		if(tx_str == null) {
+			return map;
+		}
+		String[] arr = tx_str.split(",");
+		for (String str : arr) {
+			try {
+				str = str.trim();
+				if(str.equals("")) {	// 如果是空
+					
+				}
+				else if(str.indexOf("=") == -1) {	// 如果没有=
+					map.put(str, "");;
+				}
+				else {	
+					String[] darr = str.split("=");
+					if(darr.length == 1) {
+						map.put(darr[0], "");
+					} else {
+						map.put(darr[0], darr[1]);
+					}
+				}
+			} catch (Exception e) {
+				System.err.println("特性：" + str + "解析出错：" + e.getMessage());
+			}
+		}
+		return map;
+	}
+	
+//	public static void main(String[] args) {
+////		System.out.println(txStringToMap("name=1, bas= 21, kjsa, ss=,"));
+//		System.out.println(txStringToMap(null));
 //	}
 	
 	// 下划线转中划线

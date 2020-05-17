@@ -1,4 +1,4 @@
-# sa-fast 快速开发平台
+# sa-fast 快速开发平台 v1.5.0 
 
 一个基于springboot架构的快速开发平台，内置代码生成器
 
@@ -77,7 +77,10 @@
 	[num]		声明数值输入字段
 	[enum]		声明一个枚举字段，具体语法请查看下方示例，还可以写成 [j]
 	[date]		声明一个日期字段 
-	
+	[date-create]	声明一个日期字段（数据创建日期）
+	[date-update]	声明一个日期字段（数据更新日期）
+	[fk-1]		声明一个外键(主表数据<1000时使用，比如商品分类表)，格式为 [fk-1 pk=主表.主键.连表字段.连表字段注释]，例如：[fk-1 pk=sys_type.id.name.所属分类]
+	[fk-2]		声明一个外键(主表数据>1000时使用，比如商品分类表)，格式为 [fk-2 pk=主表.主键.连表字段.连表字段注释]，例如：[fk-2 pk=ser_goods.id.name.所属商品]
 ```
 - 具体例子，请查看下列建表sql，与最终生成的页面对比效果图
 
@@ -86,22 +89,24 @@
 	-- 商品表 
 	drop table if exists ser_goods;
 	CREATE TABLE `ser_goods` (
-	  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '商品id  [no]', 
-	  `name` varchar(200) DEFAULT NULL COMMENT '商品名称', 
+	  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '商品id [no]', 
+	  `name` varchar(200) DEFAULT NULL COMMENT '商品名称 [text]', 
 	  `avatar` varchar(512) DEFAULT NULL COMMENT '商品头像 [img]', 
 	  `image_list` varchar(2048) COMMENT '轮播图片 [img_list]', 
 	  `content` text COMMENT '图文介绍 [f]', 
 	  `remark` varchar(512) DEFAULT NULL COMMENT '商品备注 [textarea]',
 	  `money` int(11) DEFAULT '0' COMMENT '商品价格 [num]', 
 	  `stock_count` int(11) DEFAULT 0 COMMENT '剩余库存 [num]',
-	  `status` int(11) DEFAULT '1' COMMENT '商品状态(1=上架,2=下架) [j]',
-	  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间 [date]',
+	  `status` int(11) DEFAULT '1' COMMENT '商品状态 (1=上架,2=下架) [j]',
+	  `create_time` datetime COMMENT '创建日期 [date-create]',
+	  `update_time` datetime COMMENT '更新日期 [date-update]',
 	  PRIMARY KEY (`id`) USING BTREE
 	) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='商品表';
 	
-	INSERT INTO `ser_goods`(`id`, `name`, `avatar`, `image_list`, `remark`, `content`, `money`, `stock_count`, `status`, `create_time`) VALUES (1001, '小苹果', 'http://127.0.0.1:8099/upload/image/2020/05-11/1589130441278158564136.jpg', '[\"http://127.0.0.1:8099/upload/image/2020/05-11/15891304215541588315943.png\"]', '这是一个小呀小苹果', '这是一个小呀小苹果<p><br></p>', 23, 213, 1, '2020-05-11 01:07:22');
-	INSERT INTO `ser_goods`(`id`, `name`, `avatar`, `image_list`, `remark`, `content`, `money`, `stock_count`, `status`, `create_time`) VALUES (1002, '大鸭梨', 'http://127.0.0.1:8099/upload/image/2020/05-11/15891304588142094778376.png', '[\"http://127.0.0.1:8099/upload/image/2020/05-11/15891301925381859798545.jpg\"]', '大鸭梨', '<p>大鸭梨图文介绍</p>', 214, 234, 1, '2020-05-11 01:42:09');
-	INSERT INTO `ser_goods`(`id`, `name`, `avatar`, `image_list`, `remark`, `content`, `money`, `stock_count`, `status`, `create_time`) VALUES (1003, '小橘子', 'http://127.0.0.1:8099/upload/image/2020/05-11/15891326019482012079187.jpg', '[\"http://127.0.0.1:8099/upload/image/2020/05-11/1589133225670119768604.jpg\"]', '小橘子', '<p>小橘子</p>', 123, 123, 2, '2020-05-11 01:44:24');
+	
+	INSERT INTO `ser_goods`(`id`, `name`, `avatar`, `image_list`, `remark`, `content`, `money`, `stock_count`, `status`, `create_time`, `update_time`) VALUES (1001, '小苹果', 'http://127.0.0.1:8099/upload/image/2020/05-11/1589130441278158564136.jpg', 'http://127.0.0.1:8099/upload/image/2020/05-11/15891304215541588315943.png', '这是一个小呀小苹果', '这是一个小呀小苹果<p><br></p>', 23, 213, 1, now(), now());
+	INSERT INTO `ser_goods`(`id`, `name`, `avatar`, `image_list`, `remark`, `content`, `money`, `stock_count`, `status`, `create_time`, `update_time`) VALUES (1002, '大鸭梨', 'http://127.0.0.1:8099/upload/image/2020/05-11/15891304588142094778376.png', 'http://127.0.0.1:8099/upload/image/2020/05-11/15891301925381859798545.jpg', '大鸭梨', '<p>大鸭梨图文介绍</p>', 214, 234, 1, now(), now());
+	INSERT INTO `ser_goods`(`id`, `name`, `avatar`, `image_list`, `remark`, `content`, `money`, `stock_count`, `status`, `create_time`, `update_time`) VALUES (1003, '小橘子', 'http://127.0.0.1:8099/upload/image/2020/05-11/15891326019482012079187.jpg', 'http://127.0.0.1:8099/upload/image/2020/05-11/1589133225670119768604.jpg', '小橘子', '<p>小橘子</p>', 123, 123, 2, now(), now());
 	
 ```
 

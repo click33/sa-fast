@@ -22,7 +22,8 @@ sa.ajax('/AccAdmin/fristOpenAdmin', function(res) {
 	// 当前用户信息 
 	sa_admin.user = {
 		username: res.data.admin.name,
-		avatar: 'sa-resources/admin-logo.png' //appCfg.logo_url
+		avatar: !!res.data.admin.avatar ? res.data.admin.avatar : 'sa-resources/admin-logo.png' // 使用logo作为头像 
+		// avatar: res.data.admin.avatar // 此写法为账号头像 
 	};		
 	sa.$sys.setCurrUser(res.data.admin);
 	

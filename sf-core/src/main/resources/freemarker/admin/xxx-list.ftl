@@ -43,7 +43,15 @@
 					</div>
 	<#elseif c.foType == 'img'>
 	<#elseif c.foType == 'img_list'>
-	<#elseif c.foType == 'date'>
+	<#elseif c.isFoType('date', 'date-create', 'date-update')>
+	<#elseif c.foType == 'fk-1'>
+					<div class="c-item">
+						<label class="c-label">${c.fkPkConcatComment}：</label>
+						<el-select size="mini" v-model="p.${c.fieldName}">
+							<el-option label="不限" :value="0"></el-option>
+							<el-option v-for="${c.fkPkTableName} in ${c.fkPkTableName}List" :label="${c.fkPkTableName}.${c.fkPkConcatName}" :value="${c.fkPkTableName}.${c.fkPkFieldName}" :key="${c.fkPkTableName}.${c.fkPkFieldName}"></el-option>
+						</el-select>
+					</div>
 	<#else>
 					<div class="c-item">
 						<label class="c-label">${c.columnComment3}：</label>
@@ -58,8 +66,14 @@
 					<div class="c-item s-radio-text">
 						<label class="c-label">综合排序：</label>
 						<el-radio-group v-model="p.sort_type">
-							<el-radio :label="0">默认</el-radio>
-							<el-radio :label="1">最近添加</el-radio>
+							<el-radio :label="0">最近添加</el-radio>
+					<#list t.columnList as c>
+						<#if c_index <= 3>
+							<el-radio :label="${c_index + 1}">${c.columnComment3}</el-radio>
+						<#else>
+							<!-- <el-radio :label="${c_index + 1}">${c.columnComment3}</el-radio> -->
+						</#if>
+					</#list>
 						</el-radio-group>
 					</div>
 				</el-form>
@@ -73,7 +87,7 @@
 					<el-table-column label="${c.columnComment3}" min-width="150px">
 						<template slot-scope="s"><span>{{sa.maxLength(sa.text(s.row.${c.fieldName}), 100)}}</span></template>
 					</el-table-column>
-	<#elseif c.foType == 'date'>
+	<#elseif c.isFoType('date', 'date-create', 'date-update')>
 					<el-table-column label="${c.columnComment3}" width="150px">
 						<template slot-scope="s"><span>{{sa.forDate(s.row.${c.fieldName}, 2)}}</span></template>
 					</el-table-column>
@@ -85,7 +99,7 @@
 						</template>
 					</el-table-column>
 	<#elseif c.foType == 'img_list'>
-					<el-table-column label="${c.columnComment3}">
+					<el-table-column label="${c.columnComment3}" width="130px">
 						<template slot-scope="s">
 							<div @click="sa.showImageList(s.row.${c.fieldName}.split(','))" style="cursor: pointer;" >
 								<img :src="s.row.${c.fieldName}.split(',')[0]" style="width: 3em; height: 3em; border-radius: 3px; cursor: pointer;" />
@@ -101,8 +115,19 @@
 		</#list>
 						</template>
 					</el-table-column>
-		
-		
+	
+	<#elseif c.foType == 'fk-1'>
+					<!-- <el-table-column label="${c.columnComment3}" prop="${c.fieldName}" ></el-table-column> -->
+					<el-table-column label="${c.fkPkConcatComment}" prop="${c.fkPkTableName}_${c.fkPkConcatName}" ></el-table-column>
+	<#elseif c.foType == 'fk-2'>
+					<el-table-column label="${c.fkPkConcatComment}">
+						<template slot-scope="s">
+							<!-- <span>{{s.row.${c.fieldName}}}</span> -->
+							<el-link type="primary" @click="sa.showIframe('${c.fkPkConcatComment}信息', '../${c.fkPkTableKebabName}/${c.fkPkTableKebabName}-info.html?${c.fkPkFieldName}=' + s.row.${c.fieldName})">
+								{{s.row.${c.fkPkTableName}_${c.fkPkConcatName}}}
+							</el-link>
+						</template>
+					</el-table-column>
 	<#else>
 					<el-table-column label="${c.columnComment3}" prop="${c.fieldName}" ></el-table-column>
 	</#if>
@@ -122,7 +147,7 @@
 						:current-page.sync="p.pageNo" 
 						:page-size.sync="p.pageSize" 
 						:total="dataCount" 
-						:page-sizes="[1, 10, 20, 30, 40, 50, 100]" 
+						:page-sizes="[1, 10, 20, 30, 40, 50, 100, 1000]" 
 						@current-change="f5()" 
 						@size-change="f5()">
 					</el-pagination>
@@ -146,7 +171,10 @@
 						sort_type: 0	// 排序方式 
 					},
 					dataCount: 0,
-					dataList: [], // 数据集合
+					dataList: [], // 数据集合 
+				<#list t.getColumnListBy('fk-1') as c>
+					${c.fkPkTableName}List: [],		// ${c.fkPkConcatComment}集合
+				</#list>
 				},
 				methods: {
 					// 刷新
@@ -176,6 +204,16 @@
 				},
 				created: function() {
 					this.f5();
+			<#if t.getColumnListBy('fk-1')?size != 0>
+				
+					// ============ 加载所需外键列表 ============
+				<#list t.getColumnListBy('fk-1') as c>
+					// 加载 ${c.fkPkConcatComment}
+					sa.ajax('/${c.fkPkTableMkName}/getList?pageSize=1000', function(res) {
+						this.${c.fkPkTableName}List = res.data; // 数据集合 
+					}.bind(this), {msg: null});
+				</#list>
+			</#if>
 				}
 			})
 		</script>

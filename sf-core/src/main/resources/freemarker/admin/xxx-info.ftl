@@ -35,7 +35,7 @@
 		<div class="vue-box s-bot-btn" style="display: none;" :style="'display: block;'">
 			<!-- ------- 内容部分 ------- -->
 			<div class="s-body">
-				<div class="c-panel" v-if="m">
+				<div class="c-panel">
 					<el-form size="mini" v-if="m">
 <#list t.columnList as c>
 	<#if c.foType == 'text'>	
@@ -74,10 +74,19 @@
 							</div>
 						</div>
 						<div style="clear: both;"></div>
-	<#elseif c.foType == 'date'>
+	<#elseif c.isFoType('date', 'date-create', 'date-update')>
 						<div class="c-item br">
 							<label class="c-label">${c.columnComment3}：</label>
 							<span>{{sa.forDate(m.${c.fieldName}, 2)}}</span>
+						</div>
+	<#elseif c.foType == 'fk-1' || c.foType == 'fk-2'>
+						<div class="c-item br">
+							<label class="c-label">${c.columnComment3}：</label>
+							<span>{{m.${c.fieldName}}}</span>
+						</div>
+						<div class="c-item">
+							<label class="c-label">${c.fkPkConcatComment}：</label>
+							<span>{{m.${c.fkPkTableName}_${c.fkPkConcatName}}}</span>
 						</div>
 	<#else>
 						<div class="c-item br">

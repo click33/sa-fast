@@ -25,7 +25,7 @@ public class SfApilogControlle {
 	// 删  
 	@RequestMapping("delete")
 	AjaxJson delete(String id){
-		StpUtil.checkPermission(AuthConst.p101_5);	// 鉴权 
+		StpUtil.checkPermission(AuthConst.p_apilog_list);	// 鉴权 
 		int line = SF.sfApilogMapper.delete(id);
 		return AjaxJson.getByLine(line);
 	}
@@ -33,7 +33,7 @@ public class SfApilogControlle {
 	// 查 - 集合（参数为null或0时默认忽略此条件）  
 	@RequestMapping("getList")
 	AjaxJson getList() { 
-		StpUtil.checkPermission(AuthConst.p101_5);	// 鉴权 
+		StpUtil.checkPermission(AuthConst.p_apilog_list);	// 鉴权 
 		SoMap so = SoMapUtil.getSoMap();
 		List<SfApilog> list = SF.sfApilogMapper.getList(so.startPage());
 		return AjaxJson.getPageData(so.endPage(), list);
