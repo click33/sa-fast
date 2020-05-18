@@ -28,16 +28,17 @@ CREATE TABLE `sf_role_permission` (
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='角色权限中间表';
 
-insert into sf_role_permission() values ('1', '-1', now());
+insert into sf_role_permission() values ('1', 'bas', now());
 insert into sf_role_permission() values ('1', '1', now());
 insert into sf_role_permission() values ('1', '11', now());
 insert into sf_role_permission() values ('1', '99', now());
-insert into sf_role_permission() values ('1', '101', now());
-insert into sf_role_permission() values ('1', '101-1', now());
-insert into sf_role_permission() values ('1', '101-2', now());
-insert into sf_role_permission() values ('1', '101-3', now());
-insert into sf_role_permission() values ('1', '101-4', now());
-insert into sf_role_permission() values ('1', '101-5', now());
+
+insert into sf_role_permission() values ('1', 'auth', now());
+insert into sf_role_permission() values ('1', 'role-list', now());
+insert into sf_role_permission() values ('1', 'menu-list', now());
+insert into sf_role_permission() values ('1', 'admin-list', now());
+insert into sf_role_permission() values ('1', 'admin-add', now());
+insert into sf_role_permission() values ('1', 'apilog-list', now());
 
 
 -- 系统管理员表 
