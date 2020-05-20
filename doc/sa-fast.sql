@@ -66,6 +66,7 @@ VALUES (10001, 'sa', '', 'E4EF2A290589A23EFE1565BB698437F5', '123456', 1, now())
 
 
 -- 系统api请求记录表 
+-- 如果此段脚本执行报错，请将 datetime(3) 改为 datetime 再次执行
 drop table if exists sf_apilog; 
 CREATE TABLE `sf_apilog` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '记录id',
@@ -81,8 +82,8 @@ CREATE TABLE `sf_apilog` (
   `res_string` text COMMENT '返回-整个信息字符串形式',
   `user_id` bigint(20) DEFAULT NULL COMMENT 'user_id',
   `admin_id` bigint(20) DEFAULT NULL COMMENT 'admin_id',
-  `start_time` datetime DEFAULT NULL COMMENT '请求开始时间',
-  `end_time` datetime DEFAULT NULL COMMENT '请求结束时间',
+  `start_time` datetime(3) DEFAULT NULL COMMENT '请求开始时间',
+  `end_time` datetime(3) DEFAULT NULL COMMENT '请求结束时间',
   `cost_time` bigint(20) DEFAULT NULL COMMENT '花费时间，单位ms',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `req_id` (`req_id`) USING BTREE

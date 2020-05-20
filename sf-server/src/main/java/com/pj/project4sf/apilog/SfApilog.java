@@ -3,6 +3,8 @@ package com.pj.project4sf.apilog;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 
 /**
@@ -29,8 +31,10 @@ public class SfApilog implements Serializable {
 	
 	private long user_id;		// user_id 
 	private long admin_id;		// admin_id 
-	
+
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
 	private Date start_time;		// 请求开始时间 
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
 	private Date end_time;		// 请求结束时间 
 	private int cost_time;		// 花费时间，单位ms 
 	

@@ -8,6 +8,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pj.project4sf.SF;
 import com.pj.utils.LogUtil;
 import com.pj.utils.sg.AjaxJson;
@@ -70,16 +71,17 @@ public class SfApilogUtil {
 	    	LogUtil.info("未找到相应ApiLog对象，aj=" + aj);
 			return;
 		}
-		
-		// 开始结束计时 
-		a.setRes_code(aj.getCode()); 	// res 状态码
-		a.setRes_msg(aj.getMsg());		// res 描述信息 
-		a.setRes_string(JSON.toJSONString(aj));		// res 字符串形式
-		a.setEnd_time(new Date());			// 请求结束时间 
-		a.setCost_time((int)(a.getEnd_time().getTime() - a.getStart_time().getTime()));	// 请求消耗时长，单位ms 
-		
+
 		// 保存数据库
 		try {
+			// 开始结束计时 
+			a.setRes_code(aj.getCode()); 	// res 状态码
+			a.setRes_msg(aj.getMsg());		// res 描述信息 
+			// a.setRes_string(JSON.toJSONString(aj));		// res 字符串形式
+			a.setRes_string(new ObjectMapper().writeValueAsString(aj));		// res 字符串形式
+			a.setEnd_time(new Date());			// 请求结束时间 
+			a.setCost_time((int)(a.getEnd_time().getTime() - a.getStart_time().getTime()));	// 请求消耗时长，单位ms 
+		
         	LogUtil.info("本次请求耗时：" + ((a.getCost_time() + 0.0) / 1000) + "s, 返回：" + a.getRes_string());
         	SF.sfApilogMapper.saveObj(a);
 		} catch (Exception e) {
