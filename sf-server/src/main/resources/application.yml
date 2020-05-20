@@ -17,6 +17,13 @@ spring:
     resources: 
         static-locations: classpath:/META-INF/resources/,classpath:/resources/, classpath:/static/, classpath:/public/, file:${spring.upload-config.root_folder}
         
+    # jackson设置 
+    jackson:
+        # 默认的日期转换格式  
+        date-format: yyyy-MM-dd HH:mm:ss
+        # 解决因为时区问题，date少8小时的bug 
+        time-zone: GMT+8
+        
     # 文件上传相关配置
     upload-config: 
         # 文件保存的根目录，所有文件都保存在这个目录下  

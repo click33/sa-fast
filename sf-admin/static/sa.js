@@ -17,7 +17,7 @@ var sa = {
 		api_url: 'http://www.baidu.com',
 		web_url: 'http://www.baidu.com'
 	}
-	// 服务器测试环境
+	// 客户生产环境
 	var cfg_prod = {
 		api_url: 'http://www.baidu.com',
 		web_url: 'http://www.baidu.com'
