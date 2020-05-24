@@ -62,16 +62,18 @@
 						<div class="c-item br">
 							<label class="c-label" style="vertical-align: top;">${c.columnComment3}：</label>
 							<img :src="m.${c.fieldName}" style="width: 3em; height: 3em; cursor: pointer;" 
-								@click="sa.showImage(m.${c.fieldName}, '400px', '400px')" v-if="m.${c.fieldName} != '' ">
+								@click="sa.showImage(m.${c.fieldName}, '400px', '400px')" v-if="m.${c.fieldName}">
+							<span v-else>无</span>
 						</div>
 	<#elseif c.foType == 'img_list'>
 						<div class="c-item br">
 							<label class="c-label" style="float: left;">${c.columnComment3}：</label>
-							<div class="image-box" style="float: left;">
+							<div class="image-box" style="float: left;" v-if="m.${c.fieldName}">
 								<div class="image-box-2" v-for="image in m.${c.fieldName}.split(',')">
 									<img :src="image" @click="sa.showImage(image, '500px', '400px')" />
 								</div>
 							</div>
+							<span v-else>无</span>
 						</div>
 						<div style="clear: both;"></div>
 	<#elseif c.isFoType('date', 'date-create', 'date-update')>

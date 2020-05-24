@@ -34,7 +34,7 @@ public class GenUtil {
 		flyRead.readInfo();
 	}
 	
-	// 开始输出为MyBatis版 
+	// 输出java代码 （mybatis版本） 
 	public static void doOutMyBatis() {
 		
 		// 模块
@@ -81,6 +81,62 @@ public class GenUtil {
 		System.out.println("FC.java 依赖清单写入成功：\t\t" + FCPath);
 		System.out.println("\n");
 	}
+	
+
+	// 输出java代码 （mybatis版本-带service层 ） 
+	public static void doOutMyBatisService() {
+		
+		// 模块
+		for (DbTable t : GenCfgManager.cfg.tableList) {
+			
+			// model
+			String modelPath = t.getServerIoPath() + t.getModelName() + ".java";			// 路径
+			String modelContent = FreeMarkerUtil.getResult("mybatis/Model.ftl", "t", t);		// 内容 
+			SUtil.outFile(modelPath, modelContent);
+			System.out.println(t.getModelName() + " 写入成功：\t\t\t" + modelPath);
+			
+			// Mapper.java 
+			String mapperJavaPath = t.getServerIoPath() + t.getMkNameBig() + "Mapper.java";	// 路径
+			String mapperJavaContent = FreeMarkerUtil.getResult("mybatis/MapperJava.ftl", "t", t);	// 内容 
+			SUtil.outFile(mapperJavaPath, mapperJavaContent);
+			System.out.println(t.getModelName() + "Mapper.java 写入成功：\t\t" + mapperJavaPath);
+
+			// Mapper.xml 
+			String mapperXmlPath = t.getServerIoPath() + t.getMkNameBig() + "Mapper.xml";	// 路径
+			String mapperXmlContent = FreeMarkerUtil.getResult("mybatis/MapperXml2.ftl", "t", t);	// 内容 
+			SUtil.outFile(mapperXmlPath, mapperXmlContent);
+			System.out.println(t.getModelName() + "Mapper.xml 写入成功：\t\t" + mapperXmlPath);
+
+			// Service
+			String servicePath = t.getServerIoPath() + t.getMkNameBig() + "Service.java";	// 路径 
+			String serviceContent = FreeMarkerUtil.getResult("service/Service.ftl", "t", t);		// 内容 
+			SUtil.outFile(servicePath, serviceContent);
+			System.out.println(t.getModelName() + "Service 写入成功：\t\t" + servicePath);
+
+			// Controller
+			String controllerPath = t.getServerIoPath() + t.getMkNameBig() + "Controller.java";	// 路径 
+			String controllerContent = FreeMarkerUtil.getResult("service/Controller.ftl", "t", t);		// 内容 
+			SUtil.outFile(controllerPath, controllerContent);
+			System.out.println(t.getModelName() + "Controller 写入成功：\t\t" + controllerPath);
+			
+			// util 
+			String utilPath = t.getServerIoPath() + t.getMkNameBig() + "Util.java";	// 路径 
+			String utilContent = FreeMarkerUtil.getResult("mybatis/Util2.ftl", "t", t);		// 内容 
+			SUtil.outFile(utilPath, utilContent);
+			System.out.println(t.getModelName() + "Util 写入成功：\t\t" + utilPath);
+			
+			// 多打印一行，模块之间有个间隔 
+			System.out.println();	
+		}
+		
+		// FC.java 依赖清单 
+		String FCPath = GenCfgManager.cfg.getServerIoPath() + "FC.java";						// 路径  
+		String FContent = FreeMarkerUtil.getResult("service/FC.ftl", "abc", 123);		// 内容 
+		SUtil.outFile(FCPath, FContent);
+		System.out.println("FC.java 依赖清单写入成功：\t\t" + FCPath);
+		System.out.println("\n");
+	}
+	
 	
 	// 开始生成admin后台管理
 	public static void doOutAdminHtml() {

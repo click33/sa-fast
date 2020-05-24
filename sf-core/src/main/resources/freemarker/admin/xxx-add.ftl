@@ -290,7 +290,7 @@
 							res.data.${c.fieldName} = new Date(res.data.${c.fieldName});		// ${c.columnComment} 日期格式转换 
 						</#if>
 						<#if c.foType == 'img_list'>
-							res.data.${c.fieldName}_arr = res.data.${c.fieldName}.split(',');		// ${c.columnComment} 字符串转数组 
+							res.data.${c.fieldName}_arr = (res.data.${c.fieldName} || '').split(',');		// ${c.columnComment} 字符串转数组 
 						</#if>
 					</#list>
 							this.m = res.data;

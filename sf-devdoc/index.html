@@ -42,13 +42,15 @@
 				<a href="index.html">
 					<div class="logo-box">
 						sa-fast 快速开发 
-						<span style="font-size: 0.7em; font-weight: 400;"> v1.5.0 更新于2020-5-18</span>
+						<span style="font-size: 0.7em; font-weight: 400;"> v1.6.0 更新于2020-5-24</span>
 					</div>
 				</a>
 				<div class="nav-box">
-					<a href="#mao-header" class="mao-href">介绍</a>
+					<!-- <a href="#mao-header" class="mao-href">首页</a> -->
 					<!-- <a href="index.html">优势</a> -->
-					<a href="#mao-doc" class="mao-href">搭建步骤</a>
+					<a href="#mao-header" class="mao-href">首页</a>
+					<a href="#mao-doc" class="mao-href">介绍</a>
+					<a href="./doc/index.html" target="_blank">在线文档</a>
 					<a href="#foot" class="mao-href">关于</a>
 				</div>
 				<!-- <a href="#foot" style="float: right; line-height: 50px; color: #FFF;">QQ群</a> -->
@@ -84,6 +86,7 @@
 			.s-p-y{pointer-events: auto;}
 			/* 按钮 */
 			.ws-btn-box{margin-right: 8px; text-align: center; display: inline-block;}
+			.ws-btn-box a{margin: 0 16px; text-decoration: none;}
 			.ws-btn{font-size: 1.4em; padding: 0.6em 1em; background-color: rgba(0,0,0,0); border: 1px #FFF solid; color: #FFF; cursor: pointer;}
 			.ws-btn{border-radius: 3px; box-shadow: 0 0 10px rgba(200,200,200,0.3); background-color: rgba(0,0,0,0.3);}
 			.ws-btn:hover{color: #FFF; border: 1px #FFF solid; background-color: rgba(0,0,0,0.6);}
@@ -93,7 +96,9 @@
 			<div class="s-poster">
 				<div class="s-poster-content">
 					<div class="s-poster-content-2 s-width" style="text-align: center;">
-						<span class="s-p-y" style="font-size: 36px;">sa-fast 快速开发框架, 内置代码生成器</span>
+						<span class="s-p-y" style="font-size: 38px;">sa-fast 快速开发框架, 内置代码生成器</span>
+						<br><br>
+						<span class="s-p-y" style="font-size: 16px; color: #eee;">只需声明简单的表注释，即可生成完善的增删改查</span>
 						<br><br><br><br>
 						<div>
 							<!-- <div class="ws-btn-box">
@@ -102,8 +107,11 @@
 								</a>
 							</div> -->
 							<div class="ws-btn-box">
-								<a href="#mao-doc" class="mao-href">
-									<button class="ws-btn s-p-y">开始使用 - 文档</button>
+								<a href="https://github.com/click33/sa-fast" target="_blank">
+									<button class="ws-btn s-p-y">GitHub仓库</button>
+								</a>
+								<a href="./doc/index.html" target="_blank">
+									<button class="ws-btn s-p-y">开始 - 在线文档</button>
 								</a>
 							</div>
 						</div>
@@ -129,7 +137,7 @@
 			
 			// 获取md文档  
 			$.ajax({
-				url : 'README.md',
+				url : './doc/README.md',
 				success: function(res) {
 					document.getElementById('md-content').innerHTML = marked(res);	
 				}

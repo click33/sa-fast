@@ -18,15 +18,15 @@ import cn.dev33.satoken.stp.StpUtil;
 @RequestMapping("/${t.mkNameBig}/")
 public class ${t.mkNameBig}Controller {
 
-	/** 底层 Mapper 对象 */
+	/** 底层 Service 对象 */
 	@Autowired
-	${t.mkNameBig}Mapper ${t.varName}Mapper;
+	${t.mkNameBig}Service ${t.varName}Service;
 
 	// 增  
 	@RequestMapping("add")
 	AjaxJson add(${t.modelName} ${t.varNameSimple}){
 		StpUtil.checkPermission("${t.kebabName}");	// 鉴权 
-		int line = ${t.varName}Mapper.add(${t.varNameSimple});
+		int line = ${t.varName}Service.add(${t.varNameSimple});
 		return AjaxJson.getByLine(line);
 	}
 
@@ -34,7 +34,7 @@ public class ${t.mkNameBig}Controller {
 	@RequestMapping("delete")
 	AjaxJson delete(${t.primaryKey.fieldType} ${t.primaryKey.fieldName}){
 		StpUtil.checkPermission("${t.kebabName}");	// 鉴权 
-		int line = ${t.varName}Mapper.delete(${t.primaryKey.fieldName});
+		int line = ${t.varName}Service.delete(${t.primaryKey.fieldName});
 		return AjaxJson.getByLine(line);
 	}
 
@@ -42,7 +42,7 @@ public class ${t.mkNameBig}Controller {
 	@RequestMapping("update")
 	AjaxJson update(${t.modelName} ${t.varNameSimple}){
 		StpUtil.checkPermission("${t.kebabName}");	// 鉴权 
-		int line = ${t.varName}Mapper.update(${t.varNameSimple});
+		int line = ${t.varName}Service.update(${t.varNameSimple});
 		return AjaxJson.getByLine(line);
 	}
 
@@ -50,7 +50,7 @@ public class ${t.mkNameBig}Controller {
 	@RequestMapping("getById")
 	AjaxJson getById(${t.primaryKey.fieldType} ${t.primaryKey.fieldName}){
 		// StpUtil.checkPermission("${t.kebabName}");	// 鉴权 
-		${t.modelName} ${t.varNameSimple} = ${t.varName}Mapper.getById(${t.primaryKey.fieldName});
+		${t.modelName} ${t.varNameSimple} = ${t.varName}Service.getById(${t.primaryKey.fieldName});
 		return AjaxJson.getSuccessData(${t.varNameSimple});
 	}
 
@@ -60,7 +60,7 @@ public class ${t.mkNameBig}Controller {
 		// StpUtil.checkPermission("${t.kebabName}");	// 鉴权 
 		SoMap so = SoMapUtil.getSoMap();	// 获取本次查询参数 
 		so.startPage();	// 开启分页
-		List<${t.modelName}> list = ${t.varName}Mapper.getList(so);	// 查询数据 
+		List<${t.modelName}> list = ${t.varName}Service.getList(so);	// 查询数据 
 		long dataCount = so.endPage();	// 结束分页 
 		return AjaxJson.getPageData(dataCount, list);
 	}

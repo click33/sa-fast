@@ -95,16 +95,18 @@
 					<el-table-column label="${c.columnComment3}">
 						<template slot-scope="s">
 							<img :src="s.row.${c.fieldName}" style="width: 3em; height: 3em; border-radius: 3px; cursor: pointer;" 
-								@click="sa.showImage(s.row.${c.fieldName}, '400px', '400px')" />
+								@click="sa.showImage(s.row.${c.fieldName}, '400px', '400px')" v-if="s.row.${c.fieldName}" />
+							<div v-else>无</div>
 						</template>
 					</el-table-column>
 	<#elseif c.foType == 'img_list'>
 					<el-table-column label="${c.columnComment3}" width="130px">
 						<template slot-scope="s">
-							<div @click="sa.showImageList(s.row.${c.fieldName}.split(','))" style="cursor: pointer;" >
+							<div @click="sa.showImageList(s.row.${c.fieldName}.split(','))" style="cursor: pointer;" v-if="s.row.${c.fieldName}">
 								<img :src="s.row.${c.fieldName}.split(',')[0]" style="width: 3em; height: 3em; border-radius: 3px; cursor: pointer;" />
 								<span style="color: #999; padding-left: 0.5em;">点击预览</span>
 							</div>
+							<div v-else>无</div>
 						</template>
 					</el-table-column>
 	<#elseif c.foType == 'enum'>

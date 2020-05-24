@@ -31,13 +31,13 @@ spring:
         # http路由前缀，用于向前台暴露文件url  
         http_prefix: /upload
         
-# mybatis配置  
-mybatis: 
+# mybatis-plus配置  
+mybatis-plus: 
     configuration: 
         # 控制打印sql 
         log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-        # 开启下划线转驼峰 
-        # map-underscore-to-camel-case: true
+        # 是否开启下划线转驼峰 
+        map-underscore-to-camel-case: false
          
         
         
