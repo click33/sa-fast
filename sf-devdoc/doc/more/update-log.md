@@ -2,6 +2,13 @@
 
 --- 
 
+
+
+### 2020-5-26 @v1.7.0
+- 优化：SoMap.java 新增集合参数获取 
+- 新增：AjaxError.java 更方便的code码定义 
+
+
 ### 2020-5-24 @v1.6.0
 - 新增：service版本 
 - 新增：集成mybatis-plus 

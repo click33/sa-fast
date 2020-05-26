@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pj.project4sf.apilog.SfApilogUtil;
+import com.pj.utils.sg.AjaxError;
 import com.pj.utils.sg.AjaxJson;
 
 import cn.dev33.satoken.exception.NotLoginException;
@@ -31,6 +32,9 @@ public class GlobalException {
 		} else if(e instanceof NotPermissionException) {	// 如果是权限异常
 			NotPermissionException ee = (NotPermissionException) e;
 			aj = AjaxJson.getNotJur("无此权限：" + ee.getCode());
+		} else if(e instanceof AjaxError) {		// 如果是AjaxError，则获取其具体code码 
+			AjaxError ee = (AjaxError) e;
+			aj = AjaxJson.get(ee.getCode(), ee.getMessage());
 		} else {	// 普通异常输出：500 + 异常信息
 			aj = AjaxJson.getError(e.getMessage());
 		}

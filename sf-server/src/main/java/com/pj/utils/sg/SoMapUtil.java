@@ -1,6 +1,8 @@
 package com.pj.utils.sg;
 
-import java.util.Enumeration;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -9,6 +11,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  * SoMap工具类 
+ * <p>最新：2020-5-26 新增集合参数获取 
  * @author kong
  *
  */
@@ -41,12 +44,19 @@ public class SoMapUtil {
 	// 初始化当前request的 SoMap
 	private static void initSoMap(HttpServletRequest request) {
 		SoMap soMap = new SoMap();
-		Enumeration<String> paramNames = request.getParameterNames();// 获得K列表
-		while (paramNames.hasMoreElements()) {
+		Map<String, String[]> parameterMap = request.getParameterMap();	// 获取所有参数 
+		for (String key : parameterMap.keySet()) {
 			try {
-				String key = paramNames.nextElement(); // 获得k
-				String value = request.getParameter(key); // 获得v
-				soMap.put(key, value);
+				String[] values = parameterMap.get(key); // 获得values 
+				if(values.length == 1) {
+					soMap.put(key, values[0]);
+				} else {
+					List<String> list = new ArrayList<String>();
+					for (String v : values) {
+						list.add(v);
+					}
+					soMap.put(key, list);
+				}
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}

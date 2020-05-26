@@ -17,12 +17,7 @@ public class ${t.mkNameBig}Util {
 	static boolean check${t.modelName}(${t.modelName} ${t.varNameSimple}) {
 		
 		<#list t.columnList as c>
-		<#if c.fieldType == "String">
-		AjaxException.getBy(NbUtil.isNull(${t.varNameSimple}.get${c.getset}()), "${c.columnComment}不能为空");	// 验证: ${c.columnComment}
-		</#if>
-		<#if c.fieldType == "long" || c.fieldType == "int">
-		AjaxException.getBy(${t.varNameSimple}.get${c.getset}() == 0, "${c.columnComment}不能为空");	// 验证: ${c.columnComment}
-		</#if>
+		AjaxError.byIsNull(${t.varNameSimple}.get${c.getset}(), "${c.columnComment}不能为空");	// 验证: ${c.columnComment}
 		</#list>
 		
 		// 重重检验，最终合格

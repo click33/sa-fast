@@ -61,5 +61,21 @@ public class SfAccAdminController {
 	}
 	
 	
+	// 测试
+	@RequestMapping("test")
+	AjaxJson test() {
+//		System.err.println("================================");
+//		SoMapUtil.getSoMap().getList("id").add("哈哈哈");
+//		System.err.println(JSON.toJSONString(SoMapUtil.getSoMap()));
+//		int line = 0;
+//		AjaxError.by(line > 0, "新增店铺失败");
+//		AjaxError.byLine(line, "新增店铺失败");
+//		AjaxError.byIsNull("d", "商品id 不能为空");	// 验证: 商品id 
+		return AjaxJson.getSuccess();
+	}
+	
+	
+	
+	
 	
 }

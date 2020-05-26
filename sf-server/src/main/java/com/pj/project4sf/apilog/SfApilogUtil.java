@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pj.project4sf.SF;
 import com.pj.utils.LogUtil;
 import com.pj.utils.sg.AjaxJson;
+import com.pj.utils.sg.SoMapUtil;
 import com.pj.utils.sg.WebNbUtil;
 
 import cn.dev33.satoken.stp.StpUtil;
@@ -42,7 +43,7 @@ public class SfApilogUtil {
     	a.setReq_id(IdUtil.simpleUUID());		// 随机一个请求id
     	a.setReq_ip(WebNbUtil.getIP(request));		// 请求ip 
     	a.setReq_api(request.getRequestURI());;		// 请求接口 
-    	a.setReq_parame(JSON.toJSONString(WebNbUtil.getParamsMap(request)));	// 请求参数 
+    	a.setReq_parame(JSON.toJSONString(SoMapUtil.getSoMap().del("this")));	// 请求参数 
     	a.setReq_token(StpUtil.getTokenValue());			// 请求token 
     	a.setReq_header(JSON.toJSONString(WebNbUtil.getHeaderMap(request)));			// 请求header 
     	a.setReq_type(request.getMethod());			// 请求类型 
