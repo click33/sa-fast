@@ -1,8 +1,10 @@
 package com.pj.utils.sg;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -85,6 +87,29 @@ public class WebNbUtil {
 			}
 		} catch (Exception e1) {
 			e1.printStackTrace();
+		}
+		return map;
+	}
+	
+	/**  将一个request请求所携带的参数封装成map返回 ，带集合的 */
+	public static Map<String, Object>getParamsMap2(HttpServletRequest request){
+		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, String[]> parameterMap = request.getParameterMap();	// 获取所有参数 
+		for (String key : parameterMap.keySet()) {
+			try {
+				String[] values = parameterMap.get(key); // 获得values 
+				if(values.length == 1) {
+					map.put(key, values[0]);
+				} else {
+					List<String> list = new ArrayList<String>();
+					for (String v : values) {
+						list.add(v);
+					}
+					map.put(key, list);
+				}
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
 		}
 		return map;
 	}
