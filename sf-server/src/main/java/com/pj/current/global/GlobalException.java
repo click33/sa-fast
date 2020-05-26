@@ -35,6 +35,8 @@ public class GlobalException {
 		} else if(e instanceof AjaxError) {		// 如果是AjaxError，则获取其具体code码 
 			AjaxError ee = (AjaxError) e;
 			aj = AjaxJson.get(ee.getCode(), ee.getMessage());
+//		} else if(e instanceof SQLException) {		// 如果是SQLException，则只返回sql error 
+//			aj = AjaxJson.getError("sql error");	
 		} else {	// 普通异常输出：500 + 异常信息
 			aj = AjaxJson.getError(e.getMessage());
 		}
