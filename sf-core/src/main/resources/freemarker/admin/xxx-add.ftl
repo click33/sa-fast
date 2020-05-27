@@ -93,7 +93,7 @@
 	<#elseif c.foType == 'enum'>
 						<div class="c-item br">
 							<label class="c-label">${c.columnComment3}：</label>
-							<el-radio-group v-model="m.status" size="mini">
+							<el-radio-group v-model="m.${c.fieldName}" size="mini">
 								<#list c.jvList?keys as jv>
 								<el-radio-button :label="${jv}">${c.jvList[jv]}</el-radio-button>
 								</#list>
