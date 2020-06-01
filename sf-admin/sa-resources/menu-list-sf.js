@@ -24,5 +24,15 @@ window.menuList.unshift(
 			{id: 'admin-add', name: '管理员添加', url: 'sa-html-sf/sf-admin/admin-add.html', info: '添加一个管理员'},
 			{id: 'apilog-list', name: '请求日志监控', url: 'sa-html-sf/sf-apilog/api-log-list.html', info: '记录本系统所有的api请求'},
 		]
-	}
+	},
+	{
+		id: 'sf-cfg', 
+		name: '系统配置', 
+		icon: 'el-icon-setting', 
+		info: '有关系统的一些配置', 
+		childList: [
+			{id: 'sf-cfg-app', name: '系统对公配置', url: 'sa-html-sf/sf-cfg/app-cfg.html'},
+			{id: 'sf-cfg-server', name: '服务器私有配置', url: 'sa-html-sf/sf-cfg/server-cfg.html'},
+		]
+	},
 );

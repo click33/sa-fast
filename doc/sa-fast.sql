@@ -40,6 +40,10 @@ insert into sf_role_permission() values ('1', 'admin-list', now());
 insert into sf_role_permission() values ('1', 'admin-add', now());
 insert into sf_role_permission() values ('1', 'apilog-list', now());
 
+insert into sf_role_permission() values ('1', 'sf-cfg', now());
+insert into sf_role_permission() values ('1', 'sf-cfg-app', now());
+insert into sf_role_permission() values ('1', 'sf-cfg-server', now());
+
 
 -- 系统管理员表 
 drop table if exists sf_admin; 
@@ -63,6 +67,24 @@ CREATE TABLE `sf_admin` (
 
 INSERT INTO `sf_admin`(`id`, `name`, `avatar`, `password`, `pw`, `role_id`, create_time) 
 VALUES (10001, 'sa', '', 'E4EF2A290589A23EFE1565BB698437F5', '123456', 1, now()); 
+
+
+
+-- 配置信息表   
+drop table if exists sf_cfg;
+CREATE TABLE `sf_cfg` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id号',
+  `cfg_name` varchar(50) NOT NULL COMMENT '配置名',
+  `cfg_value` text COMMENT '配置值',
+  `remarks` varchar(255) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE KEY `cfg_name` (`cfg_name`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='配置信息表';
+
+INSERT INTO `sf_cfg`(`id`, `cfg_name`, `cfg_value`, `remarks`) VALUES (1, 'app_cfg', '{}', '应用配置信息，对外公开');
+INSERT INTO `sf_cfg`(`id`, `cfg_name`, `cfg_value`, `remarks`) VALUES (2, 'server_cfg', '{}', '服务器私有配置');
+
+
 
 
 -- 系统api请求记录表 
