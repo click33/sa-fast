@@ -14,14 +14,14 @@ import com.alibaba.fastjson.JSON;
  *
  */
 @Component
-public class SysCfgUtil {
+public class SfCfgUtil {
 
 	
 	// 配置信息
-	private static SysCfgService sysCfgService;
+	private static SfCfgService sysCfgService;
 	@Autowired
-	public void setSysCfgService(SysCfgService sysCfgService) {
-		SysCfgUtil.sysCfgService = sysCfgService;
+	public void setSysCfgService(SfCfgService sysCfgService) {
+		SfCfgUtil.sysCfgService = sysCfgService;
 	}
 	
 	
@@ -46,12 +46,12 @@ public class SysCfgUtil {
 	
 	// 获取server端指定配置信息
 	public static String getServerCfg(String key, String default_value) {
-		return SysCfgUtil.getCfgBy("server_cfg", key, default_value);
+		return SfCfgUtil.getCfgBy("server_cfg", key, default_value);
 	}
 	
 	// 获取App端指定配置信息 
 	public static String getAppCfg(String key, String default_value) {
-		return SysCfgUtil.getCfgBy("app_cfg", key, default_value);
+		return SfCfgUtil.getCfgBy("app_cfg", key, default_value);
 	}
 	
 	
@@ -71,12 +71,12 @@ public class SysCfgUtil {
 
 	// 获取配置信息：系统名称 
 	public static String get_app_name() {
-		return SysCfgUtil.getAppCfg("app_name", "");
+		return SfCfgUtil.getAppCfg("app_name", "");
 	}
 	
 	// 获取配置信息：版本号 
 	public static String get_app_version_no() {
-		return SysCfgUtil.getAppCfg("app_version_no", "");
+		return SfCfgUtil.getAppCfg("app_version_no", "");
 	}
 	
 	
@@ -84,7 +84,7 @@ public class SysCfgUtil {
 	
 	// 新用户，默认头像地址 
 	public static String get_reserve_info() {
-		return SysCfgUtil.getServerCfg("reserve_info", "");
+		return SfCfgUtil.getServerCfg("reserve_info", "");
 	}
 
 	

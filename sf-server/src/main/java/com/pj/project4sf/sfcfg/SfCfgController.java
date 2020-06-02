@@ -14,12 +14,12 @@ import cn.dev33.satoken.stp.StpUtil;
  */
 @RestController
 @RequestMapping("/SfCfg/")
-public class SysCfgController {
+public class SfCfgController {
 
 	
 	// 配置信息
 	@Autowired
-	SysCfgService sysCfgService;
+	SfCfgService sysCfgService;
 		
 	
 	// 返回指定【cfg_name】配置信息 

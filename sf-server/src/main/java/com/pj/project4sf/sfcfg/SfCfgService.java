@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import com.pj.project4sf.SF;
 
 @Service
-public class SysCfgService {
+public class SfCfgService {
 
 	
 	// 获得cfg_value 根据cfg_name
