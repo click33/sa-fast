@@ -84,6 +84,10 @@ public class MybatisMapperDynamicLoader implements InitializingBean, Application
         public void reloadXML() throws Exception {
             SqlSessionFactory factory = context.getBean(SqlSessionFactory.class);
             Configuration configuration = factory.getConfiguration();
+            
+//            org.apache.ibatis.session.Configuration
+//            com.baomidou.mybatisplus.core.MybatisConfiguration
+            
             removeConfig(configuration);
             for (Resource resource : findResource()) {
                 try {
@@ -96,6 +100,12 @@ public class MybatisMapperDynamicLoader implements InitializingBean, Application
         }
         private void removeConfig(Configuration configuration) throws Exception {
             Class<?> classConfig = configuration.getClass();
+            // 如果使用了mybatis-plus，可能会获取不到真正的 Configuration类，需要加上以下代码，才能正确运行   ====== start
+            if(classConfig.equals(org.apache.ibatis.session.Configuration.class) == false) {
+//            	System.err.println("开始 转化");
+            	classConfig = classConfig.getSuperclass();
+            }
+            //  ====== end 
             clearMap(classConfig, configuration, "mappedStatements");
             clearMap(classConfig, configuration, "caches");
             clearMap(classConfig, configuration, "resultMaps");
