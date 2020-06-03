@@ -88,7 +88,7 @@
 						<template slot-scope="s"><span>{{sa.maxLength(sa.text(s.row.${c.fieldName}), 100)}}</span></template>
 					</el-table-column>
 	<#elseif c.isFoType('date', 'date-create', 'date-update')>
-					<el-table-column label="${c.columnComment3}" width="150px">
+					<el-table-column label="${c.columnComment3}" min-width="150px">
 						<template slot-scope="s"><span>{{sa.forDate(s.row.${c.fieldName}, 2)}}</span></template>
 					</el-table-column>
 	<#elseif c.foType == 'img'>
