@@ -22,6 +22,14 @@ public class SystemObject {
 		return SecureUtil.md5(config.getMd5_salt() + user_id + password).toUpperCase();
 	}
 	
+
+	/** 返回md5加密后的密码，根据当前配置的salt
+	 *   格式为： md5(salt + 0 + password) 
+	 */ 
+	public static String getPasswordMD5(String password) {
+		return getPasswordMD5(0, password);
+	}
+	
 	
 	// ===================================== yml自定义配置信息 ===================================================
 	
