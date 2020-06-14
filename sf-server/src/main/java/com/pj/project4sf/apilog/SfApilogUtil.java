@@ -4,12 +4,13 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pj.project4sf.SF;
 import com.pj.utils.LogUtil;
 import com.pj.utils.sg.AjaxJson;
 import com.pj.utils.sg.WebNbUtil;
@@ -23,10 +24,20 @@ import cn.hutool.core.util.IdUtil;
  * @author kong 
  *
  */
+@Component
 public class SfApilogUtil {
 
 //	req_id, req_ip, req_api, req_parame, req_token, user_id, admin_id, start_time,
 //	res_code, res_msg, res_string, end_time, cost_time)
+	
+	/** 底层 Mapper 对象 */
+	static SfApilogMapper sfApilogMapper;
+	@Autowired
+	public void setSfApilogMapper(SfApilogMapper sfApilogMapper) {
+		SfApilogUtil.sfApilogMapper = sfApilogMapper;
+	}
+	
+	
 	
 	static final String apilog_obj_save_key = "apilog_obj_save_key";
 	
@@ -83,7 +94,7 @@ public class SfApilogUtil {
 			a.setCost_time((int)(a.getEnd_time().getTime() - a.getStart_time().getTime()));	// 请求消耗时长，单位ms 
 		
         	LogUtil.info("本次请求耗时：" + ((a.getCost_time() + 0.0) / 1000) + "s, 返回：" + a.getRes_string());
-        	SF.sfApilogMapper.saveObj(a);
+        	sfApilogMapper.saveObj(a);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -103,5 +114,9 @@ public class SfApilogUtil {
 		}
 		return false;
 	}
+
+
+
+
 	
 }

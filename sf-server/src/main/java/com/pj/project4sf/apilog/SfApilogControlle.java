@@ -2,14 +2,13 @@ package com.pj.project4sf.apilog;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pj.current.satoken.AuthConst;
-import com.pj.project4sf.SF;
 import com.pj.utils.sg.AjaxJson;
 import com.pj.utils.sg.SoMap;
-import com.pj.utils.sg.SoMapUtil;
 
 import cn.dev33.satoken.stp.StpUtil;
 
@@ -21,12 +20,18 @@ import cn.dev33.satoken.stp.StpUtil;
 @RequestMapping("/SgApilog/")
 public class SfApilogControlle {
 
+	
+	/** 底层 Mapper 对象 */
+	@Autowired
+	SfApilogMapper sfApilogMapper;
+	
+	
 
 	// 删  
 	@RequestMapping("delete")
 	AjaxJson delete(String id){
 		StpUtil.checkPermission(AuthConst.p_apilog_list);	// 鉴权 
-		int line = SF.sfApilogMapper.delete(id);
+		int line = sfApilogMapper.delete(id);
 		return AjaxJson.getByLine(line);
 	}
 
@@ -34,9 +39,9 @@ public class SfApilogControlle {
 	@RequestMapping("getList")
 	AjaxJson getList() { 
 		StpUtil.checkPermission(AuthConst.p_apilog_list);	// 鉴权 
-		SoMap so = SoMapUtil.getSoMap();
-		List<SfApilog> list = SF.sfApilogMapper.getList(so.startPage());
-		return AjaxJson.getPageData(so.endPage(), list);
+		SoMap so = SoMap.getRequestSoMap();
+		List<SfApilog> list = sfApilogMapper.getList(so.startPage());
+		return AjaxJson.getPageData(so.getDataCount(), list);
 	}
 	
 	// 测试  

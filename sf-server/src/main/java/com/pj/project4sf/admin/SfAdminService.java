@@ -1,10 +1,12 @@
 package com.pj.project4sf.admin;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pj.project4sf.SF;
+import com.pj.project4sf.admin4password.SfAdminPasswordService;
 
 import cn.dev33.satoken.stp.StpUtil;
 
@@ -17,6 +19,13 @@ import cn.dev33.satoken.stp.StpUtil;
 public class SfAdminService {
 
 	
+	@Autowired
+	SfAdminMapper sfAdminMapper;
+	
+	@Autowired
+	SfAdminPasswordService sfAdminPasswordService;
+	
+	
 	// 管理员添加一个管理员
 	@Transactional(rollbackFor = Exception.class, propagation=Propagation.REQUIRED)	// REQUIRED=如果调用方有事务  就继续使用调用方的事务 
 	public long add(SfAdmin admin) {
@@ -25,14 +34,16 @@ public class SfAdminService {
 		
 		// 开始添加
 		admin.setCreate_by_aid(StpUtil.getLoginId_asLong());	// 创建人，为当前账号  
-		SF.sfAdminMapper.add(admin);	// 添加
+		sfAdminMapper.add(admin);	// 添加
 		long id = SF.publicMapper.getPrimarykey();	// 获取主键
-		SF.sfAdminPasswordService.updatePassword(id, admin.getPassword2());	// 更改密码（md5与明文）
+		sfAdminPasswordService.updatePassword(id, admin.getPassword2());	// 更改密码（md5与明文）
 		
 		// 返回主键 
 		return id;
 		// return AjaxJson.getSuccessData(id);
 	}
+	
+	
 	
 	
 }

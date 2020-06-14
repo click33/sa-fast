@@ -1,8 +1,10 @@
 package com.pj.project4sf.role;
 
-import com.pj.project4sf.SF;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.pj.project4sf.admin.SfAdminUtil;
-import com.pj.utils.sg.AjaxException;
+import com.pj.utils.sg.AjaxError;
 import com.pj.utils.sg.AjaxJson;
 import com.pj.utils.sg.NbUtil;
 
@@ -11,8 +13,16 @@ import com.pj.utils.sg.NbUtil;
  * @author kong
  *
  */
+@Component
 public class SfRoleUtil {
+	
 
+	/** 底层Mapper依赖 */
+	static SfRoleMapper sfRoleMapper;
+	@Autowired
+	public void setSfRoleMapper(SfRoleMapper sfRoleMapper) {
+		SfRoleUtil.sfRoleMapper = sfRoleMapper;
+	}
 	
 	// 获取当前会话的role_id
 	public static long getCurrRoleId() {
@@ -28,7 +38,7 @@ public class SfRoleUtil {
 		if(NbUtil.isNull(s.getRole_name())) {
 			return AjaxJson.getError("昵称不能为空");
 		}
-		SfRole s2 = SF.sfRoleMapper.getByRoleName(s.getRole_name());
+		SfRole s2 = sfRoleMapper.getByRoleName(s.getRole_name());
 		if(s2 != null && s2.getId() != s.getId()) {	// 如果该名称已存在，并且不是当前角色 
 			return AjaxJson.getError("昵称与已有角色重复，请更换");
 		}
@@ -40,9 +50,14 @@ public class SfRoleUtil {
 	static void checkRoleThrow(SfRole s) {
 		AjaxJson aj = checkRole(s);
 		if(aj.getCode() != AjaxJson.CODE_SUCCESS){
-			throw AjaxException.get(aj.getMsg());
+			throw AjaxError.get(aj.getMsg());
 		}
 	}
+
+
+
+
+
 	
 	
 }

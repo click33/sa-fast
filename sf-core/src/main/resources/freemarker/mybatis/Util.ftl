@@ -7,10 +7,10 @@ import ${cfg.package_utils};
  * @author ${cfg.author} 
  *
  */
+// @Component
 public class ${t.mkNameBig}Util {
 
-	
-	
+
 	
 
 	// 验证一个${t.modelName} 是否符合标准 【G】

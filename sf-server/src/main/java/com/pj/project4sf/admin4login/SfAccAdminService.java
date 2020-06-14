@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.pj.current.config.SystemObject;
 import com.pj.project4sf.SF;
 import com.pj.project4sf.admin.SfAdmin;
+import com.pj.project4sf.admin.SfAdminMapper;
+import com.pj.project4sf.role4permission.SfRolePermissionService;
 import com.pj.utils.sg.AjaxJson;
 import com.pj.utils.sg.NbUtil;
 import com.pj.utils.sg.WebNbUtil;
@@ -27,6 +30,17 @@ import cn.dev33.satoken.util.SpringMVCUtil;
 @Service
 public class SfAccAdminService {
 
+	
+
+	@Autowired
+	SfAccAdminMapper sfAccAdminMapper;
+
+	@Autowired
+	SfAdminMapper sfAdminMapper;
+	
+	@Autowired
+	SfRolePermissionService sfRolePermissionService;
+	
 	
 	/**
 	  * 登录 
@@ -48,13 +62,13 @@ public class SfAccAdminService {
 		// 2、获取admin
         SfAdmin admin = null;	
         if(way == 1) {
-        	admin = SF.sfAdminMapper.getById(Long.parseLong(key)); 
+        	admin = sfAdminMapper.getById(Long.parseLong(key)); 
         }
         if(way == 2) {
-        	admin = SF.sfAdminMapper.getByName(key); 
+        	admin = sfAdminMapper.getByName(key); 
         }
         if(way == 3) {
-        	admin = SF.sfAdminMapper.getByPhone(key); 
+        	admin = sfAdminMapper.getByPhone(key); 
         }
         
 
@@ -82,7 +96,7 @@ public class SfAccAdminService {
         // 组织返回参数  
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("admin", admin);
-		map.put("per_list", SF.sfRolePermissionService.getPcodeByRid(admin.getRole_id()));	// 当前拥有的权限集合 
+		map.put("per_list", sfRolePermissionService.getPcodeByRid(admin.getRole_id()));	// 当前拥有的权限集合 
 		map.put("tokenInfo", StpUtil.getTokenInfo());
 		return AjaxJson.getSuccessData(map);	// 将信息返回到前台    
 	}
@@ -91,7 +105,7 @@ public class SfAccAdminService {
 	// 指定id的账号成功登录一次 （修改最后登录时间等数据 ）
 	public int successLogin(SfAdmin s){
 		String login_ip = WebNbUtil.getIP(SpringMVCUtil.getRequest());
-		int line = SF.sfAccAdminMapper.successLogin(s.getId(), login_ip);
+		int line = sfAccAdminMapper.successLogin(s.getId(), login_ip);
 		if(line > 0) {
 	        s.setLogin_ip(login_ip);
 	        s.setLogin_time(new Date());

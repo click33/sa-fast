@@ -5,11 +5,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  * Map< String, Object> 是最常用的一种Map类型，但是它写着麻烦 
  * <p>所以特封装此类，继承Map，进行一些扩展，可以让Map更灵活使用 
- * <p>最新：2020-5-26 新增集合参数获取 
+ * <p>最新：2020-6-14 移除SoMapUtil
  * @author kong
  */
 public class SoMap extends LinkedHashMap<String, Object> {
@@ -18,6 +24,10 @@ public class SoMap extends LinkedHashMap<String, Object> {
 	
 	public SoMap() {
 		put("this", this);	// 自己put自己：方便mybatis的操作 
+	}
+	public SoMap(Map<String, ?> map) {
+		this();	// 自己put自己：方便mybatis的操作 
+		this.setMap(map);
 	}
 
 	
@@ -199,6 +209,23 @@ public class SoMap extends LinkedHashMap<String, Object> {
 		return this;
 	}
 	
+	/** 将一个Map塞进SoMap */
+	public SoMap setMap(Map<String, ?> map) {
+		if(map != null) {
+			for (String key : map.keySet()) {
+				this.set(key, map.get(key));
+			}
+		}
+		return this;
+	}
+
+	/** 删除自身的引用 */
+	public SoMap deleteThis() {
+		this.del("this");
+		return this;
+	}
+	
+
 	/** 构建一个SoMap并返回 */
 	public static SoMap getSoMap() {
 		return new SoMap();
@@ -207,7 +234,55 @@ public class SoMap extends LinkedHashMap<String, Object> {
 	public static SoMap getSoMap(String key, Object value) {
 		return new SoMap().set(key, value);
 	}
+	/** 构建一个SoMap并返回 */
+	public static SoMap getSoMap(Map<String, ?> map) {
+		return new SoMap(map);
+	}
 	
+	
+
+	// ============================= web辅助 =============================
+	
+
+	/**
+	 * 返回当前request请求的的所有参数 
+	 * @return
+	 */
+	public static SoMap getRequestSoMap() {
+		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();// 大善人SpringMVC提供的封装 
+		if(servletRequestAttributes == null) {
+			throw new RuntimeException("当前环境非JavaWeb");
+		}
+		HttpServletRequest request = servletRequestAttributes.getRequest(); // 当前request
+		if (request.getAttribute("currentSoMap") == null || request.getAttribute("currentSoMap") instanceof SoMap == false ) {
+			initRequestSoMap(request);
+		}
+		return (SoMap)request.getAttribute("currentSoMap");
+	}
+
+	// 初始化当前request的 SoMap
+	private static void initRequestSoMap(HttpServletRequest request) {
+		SoMap soMap = new SoMap();
+		Map<String, String[]> parameterMap = request.getParameterMap();	// 获取所有参数 
+		for (String key : parameterMap.keySet()) {
+			try {
+				String[] values = parameterMap.get(key); // 获得values 
+				if(values.length == 1) {
+					soMap.put(key, values[0]);
+				} else {
+					List<String> list = new ArrayList<String>();
+					for (String v : values) {
+						list.add(v);
+					}
+					soMap.put(key, list);
+				}
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		}
+		request.setAttribute("currentSoMap", soMap);
+	}
+
 	
 	
 	// ============================= 常见key （以下key经常用，所以封装以下，方便写代码） =============================
@@ -236,7 +311,7 @@ public class SoMap extends LinkedHashMap<String, Object> {
 	
 	
 	
-	
+
 	
 	// ============================= 分页相关(封装mybatis的page-help插件 ) =============================
 	
@@ -247,9 +322,17 @@ public class SoMap extends LinkedHashMap<String, Object> {
 		this.pagePlug= com.github.pagehelper.PageHelper.startPage(get_pageNo(), get_pageSize());
 		return this;
 	}
-	/** 分页插件 - 结束分页, 返回总条数 */
-	public long endPage() {
+	/** 获取上次分页的记录总数 */
+	public long getDataCount() {
+		if(pagePlug == null) {
+			return -1;
+		}
 		return pagePlug.getTotal();
+	}
+	/** 分页插件 - 结束分页, 返回总条数 （该方法已过时，请调用更加符合语义化的getDataCount() ） */
+	@Deprecated
+	public long endPage() {
+		return getDataCount();
 	}
 	
 	

@@ -2,14 +2,15 @@ package com.pj.project4sf.admin;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pj.current.satoken.AuthConst;
 import com.pj.project4sf.SF;
+import com.pj.project4sf.admin4password.SfAdminPasswordService;
 import com.pj.utils.sg.AjaxJson;
 import com.pj.utils.sg.SoMap;
-import com.pj.utils.sg.SoMapUtil;
 
 import cn.dev33.satoken.stp.StpUtil;
 
@@ -21,12 +22,20 @@ import cn.dev33.satoken.stp.StpUtil;
 @RequestMapping("/admin/")
 public class SfAdminController {
 
+	@Autowired
+	SfAdminMapper sfAdminMapper;
+	
+	@Autowired
+	SfAdminService sfAdminService;
+	
+	@Autowired
+	SfAdminPasswordService sfAdminPasswordService;
 
 	// 增  
 	@RequestMapping("add")
 	AjaxJson add(SfAdmin admin){
 		StpUtil.checkPermission(AuthConst.p_admin_list);	// 鉴权
-		long id = SF.sfAdminService.add(admin);
+		long id = sfAdminService.add(admin);
 		return AjaxJson.getSuccessData(id);
 	}
 
@@ -38,7 +47,7 @@ public class SfAdminController {
 		if(StpUtil.getLoginId_asLong() == id) {
 			return AjaxJson.getError("不能自己删除自己");
 		}
-		int line = SF.sfAdminMapper.delete(id);
+		int line = sfAdminMapper.delete(id);
 		return AjaxJson.getByLine(line);
 	}
 
@@ -47,7 +56,7 @@ public class SfAdminController {
 	AjaxJson update(SfAdmin obj){
 		StpUtil.checkPermission(AuthConst.p_admin_list);	// 鉴权
 		SfAdminUtil.checkName(obj.getId(), obj.getName());
-		int line = SF.sfAdminMapper.update(obj);
+		int line = sfAdminMapper.update(obj);
 		return AjaxJson.getByLine(line);
 	}
 
@@ -55,7 +64,7 @@ public class SfAdminController {
 	@RequestMapping("getById")
 	AjaxJson getById(long id){
 		StpUtil.checkPermission(AuthConst.p_admin_list);	// 鉴权
-		Object data = SF.sfAdminMapper.getById(id);
+		Object data = sfAdminMapper.getById(id);
 		return AjaxJson.getSuccessData(data);
 	}
 
@@ -63,16 +72,16 @@ public class SfAdminController {
 	@RequestMapping("getList")
 	AjaxJson getList(){
 		StpUtil.checkPermission(AuthConst.p_admin_list);	// 鉴权
-		SoMap so = SoMapUtil.getSoMap();
-		List<SfAdmin> list = SF.sfAdminMapper.getList(so.startPage());
-		return AjaxJson.getPageData(so.endPage(), list);
+		SoMap so = SoMap.getRequestSoMap();
+		List<SfAdmin> list = sfAdminMapper.getList(so.startPage());
+		return AjaxJson.getPageData(so.getDataCount(), list);
 	}
 
 	// 改密码
 	@RequestMapping("updatePassword")
 	AjaxJson updatePassword(long id, String password){
 		StpUtil.checkPermission(AuthConst.p_admin_list);	// 鉴权
-		int line = SF.sfAdminPasswordService.updatePassword(id, password);
+		int line = sfAdminPasswordService.updatePassword(id, password);
 		return AjaxJson.getByLine(line);
 	}
 	
@@ -128,7 +137,7 @@ public class SfAdminController {
 	AjaxJson updateInfo(SfAdmin obj){
 		obj.setId(StpUtil.getLoginId_asLong());
 		SfAdminUtil.checkName(obj.getId(), obj.getName());
-		int line = SF.sfAdminMapper.update(obj);
+		int line = sfAdminMapper.update(obj);
 		return AjaxJson.getByLine(line);
 	}
 	

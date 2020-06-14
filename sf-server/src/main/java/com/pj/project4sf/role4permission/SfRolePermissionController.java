@@ -2,12 +2,12 @@ package com.pj.project4sf.role4permission;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pj.current.satoken.AuthConst;
-import com.pj.project4sf.SF;
 import com.pj.project4sf.role.SfRoleUtil;
 import com.pj.utils.sg.AjaxJson;
 
@@ -21,6 +21,10 @@ import cn.dev33.satoken.stp.StpUtil;
 public class SfRolePermissionController {
 
 	
+	/** 底层Service */
+	@Autowired
+	SfRolePermissionService sfRolePermissionService;
+	
 	
 	
 	// 拉取权限id列表  根据指定role_id 
@@ -31,7 +35,7 @@ public class SfRolePermissionController {
 		if(role_id == 0){
 			return AjaxJson.getError("role_id不能为null或0");		// 防止拉出全部 	
 		}
-		return AjaxJson.getSuccessData(SF.sfRolePermissionService.getPcodeByRid(role_id));
+		return AjaxJson.getSuccessData(sfRolePermissionService.getPcodeByRid(role_id));
 	}
 	
 	
@@ -39,7 +43,7 @@ public class SfRolePermissionController {
 	@RequestMapping("getPcodeByCurrRid")
 	public AjaxJson getPcodeByCurrRid(){
 		long role_id = SfRoleUtil.getCurrRoleId();
-		List<String> list = SF.sfRolePermissionService.getPcodeByRid(role_id);
+		List<String> list = sfRolePermissionService.getPcodeByRid(role_id);
 		return AjaxJson.getSuccessData(list);
 	}
 	
@@ -50,7 +54,7 @@ public class SfRolePermissionController {
 	public AjaxJson updatePcodeByRid(long role_id, String[] code){
 		StpUtil.checkPermission(AuthConst.r1);	// 鉴权
 		StpUtil.checkPermission(AuthConst.p_role_list);	// 鉴权 
-		return AjaxJson.getSuccess("ok", SF.sfRolePermissionService.updateRoleMenu(role_id, code));
+		return AjaxJson.getSuccessData(sfRolePermissionService.updateRoleMenu(role_id, code));
 	}
 	
 

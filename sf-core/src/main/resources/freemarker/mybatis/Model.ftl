@@ -19,14 +19,18 @@ public class ${t.modelName} implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 <#list t.columnList as c>
-	private ${c.fieldType} ${c.fieldName};		// ${c.columnComment} 
+<#if  cfg.modelDocWay == 2 >	/** ${c.columnComment} */
+</#if>
+	${cfg.modelVisitWayString} ${c.fieldType} ${c.fieldName};	<#if cfg.modelDocWay == 1>	// ${c.columnComment} </#if>
 </#list>
 
 
 <#if t.getColumnListBy('fk-1', 'fk-2')?size != 0>
 	// 额外字段 
 <#list t.getColumnListBy('fk-1', 'fk-2') as c>
-	private String ${c.fkPkTableName}_${c.fkPkConcatName};		// 外键: ${c.fkPkConcatComment} 
+<#if  cfg.modelDocWay == 2 >	/** ${c.fkPkConcatComment}  */
+</#if>
+	${cfg.modelVisitWayString} String ${c.fkPkTableName}_${c.fkPkConcatName};	<#if cfg.modelDocWay == 1>	// 外键: ${c.fkPkConcatComment}  </#if>
 </#list>
 </#if>
 

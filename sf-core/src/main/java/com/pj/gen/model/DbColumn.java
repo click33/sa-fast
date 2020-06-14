@@ -139,8 +139,20 @@ public class DbColumn {
 			else if(foType.equals("img")) {	// 单图片
 				this.foType = "img";
 			}
+			else if(foType.equals("audio")) {	// 单音频
+				this.foType = "audio";
+			}
+			else if(foType.equals("video")) {	// 单视频
+				this.foType = "video";
+			}
 			else if(foType.equals("img_list") || foType.equals("imgList")) {	// 多图片 
 				this.foType = "img_list";
+			}
+			else if(foType.equals("audio_list") || foType.equals("audioList")) {	// 多音频 暂不支持
+				this.foType = "audio_list";
+			}
+			else if(foType.equals("video_list") || foType.equals("videoList")) {	// 多视频 暂不支持
+				this.foType = "video_list";
 			}
 			else if(foType.equals("date") || foType.equals("datetime")) {	// 日期 
 				this.foType = "date";

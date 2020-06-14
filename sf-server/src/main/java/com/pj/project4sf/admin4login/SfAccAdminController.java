@@ -5,12 +5,13 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pj.project4sf.SF;
 import com.pj.project4sf.admin.SfAdmin;
 import com.pj.project4sf.admin.SfAdminUtil;
+import com.pj.project4sf.role4permission.SfRolePermissionService;
 import com.pj.utils.sg.AjaxJson;
 import com.pj.utils.sg.NbUtil;
 
@@ -26,6 +27,13 @@ import cn.dev33.satoken.stp.StpUtil;
 public class SfAccAdminController {
 
 	
+	@Autowired
+	SfAccAdminService sfAccAdminService;
+	
+	@Autowired
+	SfRolePermissionService sfRolePermissionService;
+	
+	
 	// 账号、密码登录 
 	@RequestMapping("doLogin")
 	AjaxJson doLogin(String key, String password) {
@@ -33,7 +41,7 @@ public class SfAccAdminController {
 		if(NbUtil.isOneNull(key, password)) {
 			return AjaxJson.getError("请提供key与password参数");
 		}
-		return SF.sfAccAdminService.doLogin(key, password);
+		return sfAccAdminService.doLogin(key, password);
 	}
 	
 	
@@ -55,7 +63,7 @@ public class SfAccAdminController {
 		// 组织参数 
 		Map<String, Object> map = new HashMap<>();
 		map.put("admin", SfAdminUtil.getCurrAdmin());	// 当前登录admin
-		map.put("per_list", SF.sfRolePermissionService.getPcodeByRid(admin.getRole_id()));								// 当前拥有的权限集合 
+		map.put("per_list", sfRolePermissionService.getPcodeByRid(admin.getRole_id()));								// 当前拥有的权限集合 
 //		map.put("app_cfg", SysCfgUtil.getAppCfg());								// 当前系统的配置  
 		return AjaxJson.getSuccessData(map); 
 	}

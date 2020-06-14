@@ -1,7 +1,9 @@
 package com.pj.project4sf.admin;
 
-import com.pj.project4sf.SF;
-import com.pj.utils.sg.AjaxException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.pj.utils.sg.AjaxError;
 import com.pj.utils.sg.NbUtil;
 
 import cn.dev33.satoken.SaTokenManager;
@@ -13,31 +15,38 @@ import cn.dev33.satoken.stp.StpUtil;
  * @author kong
  *
  */
+@Component
 public class SfAdminUtil {
 
+	
+	static SfAdminMapper sfAdminMapper;
+	@Autowired
+	public void setSfAdminMapper(SfAdminMapper sfAdminMapper) {
+		SfAdminUtil.sfAdminMapper = sfAdminMapper;
+	}
 	
 	
 	// 当前admin
 	public static SfAdmin getCurrAdmin() {
 		long admin_id = StpUtil.getLoginId_asLong();
-		return SF.sfAdminMapper.getById(admin_id);
+		return sfAdminMapper.getById(admin_id);
 	}
 	
 	
 	// 检查指定姓名是否合法 ,如果不合法，则抛出异常 
 	public static boolean checkName(long admin_id, String name) {
 		if(NbUtil.isNull(name)) {
-			throw AjaxException.get("账号名称不能为空");
+			throw AjaxError.get("账号名称不能为空");
 		}
 		if(NbUtil.isNumber(name)) {
-			throw AjaxException.get("账号名称不能为纯数字");
+			throw AjaxError.get("账号名称不能为纯数字");
 		}
 //		if(name.startsWith("a")) {
 //			throw AjaxException.get("账号名称不能以字母a开头");
 //		}
-		SfAdmin a2 = SF.sfAdminMapper.getByName(name);
+		SfAdmin a2 = sfAdminMapper.getByName(name);
 		if(a2 != null && a2.getId() != admin_id) {	// 能查出来数据，而且不是本人，则代表与已有数据重复
-			throw AjaxException.get("账号名称已有账号使用，请更换");
+			throw AjaxError.get("账号名称已有账号使用，请更换");
 		} 
 		return true;
 	}
@@ -48,7 +57,7 @@ public class SfAdminUtil {
 		checkName(a.getId(), a.getName());
 		// 检查密码 
 		if(a.getPassword2().length() < 4) {
-			throw new AjaxException("密码不得低于4位");
+			throw new AjaxError("密码不得低于4位");
 		}
 		return true;
 	}
@@ -57,7 +66,7 @@ public class SfAdminUtil {
 	
 	// 指定的name是否可用 
 	public static boolean nameIsOk(String name) {
-		SfAdmin a2 = SF.sfAdminMapper.getByName(name);
+		SfAdmin a2 = sfAdminMapper.getByName(name);
 		if(a2 == null) {
 			return true;
 		}
@@ -73,6 +82,10 @@ public class SfAdminUtil {
 		}
 		return Long.parseLong(login_id.toString());
 	}
+
+
+
+
 
 
 	

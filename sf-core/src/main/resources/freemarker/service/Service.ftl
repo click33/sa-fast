@@ -24,7 +24,7 @@ public class ${t.mkNameBig}Service {
 	}
 
 	/** 删 */
-	int delete(long id){
+	int delete(${t.primaryKey.fieldType} ${t.primaryKey.fieldName}){
 		return ${t.varName}Mapper.delete(${t.primaryKey.fieldName});
 	}
 
@@ -34,7 +34,7 @@ public class ${t.mkNameBig}Service {
 	}
 
 	/** 查 */
-	${t.modelName} getById(long id){
+	${t.modelName} getById(${t.primaryKey.fieldType} ${t.primaryKey.fieldName}){
 		return ${t.varName}Mapper.getById(${t.primaryKey.fieldName});
 	}
 

@@ -1,10 +1,10 @@
 package com.pj.project4sf.admin4password;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pj.current.config.SystemObject;
-import com.pj.project4sf.SF;
 import com.pj.project4sf.admin.SfAdmin;
 import com.pj.project4sf.admin.SfAdminUtil;
 import com.pj.utils.sg.AjaxJson;
@@ -19,6 +19,9 @@ import com.pj.utils.sg.NbUtil;
 @RequestMapping("/AdminPassword/")
 public class SfAdminPasswordController {
 
+	
+	@Autowired
+	SfAdminPasswordService sfAdminPasswordService;
 
 	// 指定用户修改自己密码
 	@RequestMapping("update")
@@ -37,7 +40,7 @@ public class SfAdminPasswordController {
 		}
 		
 		// 3、开始改 
-		int line = SF.sfAdminPasswordService.updatePassword(a.getId(), new_pwd);
+		int line = sfAdminPasswordService.updatePassword(a.getId(), new_pwd);
 		return AjaxJson.getByLine(line);
 	}
 	

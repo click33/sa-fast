@@ -2,12 +2,11 @@ package com.pj.project4sf.role4permission;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.pj.project4sf.SF;
 
 /**
  * 角色权限中间表 
@@ -18,12 +17,16 @@ import com.pj.project4sf.SF;
 public class SfRolePermissionService {
 
 	
+	@Autowired
+	SfRolePermissionMapper sfRolePermissionMapper;
+	
+	
 	/**
 	 * 获取指定角色的所有权限码 
 	 */
     @Cacheable(value="api_pcode_list", key="#role_id")	// @增加缓存
     public List<String> getPcodeByRid(long role_id){
-    	return SF.sfRolePermissionMapper.getPcodeByRoleId(role_id);
+    	return sfRolePermissionMapper.getPcodeByRoleId(role_id);
     }
 	
 
@@ -40,11 +43,11 @@ public class SfRolePermissionService {
     	}
     	
     	// 先删
-    	SF.sfRolePermissionMapper.deleteByRoleId(role_id);
+    	sfRolePermissionMapper.deleteByRoleId(role_id);
     	
     	// 再添加
     	for(String pcode : pcodeArray){
-    		SF.sfRolePermissionMapper.add(role_id, pcode);
+    		sfRolePermissionMapper.add(role_id, pcode);
         }
     	
     	// 返回

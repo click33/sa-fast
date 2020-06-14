@@ -12,9 +12,14 @@
 		<script src="https://unpkg.com/jquery@3.4.1/dist/jquery.js"></script>
 		<script src="https://www.layuicdn.com/layer-v3.1.1/layer.js"></script>
 		<script src="../../static/sa.js"></script>
-	<#if t.hasFo('img') || t.hasFo('img_list') || t.hasFo('richtext') >
+<#if t.hasFo('img', 'img_list', 'video', 'video_list', 'audio', 'audio_list','richtext') >
+	<#if cfg.fileUploadWay == 1 >
 		<script src="../../static/kj/upload-util.js"></script>
 	</#if>
+	<#if cfg.fileUploadWay == 2 >
+		<script src="../../static/kj/oss-util.js"></script>
+	</#if>
+</#if>
 	<#if t.hasFo('richtext') >
 		<script src="../../static/kj/wangEditor.up.js"></script>
 	</#if>
@@ -49,7 +54,7 @@
 			.editor-item .w-e-toolbar{width: 400px; flex-wrap: wrap; } */
 			.fold{height: 100px !important; overflow: hidden;}
 			.el-select-dropdown{z-index: 9999999 !important;}
-			/*  一起变长  */
+			/*  普通文本和富文本一起变长  */
 			.c-panel .el-form .el-input,
 			.c-panel .el-form .el-textarea__inner{width: 700px;}
 		</#if>
@@ -103,8 +108,20 @@
 						<div class="c-item br">
 							<label class="c-label" style="vertical-align: top;">${c.columnComment3}：</label>
 							<img :src="m.${c.fieldName}" style="width: 3em; height: 3em; cursor: pointer;" 
-								@click="sa.showImage(m.${c.fieldName}, '400px', '400px')" v-if="m.${c.fieldName} != '' ">
-							<a href="javascript:;" @click="sa.uploadImage(src => {m.${c.fieldName} = src; sa.ok2('上传成功');})" > 选择</a>
+								@click="sa.showImage(m.${c.fieldName}, '400px', '400px')" v-if="!sa.isNull(m.${c.fieldName})">
+							<el-link type="primary" @click="sa.uploadImage(src => {m.${c.fieldName} = src; sa.ok2('上传成功');})">上传</el-link>
+						</div>
+	<#elseif c.foType == 'audio'>
+						<div class="c-item br">
+							<label class="c-label" style="vertical-align: top;">${c.columnComment3}：</label>
+							<el-link type="info" :href="m.${c.fieldName}" target="_blank" v-if="!sa.isNull(m.${c.fieldName})">{{m.${c.fieldName}}}</el-link>
+							<el-link type="primary" @click="sa.uploadAudio(src => {m.${c.fieldName} = src; sa.ok2('上传成功');})">上传</el-link>
+						</div>
+	<#elseif c.foType == 'video'>
+						<div class="c-item br">
+							<label class="c-label" style="vertical-align: top;">${c.columnComment3}：</label>
+							<el-link type="info" :href="m.${c.fieldName}" target="_blank" v-if="!sa.isNull(m.${c.fieldName})">{{m.${c.fieldName}}}</el-link>
+							<el-link type="primary" @click="sa.uploadVideo(src => {m.${c.fieldName} = src; sa.ok2('上传成功');})">上传</el-link>
 						</div>
 	<#elseif c.foType == 'img_list'>
 						<div class="c-item br">

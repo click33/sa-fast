@@ -32,9 +32,9 @@ public class ${t.mkNameBig}Controller {
 
 	// 删  
 	@RequestMapping("delete")
-	AjaxJson delete(${t.primaryKey.fieldType} ${t.primaryKey.fieldName}){
+	AjaxJson delete(${t.primaryKey.fieldType} id){
 		StpUtil.checkPermission("${t.kebabName}");	// 鉴权 
-		int line = ${t.varName}Mapper.delete(${t.primaryKey.fieldName});
+		int line = ${t.varName}Mapper.delete(id);
 		return AjaxJson.getByLine(line);
 	}
 
@@ -48,9 +48,9 @@ public class ${t.mkNameBig}Controller {
 
 	// 查  
 	@RequestMapping("getById")
-	AjaxJson getById(${t.primaryKey.fieldType} ${t.primaryKey.fieldName}){
+	AjaxJson getById(${t.primaryKey.fieldType} id){
 		// StpUtil.checkPermission("${t.kebabName}");	// 鉴权 
-		${t.modelName} ${t.varNameSimple} = ${t.varName}Mapper.getById(${t.primaryKey.fieldName});
+		${t.modelName} ${t.varNameSimple} = ${t.varName}Mapper.getById(id);
 		return AjaxJson.getSuccessData(${t.varNameSimple});
 	}
 
@@ -58,11 +58,10 @@ public class ${t.mkNameBig}Controller {
 	@RequestMapping("getList")
 	AjaxJson getList() { 
 		// StpUtil.checkPermission("${t.kebabName}");	// 鉴权 
-		SoMap so = SoMapUtil.getSoMap();	// 获取本次查询参数 
+		SoMap so = SoMap.getRequestSoMap();	// 获取本次请求参数 
 		so.startPage();	// 开启分页
 		List<${t.modelName}> list = ${t.varName}Mapper.getList(so);	// 查询数据 
-		long dataCount = so.endPage();	// 结束分页 
-		return AjaxJson.getPageData(dataCount, list);
+		return AjaxJson.getPageData(so.getDataCount(), list);
 	}
 	
 

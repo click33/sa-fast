@@ -99,6 +99,13 @@
 							<div v-else>无</div>
 						</template>
 					</el-table-column>
+	<#elseif c.foType == 'audio' || c.foType == 'video'>
+					<el-table-column label="${c.columnComment3}">
+						<template slot-scope="s">
+							<el-link type="info" :href="s.row.${c.fieldName}" target="_blank" v-if="!sa.isNull(s.row.${c.fieldName})">预览</el-link>
+							<div v-else>无</div>
+						</template>
+					</el-table-column>
 	<#elseif c.foType == 'img_list'>
 					<el-table-column label="${c.columnComment3}" width="130px">
 						<template slot-scope="s">
@@ -188,16 +195,16 @@
 					},
 					// 查看
 					get: function(data) {
-						sa.showIframe('数据详情', '${t.kebabName}-info.html?id=' + data.id, '1000px', '90%');
+						sa.showIframe('数据详情', '${t.kebabName}-info.html?id=' + data.${t.primaryKey.fieldName}, '1000px', '90%');
 					},
 					// 修改
 					update: function(data) {
-						sa.showIframe('修改数据', '${t.kebabName}-add.html?id=' + data.id, '1000px', '90%');
+						sa.showIframe('修改数据', '${t.kebabName}-add.html?id=' + data.${t.primaryKey.fieldName}, '1000px', '90%');
 					},
 					// 删除
 					del: function(data) {
 						sa.confirm('是否删除，此操作不可撤销', function() {
-							sa.ajax('/${t.mkNameBig}/delete?id=' + data.id, function(res) {
+							sa.ajax('/${t.mkNameBig}/delete?id=' + data.${t.primaryKey.fieldName}, function(res) {
 								sa.arrayDelete(this.dataList, data);
 								sa.ok('删除成功');
 							}.bind(this))

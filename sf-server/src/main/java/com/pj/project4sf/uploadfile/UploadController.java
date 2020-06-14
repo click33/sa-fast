@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.pj.utils.sg.AjaxJson;
-import com.pj.utils.sg.SoMapUtil;
+import com.pj.utils.sg.SoMap;
 
 /**
  * 文件上传控制器 (基于应用服务器的文件上传)
@@ -22,7 +22,7 @@ public class UploadController {
 	// 测试
 	@RequestMapping("test")
 	public AjaxJson test(){
-		System.out.println(SoMapUtil.getSoMap());
+		System.out.println(SoMap.getRequestSoMap());
 		return AjaxJson.getSuccess();
 	}
 	

@@ -28,8 +28,11 @@ public class GenCfg {
 	// public String package_ajaxjson; // AjaxJson类的地址，在代码生成时会用到
 	public String package_utils = ""; // util包导包地址 
 	public int fieldType = 1; 			// 对数据库表字段的处理方式（1=转小写，2=转大写，0=不变）
-	public Boolean is_lomock = false; 	// 是否使用 lomock
-	public Boolean is_three = true; 	// 是否标准三层模式
+	public Boolean is_lomock = false; 	// 是否使用 lomock 
+
+	public int fileUploadWay = 1; 	// 文件上传方式 (1=普通文件上传, 2=阿里云oss文件服务器)
+	public int modelVisitWay = 1; 	// 实体类的访问权限修饰符 (1=private, 2=public) 
+	public int modelDocWay = 1; 	// 实体类的注释形式 (1=行位注释, 2=双星文档注释)
 	
 	// 后台相关 
 	public String adminPath = "";	// 后台管理项目地址
@@ -146,15 +149,6 @@ public class GenCfg {
 		return this;
 	}
 
-	public Boolean getIs_three() {
-		return is_three;
-	}
-
-	public GenCfg setIs_three(Boolean is_three) {
-		this.is_three = is_three;
-		return this;
-	}
-
 	public String getCodePath() {
 		return codePath;
 	}
@@ -230,6 +224,55 @@ public class GenCfg {
 	 */
 	public GenCfg setApidocCodePath(String apidocCodePath) {
 		this.apidocCodePath = apidocCodePath;
+		return this;
+	}
+	/**
+	 * @return fileUploadWay
+	 */
+	public int getFileUploadWay() {
+		return fileUploadWay;
+	}
+	/**
+	 * @param fileUploadWay 要设置的 fileUploadWay
+	 */
+	public GenCfg setFileUploadWay(int fileUploadWay) {
+		this.fileUploadWay = fileUploadWay;
+		return this;
+	}
+	/**
+	 * @return modelVisitWay
+	 */
+	public int getModelVisitWay() {
+		return modelVisitWay;
+	}
+	/**
+	 * @param modelVisitWay 要设置的 modelVisitWay
+	 */
+	public GenCfg setModelVisitWay(int modelVisitWay) {
+		this.modelVisitWay = modelVisitWay;
+		return this;
+	}
+	// 返回实体类的访问权限修饰符 (String形式)
+	public String getModelVisitWayString() {
+		if(modelVisitWay == 1) {
+			return "private";
+		}
+		if(modelVisitWay == 2) {
+			return "public";
+		}
+		return "";
+	}
+	/**
+	 * @return modelDocWay
+	 */
+	public int getModelDocWay() {
+		return modelDocWay;
+	}
+	/**
+	 * @param modelDocWay 要设置的 modelDocWay
+	 */
+	public GenCfg setModelDocWay(int modelDocWay) {
+		this.modelDocWay = modelDocWay;
 		return this;
 	}
 

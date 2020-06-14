@@ -4,14 +4,13 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pj.current.satoken.AuthConst;
-import com.pj.project4sf.SF;
 import com.pj.utils.sg.AjaxJson;
 import com.pj.utils.sg.SoMap;
-import com.pj.utils.sg.SoMapUtil;
 
 import cn.dev33.satoken.stp.StpUtil;
 
@@ -23,17 +22,20 @@ import cn.dev33.satoken.stp.StpUtil;
 @RequestMapping("/role/")
 public class SfRoleController {
 
+	/** 底层Mapper依赖 */
+	@Autowired
+	SfRoleMapper sfRoleMapper;
 
 	// 增  
 	@RequestMapping("add")
 	AjaxJson add(SfRole s, HttpServletRequest request){
 		 StpUtil.checkPermission(AuthConst.p_role_list);	// 鉴权
 		// 检验
-		if(SF.sfRoleMapper.getById(s.getId()) != null) {
+		if(sfRoleMapper.getById(s.getId()) != null) {
 			return AjaxJson.getError("此id已存在，请更换");
 		}
 		SfRoleUtil.checkRoleThrow(s);
-		int line = SF.sfRoleMapper.add(s);
+		int line = sfRoleMapper.add(s);
 		return AjaxJson.getByLine(line);
 	}
 
@@ -42,7 +44,7 @@ public class SfRoleController {
 	AjaxJson delete(long id, HttpServletRequest request){
 		StpUtil.checkPermission(AuthConst.r1);	// 鉴权
 		StpUtil.checkPermission(AuthConst.p_role_list);	// 鉴权
-		int line = SF.sfRoleMapper.delete(id);
+		int line = sfRoleMapper.delete(id);
 		return AjaxJson.getByLine(line);
 	}
 
@@ -52,7 +54,7 @@ public class SfRoleController {
 		StpUtil.checkPermission(AuthConst.r1);	// 鉴权
 		StpUtil.checkPermission(AuthConst.p_role_list);	// 鉴权
 		SfRoleUtil.checkRoleThrow(s);
-		int line = SF.sfRoleMapper.update(s);
+		int line = sfRoleMapper.update(s);
 		return AjaxJson.getByLine(line);
 	}
 
@@ -60,7 +62,7 @@ public class SfRoleController {
 	@RequestMapping("getById")
 	AjaxJson getById(long id){
 		StpUtil.checkPermission(AuthConst.r99);	// 鉴权
-		Object data = SF.sfRoleMapper.getById(id);
+		Object data = sfRoleMapper.getById(id);
 		return AjaxJson.getSuccess("ok").setData(data);
 	}
 
@@ -68,8 +70,8 @@ public class SfRoleController {
 	@RequestMapping("getList")
 	AjaxJson getList(){
 		StpUtil.checkPermission(AuthConst.r99);	// 鉴权
-		SoMap so = SoMapUtil.getSoMap(); 
-		List<SfRole> list = SF.sfRoleMapper.getList(so);
+		SoMap so = SoMap.getRequestSoMap();
+		List<SfRole> list = sfRoleMapper.getList(so);
 		return AjaxJson.getSuccessData(list);
 	}
 

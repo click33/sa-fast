@@ -65,6 +65,12 @@
 								@click="sa.showImage(m.${c.fieldName}, '400px', '400px')" v-if="m.${c.fieldName}">
 							<span v-else>无</span>
 						</div>
+	<#elseif c.foType == 'audio' || c.foType == 'video'>
+						<div class="c-item br">
+							<label class="c-label" style="vertical-align: top;">${c.columnComment3}：</label>
+							<el-link type="info" :href="m.${c.fieldName}" target="_blank" v-if="!sa.isNull(m.${c.fieldName})">{{m.${c.fieldName}}}</el-link>
+							<span v-else>无</span>
+						</div>
 	<#elseif c.foType == 'img_list'>
 						<div class="c-item br">
 							<label class="c-label" style="float: left;">${c.columnComment3}：</label>
