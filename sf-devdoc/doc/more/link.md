@@ -7,5 +7,6 @@
 - **sa-token：**[一个的JavaWeb权限认证框架，强大、简单、好用](http://sa-token.dev33.cn/)
 - **sa-doc：**[一个基于markdown的接口文档编写工具](http://sa-doc.dev33.cn/)
 - **SqlFly：**[一个java语言的ORM框架](https://sqlfly.dev33.cn/)
+- **极品蓝图：**[一个导航网站](http://un.jipinlantu.com/)
 - 虚位以待 
 

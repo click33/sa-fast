@@ -35,10 +35,6 @@ spring:
         
     # 项目自定义配置 
     myconfig: 
-        # md5的盐
-        md5_salt: whatclickme
-        # 是否明文存储密码 
-        is_pw: true
         # 本项目部署到的服务器域名（文件上传等等模块  要用到）
         domain: http://127.0.0.1:8099
     

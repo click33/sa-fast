@@ -37,6 +37,19 @@
 	<!-- 通用映射 -->
 	<resultMap id="model" autoMapping="true" type="${t.packagePath}.${t.modelName}"></resultMap>
 	
+	<!-- 部分场景下，你需要使用下面的映射来解决一些问题 -->
+	<!-- 
+	<resultMap id="model" type="${t.packagePath}.${t.modelName}">
+	<#list t.columnList as c>
+		<result property="${c.fieldName}" column="${c.columnName}" />
+	</#list>
+	<#list t.getColumnListBy('fk-1', 'fk-2') as c>
+		<result property="${c.fkPkTableName}_${c.fkPkConcatName}" column="${c.fkPkTableName}_${c.fkPkConcatName}" />
+	</#list>
+	</resultMap>
+	-->
+	
+	
 	<!-- 公共查询sql片段 -->
 	<sql id="select_sql">
 		select *<#if t.getColumnListBy('fk-1', 'fk-2')?size != 0>, </#if>
@@ -45,6 +58,7 @@
 </#list>
 		from ${t.tableName} 
 	</sql>
+	
 	
 	<!-- 查 -->
 	<select id="getById" resultMap="model">
@@ -55,15 +69,20 @@
 	<!-- 查询，根据条件(参数为null或0时默认忽略此条件)【G】 -->
 	<select id="getList" resultMap="model">
 		<include refid="select_sql"></include>
-		where 1 = 1 
+		<where>
 <#list t.columnList as c>
-	<#if c.isFoType('date', 'date-create', 'date-update', 'img', 'img_list')>
+	<#if c.isFoType('date', 'date-create', 'date-update', 'img', 'img_list', 'audio', 'audio_list', 'video', 'video_list')>
 	<#else>
-		<if test=' this.isNotNull("${c.fieldName}")  '>
-			and ${c.columnName} = <#noparse>#</#noparse>{${c.fieldName}} 
-		</if>
+			<if test=' this.isNotNull("${c.fieldName}") '>
+				<#if c.getTx('j') == 'like'>
+				and ${c.columnName} like concat('%', <#noparse>#</#noparse>{${c.fieldName}}, '%') 
+				<#else>
+				and ${c.columnName} = <#noparse>#</#noparse>{${c.fieldName}} 
+				</#if>
+			</if>
 	</#if>
 </#list>
+		</where>
 		order by 
 		<choose>
 			<#list t.columnList as c>

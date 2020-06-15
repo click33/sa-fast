@@ -15,7 +15,7 @@ public class ${t.mkNameBig}Util {
 //	static ${t.mkNameBig}Mapper ${t.varName}Mapper;
 //	@Autowired
 //	public void set${t.mkNameBig}Mapper(${t.mkNameBig}Mapper ${t.varName}Mapper) {
-//		${t.mkNameBig}Util.${t.varName}Mapper; = ${t.varName}Mapper;
+//		${t.mkNameBig}Util.${t.varName}Mapper = ${t.varName}Mapper;
 //	}
 	
 <#-- private时 -->

@@ -80,7 +80,7 @@ public class DbColumn {
 		return columnComment;
 	}
 	
-	// 写入字段注释 
+	// 写入字段注释 ========================
 	public void setColumnComment(String columnComment) {
 
 		try {
@@ -326,7 +326,11 @@ public class DbColumn {
 	
 	// 获取一个特性
 	public String getTx(String tx_key) {
-		return this.txMap.get(tx_key);
+		String tv = this.txMap.get(tx_key);
+		if(tv == null) {
+			tv = "";
+		}
+		return tv;
 	}
 
 	// 是否包含一个特性

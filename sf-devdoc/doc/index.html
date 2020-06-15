@@ -5,7 +5,7 @@
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-		<link rel="shortcut icon" type="image/x-icon" href="sa-lib/logo.png">
+		<!-- <link rel="shortcut icon" type="image/x-icon" href="sa-lib/logo.png"> -->
 		<link rel="stylesheet" href="https://unpkg.com/docsify@4.11.3/lib/themes/vue.css">
 		<link rel="stylesheet" href="./index.css">
 	</head>
@@ -38,6 +38,21 @@
 					'/.*/_sidebar.md': '/_sidebar.md'
 				},
 				search: 'auto', // 打开搜索功能 
+				plugins: [
+					function(hook, vm) {
+						// 解析之后执行 
+						hook.afterEach(function(html) {
+							var url = 'https://github.com/click33/sa-fast/tree/master/sf-devdoc/doc/' + vm.route.file;
+							var footer = [
+								'<br/><br/><br/><br/><br/><br/><br/><hr/>',
+								'<footer>',
+								'&emsp;<span>发现错误？想参与编辑？ <a href="' + url + '" target="_blank">在 GitHub 上编辑此页！</a> </span>',
+								'</footer>'
+							].join('');
+							return html + footer;
+						});
+					}
+				]	// 自定义插件 
 			}
 		</script>
 		<script src="https://unpkg.com/docsify@4.9.4/lib/docsify.min.js"></script>

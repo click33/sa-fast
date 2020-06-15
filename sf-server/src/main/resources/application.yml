@@ -31,6 +31,15 @@ spring:
         # http路由前缀，用于向前台暴露文件url  
         http_prefix: /upload
         
+    # 项目自定义配置 
+    myconfig: 
+        # md5的盐
+        md5_salt: whatclickme
+        # 是否明文存储密码 
+        is_pw: true
+    
+        
+        
 # mybatis-plus配置  
 mybatis-plus: 
     configuration: 

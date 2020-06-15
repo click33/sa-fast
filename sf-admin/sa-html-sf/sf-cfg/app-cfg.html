@@ -40,23 +40,20 @@
 				<el-tabs class="s-tab" v-model="activeTab">
 					<!-- ---------------------------------- 系统参数 ---------------------------------- -->
 				    <el-tab-pane label="系统参数" name="tab1">
-						<div class="c-item">
+						<div class="c-item br">
 							<label class="c-label">系统logo：</label>
 							<img :src="m.logo_url" class="logo-img" v-if="sa.isNull(m.logo_url) == false" @click="sa.showImage(m.logo_url, '400px', '400px')">
 							<el-link type="primary" @click="sa.uploadImage(src => {m.logo_url = src; sa.ok2('上传成功');})">选择上传</el-link>
 						</div>
-						<br>
-						<div class="c-item">
+						<div class="c-item br">
 							<label class="c-label">系统名称：</label>
 							<el-input size="mini" v-model="m.app_name"></el-input>
 						</div>
-						<br>
-						<div class="c-item">
+						<div class="c-item br">
 							<label class="c-label">版本编号：</label>
 							<el-input size="mini" v-model="m.app_version_no"></el-input>
 						</div>
-						<br>
-						<div class="c-item">
+						<div class="c-item br">
 							<label class="c-label">更新描述：</label>
 							<el-input size="mini" v-model="m.app_version_log"></el-input>
 						</div>

@@ -15,14 +15,6 @@
 		<style type="text/css">
 			.c-panel .c-label{width: 8em;}
 			
-		<#if t.hasFo('img_list') >
-			/* 图集照片样式 */
-			.image-box{width: 700px; padding-left: 4px;}
-			.image-box-2{width: 90px; height: 90px; cursor: pointer; float: left;}
-			.image-box-2 img{width: 90px; height: 90px; border-radius: 2px; box-shadow: 0 0 1px #aaa;}
-			.image-box-2{display: inline-block; margin-right: 5px; margin-bottom: 5px;}
-		</#if>
-		
 		<#if t.hasFo('richtext') >
 			/* 富文本样式 */
 			.content-box{width: 700px; min-height: 100px; border: 1px #ddd solid; padding: 1em; transition: all 0.2s;overflow: hidden;}

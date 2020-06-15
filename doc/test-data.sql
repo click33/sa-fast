@@ -25,7 +25,7 @@ INSERT INTO `sys_type`(`id`, `name`, `icon`, `sort`, `create_time`) VALUES (104,
 drop table if exists ser_goods;
 CREATE TABLE `ser_goods` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '商品id [no]', 
-  `name` varchar(200) DEFAULT NULL COMMENT '商品名称 [text]', 
+  `name` varchar(200) DEFAULT NULL COMMENT '商品名称 [text j=like]', 
   `avatar` varchar(512) DEFAULT NULL COMMENT '商品头像 [img]', 
   `image_list` varchar(2048) COMMENT '轮播图片 [img_list]', 
   `content` text COMMENT '图文介绍 [f]', 

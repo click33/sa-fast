@@ -5,10 +5,16 @@
 
 
 - **集成步骤**
-	- [下载代码](/integ/down-code)
-	- [项目基架](/integ/base-iframe)
-	- [代码生成器](/integ/code-gener)
+	- [下载项目](/integ/down-code)
+	- [导入项目](/integ/import-project)
+	- [项目架构](/integ/project-framework)
+	- [常见操作](/integ/common-make)
+	- [打包部署](/integ/deploy)
 	- [最佳实践](/integ/optimum)
+
+
+- **代码生成器**
+	- [代码生成器](/gen/code-gener)
 
 
 - **其它**
@@ -20,3 +26,4 @@
 
 
 
+<br/><br/><br/><br/><br/><br/>

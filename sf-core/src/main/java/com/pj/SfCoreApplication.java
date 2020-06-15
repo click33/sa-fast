@@ -62,8 +62,10 @@ public class SfCoreApplication {
 //		GenUtil.doOutMyBatisService();	// 输出java代码 （mybatis版本-带service层 ） 
 		GenUtil.doOutAdminHtml();	// 输出 admin后台管理页面  
 		GenUtil.doOutApidoc();	// 输出 接口文档页面 
+		
+		
 		System.out.println("\n\n * * * * * * * * * * * *  完结撒花   * * * * * * * * * * * *");
-		System.out.println("sa-fast快速开发平台,  当前版本v1.9.0，更新于2020-6-15 ");
+		System.out.println("sa-fast快速开发平台,  当前版本v2.0.0，更新于2020-6-15 ");
 		System.out.println("在线文档： http://sa-fast.dev33.cn/");
 		System.out.println("开源地址： https://github.com/click33/sa-fast\n\n");
 		

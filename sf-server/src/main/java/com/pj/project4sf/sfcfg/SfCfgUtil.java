@@ -78,7 +78,8 @@ public class SfCfgUtil {
 	public static String get_app_version_no() {
 		return SfCfgUtil.getAppCfg("app_version_no", "");
 	}
-	
+
+
 	
 	// --- server  
 	

@@ -23,26 +23,28 @@ INSERT INTO `sf_role`(`id`, `role_name`, `role_info`, `is_lock`) VALUES (12, '�
 -- 角色权限对应表  
 drop table if exists sf_role_permission; 
 CREATE TABLE `sf_role_permission` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id号',
   `role_id` bigint(20) DEFAULT NULL COMMENT '角色ID ',
   `permission_code` varchar(50) DEFAULT NULL COMMENT '菜单项ID',
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间'
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='角色权限中间表';
 
-insert into sf_role_permission() values ('1', 'bas', now());
-insert into sf_role_permission() values ('1', '1', now());
-insert into sf_role_permission() values ('1', '11', now());
-insert into sf_role_permission() values ('1', '99', now());
+insert into sf_role_permission() values (0, '1', 'bas', now());
+insert into sf_role_permission() values (0, '1', '1', now());
+insert into sf_role_permission() values (0, '1', '11', now());
+insert into sf_role_permission() values (0, '1', '99', now());
 
-insert into sf_role_permission() values ('1', 'auth', now());
-insert into sf_role_permission() values ('1', 'role-list', now());
-insert into sf_role_permission() values ('1', 'menu-list', now());
-insert into sf_role_permission() values ('1', 'admin-list', now());
-insert into sf_role_permission() values ('1', 'admin-add', now());
-insert into sf_role_permission() values ('1', 'apilog-list', now());
+insert into sf_role_permission() values (0, '1', 'auth', now());
+insert into sf_role_permission() values (0, '1', 'role-list', now());
+insert into sf_role_permission() values (0, '1', 'menu-list', now());
+insert into sf_role_permission() values (0, '1', 'admin-list', now());
+insert into sf_role_permission() values (0, '1', 'admin-add', now());
+insert into sf_role_permission() values (0, '1', 'apilog-list', now());
 
-insert into sf_role_permission() values ('1', 'sf-cfg', now());
-insert into sf_role_permission() values ('1', 'sf-cfg-app', now());
-insert into sf_role_permission() values ('1', 'sf-cfg-server', now());
+insert into sf_role_permission() values (0, '1', 'sf-cfg', now());
+insert into sf_role_permission() values (0, '1', 'sf-cfg-app', now());
+insert into sf_role_permission() values (0, '1', 'sf-cfg-server', now());
 
 
 -- 系统管理员表 
