@@ -1,7 +1,7 @@
 // 声明所有全局内容 
 var sa_mcontent = {
 	// 例如：定义res, 你可以在md文档中使用 import(res)，来导入这一段话 
-	res: '``` js\n成功时：code=200,\n失败时：code=500，msg=失败原因 \n```'
+	res: '``` js\n\t{\n\t\t"code": 200,	// 成功时=200, 失败时=500  msg=失败原因\n\t\t"msg": "ok",\n\t\t"data": {}, \n\t\t"dataCount": 0\n\t} \n```'
 };
 
 
