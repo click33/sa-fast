@@ -10,15 +10,15 @@
 ##### 首次部署
 1. pom.xml配置：已经配置完毕，无需更改
 2. 在文件管理器中进入项目根目录(pom.xml所在目录)，进入cmd，运行命令：`mvn package`   
-3. 等待半分钟左右，然后再target目录下会多出：
-	- 一个文件：sf-server-0.0.1-SNAPSHOT.jar		(你写的代码jar包)
-	- 和一个文件夹：lib\						(pom.xml中所有依赖包)
+3. 等待半分钟左右，然后再`target`目录下会多出：
+	- 一个文件：`sf-server-0.0.1-SNAPSHOT.jar`		(你写的代码jar包)
+	- 和一个文件夹：`lib\`						(`pom.xml`中所有依赖包)
 4. 将这两个复制到linux服务器
-5. 先cd到项目目录，然后运行shell脚本：`nohup java -jar sf-server-0.0.1-SNAPSHOT.jar`
+5. 先cd到项目目录，然后运行`shell`脚本：`nohup java -jar sf-server-0.0.1-SNAPSHOT.jar`
 
 #####  以后再次部署的时候，因为项目已经在运行，所以需要先关掉，才能再次部署
 1. 运行：`ps -ef|grep java`，搜寻所有java相关进程
-2. 找到项目所属的进程，记住进程id：pid，比如是：13310
+2. 找到项目所属的进程，记住进程id：pid，比如是：`13310`
 3. 运行：`kill -9 -13310`  强制杀掉进程
 再次重复上面的【首次部署】
 
@@ -28,9 +28,9 @@
 
 
 ## 2. admin后台管理部署
-1. 后台管理基于前后台分离模式，里面都是纯html
-2. 直接复制到linux上，然后将所在文件夹开放静态目录访问就好了
-3. 如果觉得nginx等服务器配置麻烦，也可以直接在`springboot`中配置一个静态资源映射即可
+1. 后台管理基于前后台分离模式，里面都是`纯html`
+2. 直接复制到`linux`上，然后将所在文件夹开放静态目录访问就好了
+3. 如果觉得`nginx`等服务器配置麻烦，也可以直接在`springboot`中配置一个静态资源映射即可
 4. 例如你的后台管理页面放在了 `/app/sf/html/sf-admin/`下
 5. 你只需要在`springboot`的yml配置文件的`spring.resources.static-locations` 配置项中再追加一个静态资源目录即可：`file:/app/sf/html`
 6. 重新打包部署服务端代码，你便可以通过如下方式访问后台管理了：`http://xxx.com/sf-admin/index.html`。

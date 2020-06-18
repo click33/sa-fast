@@ -126,7 +126,7 @@
 						<label class="c-label">${c.fkPkConcatComment}：</label>
 						<el-select size="mini" v-model="m.${c.fieldName}">
 							<el-option label="不限" :value="0"></el-option>
-							<el-option v-for="${c.fkPkTableName} in ${c.fkPkTableName}List" :label="${c.fkPkTableName}.${c.fkPkConcatName}" :value="${c.fkPkTableName}.${c.fkPkFieldName}" :key="${c.fkPkTableName}.${c.fkPkFieldName}"></el-option>
+							<el-option v-for="${c.fkPkTableName} in ${c.fkPkTableName}List" :label="${c.fkPkTableName}.${c.fkPkConcatName}" :value="${c.fkPkTableName}.${c.fkPkColumnName}" :key="${c.fkPkTableName}.${c.fkPkColumnName}"></el-option>
 						</el-select>
 					</div>
 	<#elseif c.foType == 'no'>

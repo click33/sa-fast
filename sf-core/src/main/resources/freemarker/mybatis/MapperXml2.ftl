@@ -43,8 +43,8 @@
 	<#list t.columnList as c>
 		<result property="${c.fieldName}" column="${c.columnName}" />
 	</#list>
-	<#list t.getColumnListBy('fk-1', 'fk-2') as c>
-		<result property="${c.fkPkTableName}_${c.fkPkConcatName}" column="${c.fkPkTableName}_${c.fkPkConcatName}" />
+	<#list t.getAllDbFk() as fk>
+		<result property="${fk.fieldName}" column="${fk.columnName}" />
 	</#list>
 	</resultMap>
 	-->
@@ -52,9 +52,9 @@
 	
 	<!-- 公共查询sql片段 -->
 	<sql id="select_sql">
-		select *<#if t.getColumnListBy('fk-1', 'fk-2')?size != 0>, </#if>
-<#list t.getColumnListBy('fk-1', 'fk-2') as c>
-		(select ${c.fkPkConcatName} from ${c.fkPkTableName} where ${c.fkPkFieldName} = ${t.tableName}.${c.fieldName}) as ${c.fkPkTableName}_${c.fkPkConcatName}<#if c_index != t.getColumnListBy('fk-1', 'fk-2')?size-1>, </#if>
+		select *<#if t.getAllDbFk()?size != 0>, </#if>
+<#list t.getAllDbFk() as fk>
+		(select ${fk.fkPkConcatName} from ${fk.dc.fkPkTableName} where ${fk.dc.fkPkColumnName} = ${t.tableName}.${fk.dc.columnName}) as ${fk.columnName}<#if fk_index != t.getAllDbFk()?size-1>, </#if>
 </#list>
 		from ${t.tableName} 
 	</sql>

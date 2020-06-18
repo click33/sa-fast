@@ -1,12 +1,16 @@
 package com.pj.gen.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.pj.gen.SUtil;
+import com.pj.gen.cfg.GenCfgManager;
+import com.pj.gen.utils.SoMap;
 
 /**
  * 一个列
@@ -28,13 +32,17 @@ public class DbColumn {
 	private Map<String, String> jvList = new HashMap<String, String>();	// 如果是枚举类型，则代表所有枚举类型 
 	
 	// 外键相关
-	private String fkPkTableName;	// 如果是个外键，对应的主键表名   
-	private String fkPkFieldName;	// 如果是个外键，对应的主键字段名字   
-	private String fkPkConcatName;	// 如果是个外键，对应的连表查需要展示的字段名   
-	private String fkPkConcatComment;	// 如果是个外键，对应的连表查需要展示的字段名 的字段注释 
+	public String fkPkTableName;	// 如果是个外键，对应的主键表名   
+	public String fkPkColumnName;	// 如果是个外键，对应的主键字段名字   
+	
+	private String fkPkConcatName;	// 如果是个外键，对应的连表查需要展示的字段名   （只记录首个，在fk-1用到）
+	private String fkPkConcatComment;	// 如果是个外键，对应的连表查需要展示的字段名 的字段注释 （只记录首个，在fk-1用到）
+	
+	private List<DbFk> fkPkConcatList;	// 连表字段集合 
 	
 
-	private Map<String, String> txMap = new HashMap<String, String>();	// 特性Map 
+//	private Map<String, String> txMap = new HashMap<String, String>();	// 特性Map 
+	private SoMap txMap = new SoMap();	// 特性Map 
 	
 	
 	public DbColumn() {
@@ -199,26 +207,38 @@ public class DbColumn {
 			}
 			else if(foType.equals("fk-1")) {	// fk-1  外键，下拉列表框 
 				this.foType = "fk-1";
-				String pkInfo = this.txMap.get("pk");
+				String pkInfo = this.txMap.getString("pk");
 				try {
 					String[] pkArr = pkInfo.split("\\.");
 					this.fkPkTableName = pkArr[0];
-					this.fkPkFieldName = pkArr[1];
+					this.fkPkColumnName = pkArr[1];
+					this.fkPkConcatList = new ArrayList<DbFk>();
+					fkPkConcatList.add(new DbFk(this, pkArr[2], pkArr[3]));		// 连表字段、连表字段注释
+					// 肮脏的实现
 					this.fkPkConcatName = pkArr[2];
 					this.fkPkConcatComment = pkArr[3];
 				} catch (Exception e) {
 					System.err.println("外键解析出错：" + pkInfo+ "," + e.getMessage());
 				}
+				if(this.fkPkConcatList.size() == 0) {
+					throw new Exception("fk-1模式必须指定一个外键连表字段：" + pkInfo);	
+				}
 			}
 			else if(foType.equals("fk-2")) {	// fk-2  外键，弹出选择页面 
 				this.foType = "fk-2";
-				String pkInfo = this.txMap.get("pk");
+				this.txMap.putDefaultValue("showfk", true);	// 默认：显示本表外键  
+				this.txMap.putDefaultValue("link", true);	// 默认：带点击链接 
+				String pkInfo = this.txMap.getString("pk");
 				try {
 					String[] pkArr = pkInfo.split("\\.");
 					this.fkPkTableName = pkArr[0];
-					this.fkPkFieldName = pkArr[1];
-					this.fkPkConcatName = pkArr[2];
-					this.fkPkConcatComment = pkArr[3];
+					this.fkPkColumnName = pkArr[1];
+					this.fkPkConcatList = new ArrayList<DbFk>();
+					for (int i = 2; i < pkArr.length; i+=2) {
+						fkPkConcatList.add(new DbFk(this, pkArr[i], pkArr[i+1]));		// 连表字段、连表字段注释		
+					}
+//					this.fkPkConcatName = pkArr[2];
+//					this.fkPkConcatComment = pkArr[3];
 				} catch (Exception e) {
 					System.err.println("外键解析出错：" + pkInfo+ "," + e.getMessage());
 				}
@@ -235,12 +255,12 @@ public class DbColumn {
 		}
 	}
 	
-	public static void main(String[] args) {
-		DbColumn c = new DbColumn();
-		c.setColumnComment("所属分类 [fk-1 pk=sys_type.id.name.所属分类]");
-		System.out.println(c);
-	}
-	
+//	public static void main(String[] args) {
+//		DbColumn c = new DbColumn();
+//		c.setColumnComment("所属分类 [fk-1 pk=sys_type.id.name.所属分类]");
+//		System.out.println(c);
+//	}
+//	
 	public String getColumnType() {
 		return columnType;
 	}
@@ -248,6 +268,10 @@ public class DbColumn {
 		this.columnType = columnType;
 	}
 	public String getFieldName() {
+		if(GenCfgManager.cfg.getModelStyle() == 2) {
+			String columnName = this.getColumnName();
+			return SUtil.wordEachBig_fs(columnName);// 下划线转小驼峰 
+		}
 		return columnName;
 	}
 //	public void setFieldName(String fieldName) {
@@ -314,19 +338,19 @@ public class DbColumn {
 	/**
 	 * @return txMap
 	 */
-	public Map<String, String> getTxMap() {
+	public SoMap getTxMap() {
 		return txMap;
 	}
 	/**
 	 * @param txMap 要设置的 txMap
 	 */
-	public void setTxMap(Map<String, String> txMap) {
+	public void setTxMap(SoMap txMap) {
 		this.txMap = txMap;
 	}
 	
 	// 获取一个特性
 	public String getTx(String tx_key) {
-		String tv = this.txMap.get(tx_key);
+		String tv = this.txMap.getString(tx_key);
 		if(tv == null) {
 			tv = "";
 		}
@@ -335,63 +359,15 @@ public class DbColumn {
 
 	// 是否包含一个特性
 	public boolean isTx(String tx_key) {
-		return this.txMap.get(tx_key) != null;
+		Object tv = this.txMap.get(tx_key);
+		if(tv == null || tv.equals("false")) {
+			return false;
+		}
+		return true;
 	}
 	
 	
-	
-	
-	
-	/**
-	 * @return fkPkTableName
-	 */
-	public String getFkPkTableName() {
-		return fkPkTableName;
-	}
-	/**
-	 * @param fkPkTableName 要设置的 fkPkTableName
-	 */
-	public void setFkPkTableName(String fkPkTableName) {
-		this.fkPkTableName = fkPkTableName;
-	}
-	/**
-	 * @return fkPkFieldName
-	 */
-	public String getFkPkFieldName() {
-		return fkPkFieldName;
-	}
-	/**
-	 * @param fkPkFieldName 要设置的 fkPkFieldName
-	 */
-	public void setFkPkFieldName(String fkPkFieldName) {
-		this.fkPkFieldName = fkPkFieldName;
-	}
-	/**
-	 * @return fkPkConcatName
-	 */
-	public String getFkPkConcatName() {
-		return fkPkConcatName;
-	}
-	/**
-	 * @param fkPkConcatName 要设置的 fkPkConcatName
-	 */
-	public void setFkPkConcatName(String fkPkConcatName) {
-		this.fkPkConcatName = fkPkConcatName;
-	}
-	/**
-	 * @return fkPkConcatComment
-	 */
-	public String getFkPkConcatComment() {
-		return fkPkConcatComment;
-	}
-	/**
-	 * @param fkPkConcatComment 要设置的 fkPkConcatComment
-	 */
-	public void setFkPkConcatComment(String fkPkConcatComment) {
-		this.fkPkConcatComment = fkPkConcatComment;
-	}
-	
-	
+
 	// 外键对应主键的表名，的模块，的接口名 
 	public String getFkPkTableMkName() {
 		return SUtil.wordEachBig(fkPkTableName);
@@ -407,6 +383,78 @@ public class DbColumn {
 	
 	
 
+
+	/**
+	 * @return fkPkTableName
+	 */
+	public String getFkPkTableName() {
+		return fkPkTableName;
+	}
+	/**
+	 * @param fkPkTableName 要设置的 fkPkTableName
+	 */
+	public void setFkPkTableName(String fkPkTableName) {
+		this.fkPkTableName = fkPkTableName;
+	}
+	/**
+	 * @return fkPkColumnName
+	 */
+	public String getFkPkColumnName() {
+		return fkPkColumnName;
+	}
+	/**
+	 * @param fkPkColumnName 要设置的 fkPkColumnName
+	 */
+	public void setFkPkColumnName(String fkPkColumnName) {
+		this.fkPkColumnName = fkPkColumnName;
+	}
+	
+	
+	
+	/**
+	 * @return fkPkConcatList
+	 */
+	public List<DbFk> getFkPkConcatList() {
+		return fkPkConcatList;
+	}
+	/**
+	 * @param fkPkConcatList 要设置的 fkPkConcatList
+	 */
+	public void setFkPkConcatList(List<DbFk> fkPkConcatList) {
+		this.fkPkConcatList = fkPkConcatList;
+	}
+	
+	
+	
+	/**
+	 * @return fkPkConcatName
+	 */
+	public String getFkPkConcatName() {
+		return fkPkConcatName;
+	}
+//	/**
+//	 * @param fkPkConcatName 要设置的 fkPkConcatName
+//	 */
+//	public void setFkPkConcatName(String fkPkConcatName) {
+//		this.fkPkConcatName = fkPkConcatName;
+//	}
+	/**
+	 * @return fkPkConcatComment
+	 */
+	public String getFkPkConcatComment() {
+		return fkPkConcatComment;
+	}
+//	/**
+//	 * @param fkPkConcatComment 要设置的 fkPkConcatComment
+//	 */
+//	public void setFkPkConcatComment(String fkPkConcatComment) {
+//		this.fkPkConcatComment = fkPkConcatComment;
+//	}
+//	
+	
+	
+	
+	
 	
 	/* （非 Javadoc）
 	 * @see java.lang.Object#toString()
@@ -415,9 +463,17 @@ public class DbColumn {
 	public String toString() {
 		return "DbColumn [columnName=" + columnName + ", columnComment=" + columnComment + ", columnType=" + columnType
 				+ ", fieldType=" + fieldType + ", foType=" + foType + ", jvList=" + jvList + ", fkPkTableName="
-				+ fkPkTableName + ", fkPkFieldName=" + fkPkFieldName + ", fkPkConcatName=" + fkPkConcatName
-				+ ", fkPkConcatComment=" + fkPkConcatComment + ", txMap=" + txMap + "]";
+				+ fkPkTableName + ", fkPkColumnName=" + fkPkColumnName + ", fkPkConcatList=" + fkPkConcatList + ", txMap=" + txMap
+				+ "]";
 	}
+
+
+	
+	
+	
+	
+
+	
 	
 	
 	

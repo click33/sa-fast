@@ -80,14 +80,18 @@
 							<span>{{sa.forDate(m.${c.fieldName}, 2)}}</span>
 						</div>
 	<#elseif c.foType == 'fk-1' || c.foType == 'fk-2'>
+					<#if c.isTx('showfk')>
 						<div class="c-item br">
 							<label class="c-label">${c.columnComment3}：</label>
 							<span>{{m.${c.fieldName}}}</span>
 						</div>
+					</#if>
+					<#list c.fkPkConcatList as fk>
 						<div class="c-item">
-							<label class="c-label">${c.fkPkConcatComment}：</label>
-							<span>{{m.${c.fkPkTableName}_${c.fkPkConcatName}}}</span>
+							<label class="c-label">${fk.fkPkConcatComment}：</label>
+							<span>{{m.${fk.fieldName}}}</span>
 						</div>
+					</#list>
 	<#else>
 						<div class="c-item br">
 							<label class="c-label">${c.columnComment3}：</label>

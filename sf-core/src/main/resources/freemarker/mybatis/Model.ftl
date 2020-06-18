@@ -25,12 +25,12 @@ public class ${t.modelName} implements Serializable {
 </#list>
 
 
-<#if t.getColumnListBy('fk-1', 'fk-2')?size != 0>
+<#if t.getAllDbFk()?size != 0>
 	// 额外字段 
-<#list t.getColumnListBy('fk-1', 'fk-2') as c>
-<#if  cfg.modelDocWay == 2 >	/** ${c.fkPkConcatComment}  */
+<#list t.getAllDbFk() as fk>
+<#if  cfg.modelDocWay == 2 >	/** 外键: ${c.fkPkConcatComment} */
 </#if>
-	${cfg.modelVisitWayString} String ${c.fkPkTableName}_${c.fkPkConcatName};	<#if cfg.modelDocWay == 1>	// 外键: ${c.fkPkConcatComment}  </#if>
+	${cfg.modelVisitWayString} String ${fk.fieldName};	<#if cfg.modelDocWay == 1>	// 外键: ${fk.fkPkConcatComment} </#if>
 </#list>
 </#if>
 

@@ -29,7 +29,7 @@ public class DbTable {
 	// private boolean has_richtext;					// 此表内是否包含richtext类型字段【只读字段】
 	
 	
-	private List<DbColumn> columnList;			// 列集合 
+	private List<DbColumn> columnList;			// 列集合 	
 
 	
 	/**
@@ -198,7 +198,18 @@ public class DbTable {
 		return list;
 	}
 	
-	
+	// 返回这个表的所有外键字段：fk1、fk-2 
+	public List<DbFk> getAllDbFk() {
+		List<DbFk> list = new ArrayList<DbFk>();
+		for (DbColumn c : this.columnList) {
+			if(c.isFoType("fk-1", "fk-2")) {	// 如果是fk-1 或者 fk-2
+				for (DbFk dbFk : c.getFkPkConcatList()) {
+					list.add(dbFk);
+				}
+			}
+		}
+		return list;
+	}
 	
 	
 	

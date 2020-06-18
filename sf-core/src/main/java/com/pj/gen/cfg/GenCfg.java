@@ -33,6 +33,7 @@ public class GenCfg {
 	public int fileUploadWay = 1; 	// 文件上传方式 (1=普通文件上传, 2=阿里云oss文件服务器)
 	public int modelVisitWay = 1; 	// 实体类的访问权限修饰符 (1=private, 2=public) 
 	public int modelDocWay = 1; 	// 实体类的注释形式 (1=行位注释, 2=双星文档注释)
+	public int modelStyle = 1;		// 实体类字段风格 (1=保留下划线, 2=下划线转驼峰)  （如果打开下划线转驼峰，需打开yml配置文件的 map-underscore-to-camel-case=true 选项 ）
 	
 	// 后台相关 
 	public String adminPath = "";	// 后台管理项目地址
@@ -273,6 +274,19 @@ public class GenCfg {
 	 */
 	public GenCfg setModelDocWay(int modelDocWay) {
 		this.modelDocWay = modelDocWay;
+		return this;
+	}
+	/**
+	 * @return modelStyle
+	 */
+	public int getModelStyle() {
+		return modelStyle;
+	}
+	/**
+	 * @param modelStyle 要设置的 modelStyle
+	 */
+	public GenCfg setModelStyle(int modelStyle) {
+		this.modelStyle = modelStyle;
 		return this;
 	}
 

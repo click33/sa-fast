@@ -7,26 +7,10 @@
 
 ## 1、项目技术栈
 
-##### 后端 
-- 数据库：`mysql 5.7`
-- 后端框：`springboot`
-- 数据层：`mybatis-plus`（生成的代码基于`mybatis`）
-- 连接池：`druid`
-- 分页插件：`pagehelper插件`
-- 缓存插件：`redis`
-- 权限认证：`sa-token`
-- 文件上传：基于应用服务器的文件上传（可配置为`oss`）
-- 其它插件：`lombok`、`hutool`、`fastjson` 等等 
-
-##### 前端
-- 模板：`sa-admin`
-- js框架：`vue.js`
-- ui框架：`element-ui`
-- 富文本：`wangEditor`
-- 其它库：`jquery`、`layer`、`swiper`、`echarts` 等等 
-
-##### 接口文档
-- 基于：`sa-doc`
+- 数据库：`推荐 mysql 5.7`
+- 后端框架：`mysql 5.7`、`springboot`、`mybatis-plus`、`druid`、`pagehelper插件`、`redis`、`sa-token`、`lombok`、`hutool`、`fastjson` 等等 
+- 前端框架：`sa-admin`、`vue.js`、`element-ui`、`wangEditor`、`jquery`、`layer`、`swiper`、`echarts` 等等 
+- 接口文档：`sa-doc`
 
 
 

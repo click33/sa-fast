@@ -3,8 +3,8 @@ package com.pj.gen;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.Writer;
-import java.util.HashMap;
-import java.util.Map;
+
+import com.pj.gen.utils.SoMap;
 
 /**
  * String处理工具类
@@ -135,8 +135,8 @@ public class SUtil {
 	
 	
 	// 将类似 name=张三, age=18 样式的字符串, 转换为map
-	public static Map<String, String> txStringToMap(String tx_str) {
-		Map<String, String> map = new HashMap<String, String>();
+	public static SoMap txStringToMap(String tx_str) {
+		SoMap map = new SoMap();
 		if(tx_str == null) {
 			return map;
 		}

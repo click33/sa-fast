@@ -49,7 +49,7 @@
 						<label class="c-label">${c.fkPkConcatComment}：</label>
 						<el-select size="mini" v-model="p.${c.fieldName}">
 							<el-option label="不限" :value="0"></el-option>
-							<el-option v-for="${c.fkPkTableName} in ${c.fkPkTableName}List" :label="${c.fkPkTableName}.${c.fkPkConcatName}" :value="${c.fkPkTableName}.${c.fkPkFieldName}" :key="${c.fkPkTableName}.${c.fkPkFieldName}"></el-option>
+							<el-option v-for="${c.fkPkTableName} in ${c.fkPkTableName}List" :label="${c.fkPkTableName}.${c.fkPkConcatName}" :value="${c.fkPkTableName}.${c.fkPkColumnName}" :key="${c.fkPkTableName}.${c.fkPkColumnName}"></el-option>
 						</el-select>
 					</div>
 	<#else>
@@ -125,18 +125,33 @@
 						</template>
 					</el-table-column>
 	
-	<#elseif c.foType == 'fk-1'>
-					<!-- <el-table-column label="${c.columnComment3}" prop="${c.fieldName}" ></el-table-column> -->
-					<el-table-column label="${c.fkPkConcatComment}" prop="${c.fkPkTableName}_${c.fkPkConcatName}" ></el-table-column>
-	<#elseif c.foType == 'fk-2'>
-					<el-table-column label="${c.fkPkConcatComment}">
+	<#elseif c.foType == 'fk-1' || c.foType == 'fk-2'>
+			<#if c.isTx('showfk')>
+				<#if c.isTx('link')>
+					<el-table-column label="${c.columnComment3}">
 						<template slot-scope="s">
-							<!-- <span>{{s.row.${c.fieldName}}}</span> -->
-							<el-link type="primary" @click="sa.showIframe('${c.fkPkConcatComment}信息', '../${c.fkPkTableKebabName}/${c.fkPkTableKebabName}-info.html?${c.fkPkFieldName}=' + s.row.${c.fieldName})">
-								{{s.row.${c.fkPkTableName}_${c.fkPkConcatName}}}
+							<el-link type="primary" @click="sa.showIframe('[ id=' + s.row.${c.fieldName} + ' ] 详细信息', '../${c.fkPkTableKebabName}/${c.fkPkTableKebabName}-info.html?id=' + s.row.${c.fieldName})">
+								{{s.row.${c.fieldName}}} 
 							</el-link>
 						</template>
 					</el-table-column>
+				<#else>
+					<el-table-column label="${c.columnComment3}" prop="${c.fieldName}" ></el-table-column>
+				</#if>
+			</#if>
+			<#list c.fkPkConcatList as fk>
+				<#if c.isTx('link')>
+					<el-table-column label="${fk.fkPkConcatComment}">
+						<template slot-scope="s">
+							<el-link type="primary" @click="sa.showIframe('[id=' + s.row.${c.fieldName} + '] 详细信息', '../${c.fkPkTableKebabName}/${c.fkPkTableKebabName}-info.html?id=' + s.row.${c.fieldName})">
+								{{s.row.${fk.fieldName}}} 
+							</el-link>
+						</template>
+					</el-table-column>
+				<#else>
+					<el-table-column label="${fk.fkPkConcatComment}" prop="${fk.fieldName}" ></el-table-column>
+				</#if>
+			</#list>
 	<#else>
 					<el-table-column label="${c.columnComment3}" prop="${c.fieldName}" ></el-table-column>
 	</#if>

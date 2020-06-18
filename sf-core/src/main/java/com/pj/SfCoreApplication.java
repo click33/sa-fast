@@ -15,18 +15,18 @@ public class SfCoreApplication {
 	public static void main(String[] args) {
 
 		// 启动springboot  
-		SpringApplication.run(SfCoreApplication.class, args); // run-->x
+		SpringApplication.run(SfCoreApplication.class, args); 
 		
 		// ===================================  你可以重写一些内部逻辑，填充一些功能 =================================== 
-//		// 例如 以下代码代表实体类的字段名由下划线 转小驼峰模式
+//		// 例如 以下代码代表截取掉表前缀 
 //		DbModelManager.manager = new DbModelManager() {
-//			// 重写创建 DbColumn 
-//			public DbColumn getDbColumn() {
-//				return new DbColumn() {
-//					// 重写创建 getFieldName  
-//					public String getFieldName(){
-//						String columnName = this.getColumnName();
-//						return SUtil.wordEachBig_fs(columnName);// 下划线转小驼峰 ，需注意，此功能需要打开yml配置文件的 map-underscore-to-camel-case=true 选项 
+//			// 重写创建 DbTable 的函数 
+//			public DbTable getDbTable() {
+//				return new DbTable() {
+//					// 重写获取模块名称的函数 
+//					public String getMkName(){
+//						String tableName = this.getTableName();
+//						return tableName.replaceAll("sys_", "").replaceAll("_table", "");	// 结果: sys_user_table --> user 	
 //					}
 //				};
 //			}
@@ -48,6 +48,7 @@ public class SfCoreApplication {
             .setFileUploadWay(1)			// 文件上传方式 (1=普通文件上传, 2=阿里云oss文件服务器[需要集成阿里云oss相关工具类]) 
             .setModelVisitWay(1)			// 实体类的访问权限修饰符 (1=private, 2=public)  
             .setModelDocWay(1)				// 实体类的注释形式 (1=行尾注释, 2=双星文档注释)  
+            .setModelStyle(1) 				// 实体类字段风格 (1=保留下划线, 2=下划线转驼峰) （如果打开下划线转驼峰，需打开yml配置文件的 map-underscore-to-camel-case=true 选项 ）
             // .addTableName("sys_user")	// 添加要生成的表 
             .addTableAll()		// 添加所有表 (要生成的表)
             .removeTableName("sf_role", "sf_role_permission", "sf_admin", "sf_apilog", "sf_cfg")	// 移除这些内置的表，不必生成代码   
@@ -65,7 +66,7 @@ public class SfCoreApplication {
 		
 		
 		System.out.println("\n\n * * * * * * * * * * * *  完结撒花   * * * * * * * * * * * *");
-		System.out.println("sa-fast快速开发平台,  当前版本v2.0.0，更新于2020-6-15 ");
+		System.out.println("sa-fast快速开发平台,  当前版本v2.1.0，更新于2020-6-18 ");
 		System.out.println("在线文档： http://sa-fast.dev33.cn/");
 		System.out.println("开源地址： https://github.com/click33/sa-fast\n\n");
 		
