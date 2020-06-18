@@ -58,7 +58,7 @@ CREATE TABLE `sys_redeem` (
   `name` varchar(200) COMMENT '红包名称 [text]',
   `money` bigint(20) DEFAULT NULL COMMENT '红包金额 [num]',
   `type_id` bigint(20) COMMENT '所属分类 [fk-1 pk=sys_type.id.name.所属分类]',
-  `goods_id` bigint(20) COMMENT '所属商品id [fk-2 pk=ser_goods.id.name.所属商品]',
+  `goods_id` bigint(20) COMMENT '所属商品id [fk-2 pk=ser_goods.id]',
   `status` int(11) DEFAULT '2' COMMENT '所属状态(1=正常,2=禁用) [j]',
   `end_time` datetime COMMENT '截止日期 [date]',
   `create_time` datetime COMMENT '创建日期 [date-create]',
