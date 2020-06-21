@@ -34,11 +34,13 @@
 	<!-- ================================== 查询相关 ================================== -->
 	<!-- select <#list t.columnList as c>${c.columnName}<#if c_index != t.columnList?size - 1>, </#if></#list> from ${t.tableName}  -->
 	
-	<!-- 通用映射 -->
+	<!-- 通用映射：自动模式 --><#if cfg.resultMapWay == 2>
+	<!--</#if>
 	<resultMap id="model" autoMapping="true" type="${t.packagePath}.${t.modelName}"></resultMap>
+	<#if cfg.resultMapWay == 2>--></#if>
 	
-	<!-- 部分场景下，你需要使用下面的映射来解决一些问题 -->
-	<!-- 
+	<!-- 通用映射：手动模式 --><#if cfg.resultMapWay == 1>
+	<!--</#if>
 	<resultMap id="model" type="${t.packagePath}.${t.modelName}">
 	<#list t.columnList as c>
 		<result property="${c.fieldName}" column="${c.columnName}" />
@@ -47,7 +49,7 @@
 		<result property="${fk.fieldName}" column="${fk.columnName}" />
 	</#list>
 	</resultMap>
-	-->
+	<#if cfg.resultMapWay == 1>--></#if>
 	
 	
 	<!-- 公共查询sql片段 -->

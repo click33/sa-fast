@@ -1,4 +1,5 @@
 // 此处定义所有有关 sa-fast 的路由 
+// 如需添加自定义菜单，请不要更改此文件，请在menu-list.js里添加 
 window.menuList = window.menuList || [];
 window.menuList.unshift(
 	{
@@ -12,7 +13,18 @@ window.menuList.unshift(
 			{id: '99', name: '允许进入后台管理', is_show: false, info: '只有拥有这个权限的角色才可以进入后台'},
 		]
 	},
-	{	// 添加 menuList 的开头
+	{	
+		id: 'console',
+		name: '监控中心',
+		icon: 'el-icon-view',
+		info: '对本系统的各种监控',
+		childList: [
+			{id: 'sql-console', name: 'SQL监控', url: 'sa-html-sf/sf-console/sql-console.html', info: 'sql控制台'},
+			{id: 'redis-console', name: 'Redis控制台', url: 'sa-html-sf/sf-console/redis-console.html', info: 'redis常用工具'},
+			{id: 'apilog-list', name: 'API请求日志', url: 'sa-html-sf/sf-apilog/api-log-list.html', info: '记录本系统所有的api请求'},
+		]
+	},
+	{	
 		id: 'auth',
 		name: '权限控制',
 		icon: 'el-icon-unlock',
@@ -22,7 +34,7 @@ window.menuList.unshift(
 			{id: 'menu-list', name: '菜单列表', url: 'sa-html-sf/sf-role/menu-list.html', info: '所有菜单项预览'},
 			{id: 'admin-list', name: '管理员列表', url: 'sa-html-sf/sf-admin/admin-list.html', info: '所有管理员账号'},
 			{id: 'admin-add', name: '管理员添加', url: 'sa-html-sf/sf-admin/admin-add.html', info: '添加一个管理员'},
-			{id: 'apilog-list', name: '请求日志监控', url: 'sa-html-sf/sf-apilog/api-log-list.html', info: '记录本系统所有的api请求'},
+			// {id: 'apilog-list', name: '请求日志监控', url: 'sa-html-sf/sf-apilog/api-log-list.html', info: '记录本系统所有的api请求'},
 		]
 	},
 	{

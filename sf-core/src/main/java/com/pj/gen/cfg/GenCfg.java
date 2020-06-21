@@ -33,7 +33,8 @@ public class GenCfg {
 	public int fileUploadWay = 1; 	// 文件上传方式 (1=普通文件上传, 2=阿里云oss文件服务器)
 	public int modelVisitWay = 1; 	// 实体类的访问权限修饰符 (1=private, 2=public) 
 	public int modelDocWay = 1; 	// 实体类的注释形式 (1=行位注释, 2=双星文档注释)
-	public int modelStyle = 1;		// 实体类字段风格 (1=保留下划线, 2=下划线转驼峰)  （如果打开下划线转驼峰，需打开yml配置文件的 map-underscore-to-camel-case=true 选项 ）
+	public int modelStyle = 1;		// 实体类字段风格 (1=保留下划线, 2=下划线转驼峰)  （如果打开下划线转驼峰，需采用resultMap手动映射模式，或打开yml配置文件的 map-underscore-to-camel-case=true 选项 ）
+	public int resultMapWay = 1; 	// resultMap映射模式  (1=自动模式, 2=手动模式)
 	
 	// 后台相关 
 	public String adminPath = "";	// 后台管理项目地址
@@ -289,7 +290,40 @@ public class GenCfg {
 		this.modelStyle = modelStyle;
 		return this;
 	}
+	/**
+	 * @return resultMapWay
+	 */
+	public int getResultMapWay() {
+		return resultMapWay;
+	}
+	/**
+	 * @param resultMapWay 要设置的 resultMapWay
+	 */
+	public GenCfg setResultMapWay(int resultMapWay) {
+		this.resultMapWay = resultMapWay;
+		return this;
+	}
 
+	
+	
+	
+	/* （非 Javadoc）
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "GenCfg [sqlFly=" + sqlFly + ", projectPath=" + projectPath + ", codePath=" + codePath + ", packagePath="
+				+ packagePath + ", docPath=" + docPath + ", author=" + author + ", package_utils=" + package_utils
+				+ ", fieldType=" + fieldType + ", is_lomock=" + is_lomock + ", fileUploadWay=" + fileUploadWay
+				+ ", modelVisitWay=" + modelVisitWay + ", modelDocWay=" + modelDocWay + ", modelStyle=" + modelStyle
+				+ ", resultMapWay=" + resultMapWay + ", adminPath=" + adminPath + ", adminCodePath=" + adminCodePath
+				+ ", apidocPath=" + apidocPath + ", apidocCodePath=" + apidocCodePath + ", tableNameList="
+				+ tableNameList + ", tableList=" + tableList + "]";
+	}
+
+	
+	
+	
 	
 
 }

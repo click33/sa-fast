@@ -35,12 +35,16 @@ insert into sf_role_permission() values (0, '1', '1', now());
 insert into sf_role_permission() values (0, '1', '11', now());
 insert into sf_role_permission() values (0, '1', '99', now());
 
+insert into sf_role_permission() values (0, '1', 'console', now());
+insert into sf_role_permission() values (0, '1', 'sql-console', now());
+insert into sf_role_permission() values (0, '1', 'redis-console', now());
+insert into sf_role_permission() values (0, '1', 'apilog-list', now());
+
 insert into sf_role_permission() values (0, '1', 'auth', now());
 insert into sf_role_permission() values (0, '1', 'role-list', now());
 insert into sf_role_permission() values (0, '1', 'menu-list', now());
 insert into sf_role_permission() values (0, '1', 'admin-list', now());
 insert into sf_role_permission() values (0, '1', 'admin-add', now());
-insert into sf_role_permission() values (0, '1', 'apilog-list', now());
 
 insert into sf_role_permission() values (0, '1', 'sf-cfg', now());
 insert into sf_role_permission() values (0, '1', 'sf-cfg-app', now());

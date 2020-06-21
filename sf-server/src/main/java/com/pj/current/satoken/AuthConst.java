@@ -23,7 +23,11 @@ public final class AuthConst {
 	public static final String p_menu_list = "menu-list";		//  权限管理  - 菜单列表
 	public static final String p_admin_list = "admin-list";		//  权限管理  - 管理员列表
 	public static final String p_admin_add = "admin-add";		//  权限管理  - 管理员添加
-	public static final String p_apilog_list = "apilog-list";		//  权限管理  - 请求日志监控 
+	
+	public static final String p_console = "console";		//  监控中心  
+	public static final String p_sql_console = "sql-console";		//  监控中心  - SQL监控   
+	public static final String p_redis_console = "redis-console";		//  监控中心  - Redis 控制台
+	public static final String p_apilog_list = "apilog-list";		//  监控中心  - API 请求日志 
 
 	public static final String p_sf_cfg = "sf-cfg";		//  系统配置 	
 	public static final String p_sf_cfg_app = "sf-cfg-app";		//  系统配置 - 系统对公配置		

@@ -38,12 +38,8 @@
 │  │  SaFastPrint.java		sa-fast启动打印字符画
 │  │ 
 ├─project		项目模块包，按表分包 
-│  ├─ xxx			
-│  ├─ xxx			
 │  │ 
 ├─project4sf		sa-fast内置模块包 ，按表分包 
-│  ├─ xxx
-│  ├─ xxx
 │  │ 
 ├─utils				工具类包 
 │   ├─sg				sa-fast内置工具类包 

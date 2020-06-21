@@ -9,7 +9,16 @@ spring:
         url: jdbc:mysql://127.0.0.1:3306/sf-dev?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
         username: root
         password: root123456 
-            
+        # 是否打开sql监控台  (生产环境请务必关闭此选项) 
+        druid: 
+            stat-view-servlet:
+                enabled: true
+            web-stat-filter: 
+                enabled: true
+            filter:
+                config:
+                    enabled: true
+
     # redis配置 
     redis:
         # Redis数据库索引（默认为0）
