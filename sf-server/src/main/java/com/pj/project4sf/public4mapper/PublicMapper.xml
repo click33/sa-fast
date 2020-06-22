@@ -42,7 +42,7 @@
 	</update>
 	
 	<!-- 指定表的指定字段SoMap集合更新为指定值,根据指定id   -->
-	<update id="updateSoMapById">
+	<update id="updateBySoMapById">
 		update ${tableName} set 
 		<foreach collection="soMap.entrySet()" item="value"  index="key" separator=",">
 			<if test=' key != "this" '>
@@ -53,7 +53,7 @@
 	</update>
 	
 	<!-- 指定表的指定字段SoMap集合更新为指定值,根据指定id   -->
-	<update id="updateSoMapBy">
+	<update id="updateBySoMapBy">
 		update ${tableName} set 
 		<foreach collection="soMap.entrySet()" item="value"  index="key" separator=",">
 			<if test=' key != "this" '>

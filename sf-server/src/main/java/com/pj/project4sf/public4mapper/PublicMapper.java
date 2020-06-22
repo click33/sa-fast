@@ -8,6 +8,7 @@ import com.pj.utils.sg.SoMap;
 /**
  * 公用Mapper，一大堆常见方法 
  * @author kong
+ * 更新于2020-6-22 更换部分API命名 
  *
  */
 @Mapper
@@ -82,7 +83,7 @@ public interface PublicMapper {
 	 * <p>
 	 * 参数：表名、id值、列集合  
 	 */
-	public int updateSoMapById(
+	public int updateBySoMapById(
 			@Param("tableName") String tableName, 
 			@Param("soMap") SoMap soMap,
 			@Param("id") Object id
@@ -93,7 +94,7 @@ public interface PublicMapper {
 	 * <p>
 	 * 参数：表名、id值、列集合  
 	 */
-	public int updateSoMapBy(
+	public int updateBySoMapBy(
 			@Param("tableName") String tableName, 
 			@Param("soMap") SoMap soMap,
 			@Param("whereName") String whereName, 
