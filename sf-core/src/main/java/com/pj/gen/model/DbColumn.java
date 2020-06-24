@@ -196,7 +196,7 @@ public class DbColumn {
 							String value = e.split("=")[1].trim();
 							this.jvList.put(key, value);
 						} catch (Exception e2) {
-							System.out.println(e2.getMessage());
+							System.err.println("枚举字段(" + this.columnName + ")解析可能出错：" + e2.getMessage());
 						}
 					}
 				}
