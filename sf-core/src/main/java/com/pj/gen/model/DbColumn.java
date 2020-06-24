@@ -221,6 +221,7 @@ public class DbColumn {
 					System.err.println("外键解析出错：" + pkInfo+ "," + e.getMessage());
 				}
 				if(this.fkPkConcatList.size() == 0) {
+//					System.err.println("外键解析出错：" + pkInfo+ "," + e.getMessage());
 					throw new Exception("fk-1模式必须指定一个外键连表字段：" + pkInfo);	
 				}
 			}
@@ -251,7 +252,8 @@ public class DbColumn {
 			
 			// 后置工作
 		} catch (Exception e) {
-			System.out.println("字段(" + this.columnName + ")注释解析异常：" + e.getMessage());
+			System.err.println("字段(" + this.columnName + ")注释解析异常：" + e.getMessage());
+			throw new RuntimeException(e);
 		}
 	}
 	
@@ -430,6 +432,9 @@ public class DbColumn {
 	 * @return fkPkConcatName
 	 */
 	public String getFkPkConcatName() {
+		if(fkPkConcatName == null) {
+			return "";
+		}
 		return fkPkConcatName;
 	}
 //	/**
@@ -442,6 +447,9 @@ public class DbColumn {
 	 * @return fkPkConcatComment
 	 */
 	public String getFkPkConcatComment() {
+		if(fkPkConcatComment == null) {
+			return "";
+		}
 		return fkPkConcatComment;
 	}
 //	/**
