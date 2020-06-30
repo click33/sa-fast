@@ -79,10 +79,10 @@ public class DbColumn {
 		columnComment = columnComment.replaceAll(" ", "");
 		// 去括号
 		// 获取枚举信息
-		int start_index = this.columnComment.lastIndexOf("(");
-		int end_index = this.columnComment.lastIndexOf(")");
+		int start_index = columnComment.lastIndexOf("(");
+		int end_index = columnComment.lastIndexOf(")");
 		if(start_index > -1 && end_index > -1) {
-			String k_str = this.columnComment.substring(start_index, end_index + 1);
+			String k_str = columnComment.substring(start_index, end_index + 1);
 			columnComment = columnComment.replace(k_str, "");
 		}
 		return columnComment;
