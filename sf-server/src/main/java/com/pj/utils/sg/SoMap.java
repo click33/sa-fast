@@ -15,7 +15,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 /**
  * Map< String, Object> 是最常用的一种Map类型，但是它写着麻烦 
  * <p>所以特封装此类，继承Map，进行一些扩展，可以让Map更灵活使用 
- * <p>最新：2020-6-14 移除SoMapUtil
+ * <p>最新：2020-7-2 更新对空字符串的判断 
  * @author kong
  */
 public class SoMap extends LinkedHashMap<String, Object> {
@@ -55,14 +55,14 @@ public class SoMap extends LinkedHashMap<String, Object> {
 	/** 转为int并返回 */
 	public int getInt(String key) {
 		String value = getString(key);
-		if(value == null) {
+		if(value == null || value.equals("")) {
 			return 0;
 		}
 		return Integer.valueOf(value);
 	}
 	public int getInt(String key, int defaultValue) {
 		String value = getString(key);
-		if(value == null) {
+		if(value == null || value.equals("")) {
 			return defaultValue;
 		}
 		return Integer.valueOf(value);
@@ -71,7 +71,7 @@ public class SoMap extends LinkedHashMap<String, Object> {
 	/** 转为long并返回 */
 	public long getLong(String key) {
 		String value = getString(key);
-		if(value == null) {
+		if(value == null || value.equals("")) {
 			return 0;
 		}
 		return Long.valueOf(value);
@@ -80,7 +80,7 @@ public class SoMap extends LinkedHashMap<String, Object> {
 	/** 转为double并返回 */
 	public double getDouble(String key) {
 		String value = getString(key);
-		if(value == null) {
+		if(value == null || value.equals("")) {
 			return 0.0;
 		}
 		return Double.valueOf(value);
@@ -89,7 +89,7 @@ public class SoMap extends LinkedHashMap<String, Object> {
 	/** 转为boolean并返回 */
 	public boolean getBoolean(String key) {
 		String value = getString(key);
-		if(value == null) {
+		if(value == null || value.equals("")) {
 			return false;
 		}
 		return Boolean.valueOf(value);
@@ -118,7 +118,7 @@ public class SoMap extends LinkedHashMap<String, Object> {
 	public List<Object> getList(String key) {
 		Object value = get(key);
 		List<Object> list = null;
-		if(value == null) {
+		if(value == null || value.equals("")) {
 			list = new ArrayList<Object>();
 		}
 		else if(value instanceof List) {

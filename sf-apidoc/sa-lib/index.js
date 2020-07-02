@@ -1,7 +1,7 @@
 // 声明所有全局内容 
 var sa_mcontent = {
 	// 例如：定义res, 你可以在md文档中使用 import(res)，来导入这一段话 
-	res: '``` js\n\t{\n\t\t"code": 200,	// 成功时=200, 失败时=500  msg=失败原因\n\t\t"msg": "ok",\n\t\t"data": {}, \n\t\t"dataCount": 0\n\t} \n```'
+	res: '``` js\n\t{\n\t\t"code": 200,	// 成功时=200, 失败时=500  msg=失败原因\n\t\t"msg": "ok",\n\t\t"data": {}\n\t} \n```'
 };
 
 
@@ -9,14 +9,16 @@ var sa_mcontent = {
 var sa_plugins = function(hook) {
 	// 解析之前执行
 	hook.beforeEach(function(content) {
-		content = refMd_p2table(content); 	// 参数转表格 
-		content = refMd_import2content(content);	// 加载import
-		content = refMd_api2trim(content);	// api去除空格
+		content = refMd_p2table(content); 	// 参数转表格  
+		content = refMd_import2content(content);	// 加载import  
+		content = refMd_api2trim(content);	// api去除空格  
+		content = refMd_var(content);		// 更换变量 
 		return content;
 	});
 
 	// 解析之后执行 
 	hook.afterEach(function(html) {
+		// 添加页脚 
 		var footer = [
 			'<br/><br/><br/><br/><br/><br/><br/><hr/>',
 			'<footer>',
@@ -26,15 +28,115 @@ var sa_plugins = function(hook) {
 		].join('');
 		return html + footer;
 	});
+	
+	// 渲染完全完成之后
+	hook.doneEach(function() {
+		// console.log(123);
+		$('.anchor').each(function(index, el) {
+			try{
+				// 获取父元素
+				var parTag = $(this).parent('h3');
+				if(parTag == null) {
+					return;
+				}
+				var tagName = parTag.prop("tagName");
+				if(tagName != 'H3') {
+					return;
+				}
+				// 地址、参数等信息 
+				var cc_id = sa.randomString(16);	// id号码 
+				window.apiInfoMap = window.apiInfoMap || {};	// 存储当前页面所有api信息 
+				window.apiInfoMap[cc_id] = {	// 此项的所有信息 
+					// api_title: parTag.find('a span').text(),	// 接口标题 
+					ajaxUrl: '',	// 接口地址 
+					ajaxType: '',	// 接口请求方式 
+					headerList: [],	// 请求头参数  
+					bodyList: [],	// 请求体参数 
+				};	
+				var apiInfo = window.apiInfoMap[cc_id];
+				var nextTagArr = $(parTag).nextAll();	
+				for (var i = 0; i < nextTagArr.length; i++) {
+					var tag = $(nextTagArr.get(i));
+					// 如果已经到了H3了，则可以结束了 
+					if(tag.prop("tagName") == 'H3') {
+						break;
+					}
+					// 如果是参数 
+					if(tag.prop("tagName") == 'TABLE') {
+						var trArr = $(tag).find('tbody tr');
+						for (var i = 0; i < trArr.length; i++) {
+							var tdArr = $(trArr.get(i)).find('td');
+							apiInfo.bodyList.push({name: tdArr.get(0).innerHTML, value: '', tips: tdArr.get(3).innerHTML});	// , value: tdArr.get(3)
+						}
+					}
+					// 如果是地址 
+					if(tag.prop("tagName") == 'UL') {
+						// 如果能搜索到 data-lang="api"
+						var tg = $(tag).find('[class=lang-api]');
+						if(tg.length > 0) {
+							var url_i = tg.get(0).innerHTML;
+							if(url_i.indexOf('http') != 0) {
+								url_i = sa_doc_cfg.server_url + url_i;;
+							}
+							apiInfo.ajaxUrl = url_i;
+						}
+					}
+				}
+				// console.log(nextAll.length);
+				
+				// console.log(tagName);
+				// 后面添加一个按钮
+				// parTag.after('<button>测试接口</button>');
+				// console.log(parTag.find('a span').text());
+				var button = '<button class="test-api-btn" type="button" '+
+					' cc-id="' + cc_id + '" ' + 
+					' api-title="' + parTag.find('a span').text() + '" ' + 
+					' onclick="test_api(this)">测试接口</button>';
+				parTag.append(button);
+			}catch(e){
+				console.err(e);
+			}
+		})
+	});
+	
 };
+
+
+// 点击测试接口的按钮
+function test_api(event) {
+	// console.log(event.classList);
+	// 获取参数 
+	// 获取title
+	var j_index = document.title.indexOf('-');
+	var title = document.title;
+	if(j_index > -1) {
+		title = title.substr(0, j_index);
+		title = event.getAttribute('api-title') + '	&emsp;&emsp;----by&emsp; ' + title;
+	}
+	
+	// 获取地址、参数等信息 
+	var id = event.getAttribute('cc-id');
+	var cc = window.apiInfoMap[id];	
+	console.log(cc);
+	// var cc = {
+	// 	ajaxType: 'GET',
+	// 	ajaxUrl: 'dsada',
+	// 	headerList: [],
+	// 	bodyList: []
+	// }
+	sessionStorage.setItem('sa-doc-cc-' + id, JSON.stringify(cc));
+	
+	sa.showIframe3(title, './sa-lib/api-test/index.html?id=' + id, '1000px', '90%');
+}
+
 
 
 // 移除数组中所有空白字符串 
 function arrayTrimSpace(array) {
 	for (var i = 0; i < array.length; i++) {
 		if (array[i] == "" || array[i] == " " || array[i] == null || typeof(array[i]) == "undefined") {
-			array.splice(i, 1);
-			i = i - 1;
+			array.splice(i, 1); 
+			i = i - 1; 
 		}
 	}
 	return array;
@@ -188,6 +290,9 @@ function refMd_api2trim(content) {
 		str = '``` api\n' + str + '```\n';
 		// console.log(str);
 		
+		// 加上按钮
+		// str = '<button>测试接口</button>\n' + str;
+		
 		// 将原始p内容替换成为后来内容  
 		content = content.replace(p, str); 
 	})
@@ -197,8 +302,13 @@ function refMd_api2trim(content) {
 	return content;
 }
 
+// 加工md，将其中的变量
+function refMd_var(content) {
+	content = content.replace('${sa_doc_cfg.server_url}', window.sa_doc_cfg.server_url);
+	return content;
+}
 
 
 // 打印信息 
-console.log('欢迎使用sa-doc(一个基于markdown的接口文档编写工具)，当前版本：v1.0.0，更新于：2020-04-24，GitHub地址：https://github.com/click33/sa-doc');
+console.log('欢迎使用sa-doc(一个基于markdown的接口文档编写工具)，当前版本：v1.3.0，更新于：2020-07-2，GitHub地址：https://github.com/click33/sa-doc');
 console.log('如在使用中发现任何bug或者疑问，请加入QQ群交流：782974737，点击加入：https://jq.qq.com/?_wv=1027&k=5DHN5Ib');

@@ -28,3 +28,17 @@
 @media screen and (min-width: 800px) {
 	#main table tr th{min-width: 150px;}
 }
+
+
+/* 测试接口的按钮 */
+.test-api-btn{
+	margin-left: 30px;
+	cursor: pointer;
+	border-radius: 2px;
+	border-width: 0px;
+	padding: 7px 15px;
+	background-color: green;
+	color: #FFF;
+}
+
+.layui-layer-iframe{box-shadow: 0 0 100px #000 !important;}

@@ -12,7 +12,7 @@ public class SaFastPrint {
 
 	public SaFastPrint() {
 		System.out.println("===================================================================");
-		System.out.println("sa-fast快速开发平台,  当前版本1.12.0，更新于2020-6-22 ");
+		System.out.println("sa-fast快速开发平台,  当前版本1.13.0，更新于2020-7-3 ");
 		System.out.println("在线文档： http://sa-fast.dev33.cn/");
 		System.out.println("开源地址： https://github.com/click33/sa-fast");
 		System.out.println("===================================================================");
