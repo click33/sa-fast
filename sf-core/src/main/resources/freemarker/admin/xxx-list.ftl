@@ -130,7 +130,7 @@
 				<#if c.isTx('link')>
 					<el-table-column label="${c.columnComment3}">
 						<template slot-scope="s">
-							<el-link type="primary" @click="sa.showIframe('[ id=' + s.row.${c.fieldName} + ' ] 详细信息', '../${c.fkPkTableKebabName}/${c.fkPkTableKebabName}-info.html?id=' + s.row.${c.fieldName})">
+							<el-link type="primary" @click="sa.showIframe(' id = ' + s.row.${c.fieldName} + '  详细信息', '../${c.fkPkTableKebabName}/${c.fkPkTableKebabName}-info.html?id=' + s.row.${c.fieldName})">
 								{{s.row.${c.fieldName}}} 
 							</el-link>
 						</template>
@@ -143,7 +143,7 @@
 				<#if c.isTx('link')>
 					<el-table-column label="${fk.fkPkConcatComment}">
 						<template slot-scope="s">
-							<el-link type="primary" @click="sa.showIframe('[id=' + s.row.${c.fieldName} + '] 详细信息', '../${c.fkPkTableKebabName}/${c.fkPkTableKebabName}-info.html?id=' + s.row.${c.fieldName})">
+							<el-link type="primary" @click="sa.showIframe('id = ' + s.row.${c.fieldName} + ' 详细信息', '../${c.fkPkTableKebabName}/${c.fkPkTableKebabName}-info.html?id=' + s.row.${c.fieldName})">
 								{{s.row.${fk.fieldName}}} 
 							</el-link>
 						</template>
