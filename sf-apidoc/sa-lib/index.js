@@ -91,7 +91,7 @@ var sa_plugins = function(hook) {
 				var button = '<button class="test-api-btn" type="button" '+
 					' cc-id="' + cc_id + '" ' + 
 					' api-title="' + parTag.find('a span').text() + '" ' + 
-					' onclick="test_api(this)">测试接口</button>';
+					' onclick="test_api(this)">接口测试</button>';
 				parTag.append(button);
 			}catch(e){
 				console.err(e);
