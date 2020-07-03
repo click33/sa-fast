@@ -29,8 +29,8 @@ var sa_plugins = function(hook) {
 		return html + footer;
 	});
 	
-	// 渲染完全完成之后
-	hook.doneEach(function() {
+	
+	function f5_test_btn() {
 		// console.log(123);
 		$('.anchor').each(function(index, el) {
 			try{
@@ -49,7 +49,7 @@ var sa_plugins = function(hook) {
 				window.apiInfoMap[cc_id] = {	// 此项的所有信息 
 					// api_title: parTag.find('a span').text(),	// 接口标题 
 					ajaxUrl: '',	// 接口地址 
-					ajaxType: '',	// 接口请求方式 
+					ajaxType: 'GET',	// 接口请求方式 
 					headerList: [],	// 请求头参数  
 					bodyList: [],	// 请求体参数 
 				};	
@@ -64,11 +64,21 @@ var sa_plugins = function(hook) {
 					// 如果是参数 
 					if(tag.prop("tagName") == 'TABLE') {
 						var trArr = $(tag).find('tbody tr');
-						for (var i = 0; i < trArr.length; i++) {
-							var tdArr = $(trArr.get(i)).find('td');
+						for (var j = 0; j < trArr.length; j++) {
+							var tdArr = $(trArr.get(j)).find('td');
 							apiInfo.bodyList.push({name: tdArr.get(0).innerHTML, value: '', tips: tdArr.get(3).innerHTML});	// , value: tdArr.get(3)
 						}
 					}
+					// 如果是参数
+					// if(tag.prop("tagName") == 'DIV' && tag.prop('class') == 'body-p-list') {
+					// 	var text = tag.text();
+					// 	var trArr = JSON.parse(text);
+					// 	console.log(trArr.length);
+					// 	for (var j = 0; j < trArr.length; j++) {
+					// 		var tdArr = trArr[j];
+					// 		apiInfo.bodyList.push({name: tdArr[0], value: '', tips: tdArr[3]});	// , value: tdArr[2]
+					// 	}
+					// }
 					// 如果是地址 
 					if(tag.prop("tagName") == 'UL') {
 						// 如果能搜索到 data-lang="api"
@@ -97,6 +107,11 @@ var sa_plugins = function(hook) {
 				console.err(e);
 			}
 		})
+	}
+	
+	// 渲染完全完成之后
+	hook.doneEach(function() {
+		f5_test_btn();
 	});
 	
 };
@@ -165,6 +180,7 @@ function refMd_p2table(content) {
 		// 将这个p内容按换行符切割  
 		var canStr = p.replace(/```\s*p/, '').replace('```', '').trim();	// 去除首行尾行 
 		var canArr = canStr.split('\n') || [];	// 按行切割 
+		// var bodyPList = [];	// 二维数组记录一下参数集合 
 		
 		// 开始逐行转换为tr 
 		canArr.forEach(function(canStr) {
@@ -237,11 +253,13 @@ function refMd_p2table(content) {
 			
 			// 添加到表格 
 			table += getTrMd(name, type, default_value, remrak);
+			// bodyPList.push([name, type, default_value, remrak]);
 		})
 		
 		// console.log(p);
 		// 将原始p内容替换成为table内容  
 		table += '\n';
+		// table += '\n<div class="body-p-list" style="display: none;">' + JSON.stringify(bodyPList) + '</div>\n';	// 增加上参数信息 
 		content = content.replace(p, table); 
 	});
 	return content;
