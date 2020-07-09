@@ -42,3 +42,5 @@
 }
 
 .layui-layer-iframe{box-shadow: 0 0 100px #000 !important;}
+
+#main [data-lang=js]{margin-bottom: 80px;}
