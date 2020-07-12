@@ -28,7 +28,7 @@ public class ${t.modelName} implements Serializable {
 <#if t.getAllDbFk()?size != 0>
 	// 额外字段 
 <#list t.getAllDbFk() as fk>
-<#if  cfg.modelDocWay == 2 >	/** 外键: ${c.fkPkConcatComment} */
+<#if  cfg.modelDocWay == 2 >	/** 外键: ${fk.fkPkConcatComment} */
 </#if>
 	${cfg.modelVisitWayString} String ${fk.fieldName};	<#if cfg.modelDocWay == 1>	// 外键: ${fk.fkPkConcatComment} </#if>
 </#list>
