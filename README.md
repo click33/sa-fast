@@ -27,6 +27,10 @@
 - 在线文档：[http://sa-fast.dev33.cn/doc/index.html](http://sa-fast.dev33.cn/doc/index.html)
 
 
+## 需求提交
+- 我们深知一个优秀的项目需要海纳百川，[点我在线提交需求](http://sa-app.dev33.cn/wall.html?name=sa-fast)
+
+
 ## 演示预览
 <table>
     <tr>
