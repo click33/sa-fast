@@ -109,7 +109,7 @@ public class DbTable {
 	// 专属包名(模块名所有字母小写)
 	public String getPackageModules() {
 		// return getTableNameSmall();
-		return getMkName().toLowerCase();
+		return getMkName().toLowerCase().replaceAll("_", GenCfgManager.cfg.packageUnderlineTo);
 	}
 	
 	//  完全限定名包名 
@@ -120,7 +120,8 @@ public class DbTable {
 	// 返回表名转 kebab-case形式 
 	public String getKebabName() {
 		// return SUtil.xia_2_zhong(getTableName());
-		return SUtil.xia_2_zhong(getPackageModules());
+//		return SUtil.xia_2_zhong(getPackageModules());
+		return SUtil.xia_2_zhong(getMkName());
 	}
 	
 	

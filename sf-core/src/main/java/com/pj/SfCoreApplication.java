@@ -35,8 +35,10 @@ public class SfCoreApplication {
             .setFileUploadWay(1)			// 文件上传方式 (1=普通文件上传, 2=阿里云oss文件服务器[需要集成阿里云oss相关工具类]) 
             .setModelVisitWay(1)			// 实体类的访问权限修饰符 (1=private, 2=public)  
             .setModelDocWay(1)				// 实体类的注释形式 (1=行尾注释, 2=双星文档注释)  
-            .setModelStyle(1) 				// 实体类字段风格 (1=保留下划线, 2=下划线转驼峰) （如果打开下划线转驼峰，需采用resultMap手动映射模式，或打开yml配置文件的 map-underscore-to-camel-case=true 选项 ）
+            .setModelStyle(1) 				// 实体类字段风格 (1=保留下划线, 2=下划线转驼峰 [如果打开下划线转驼峰，需采用resultMap手动映射模式，或打开yml配置文件的 map-underscore-to-camel-case=true 选项])
             .setResultMapWay(1) 			// resultMap映射模式  (1=自动模式, 2=手动模式)
+            .setUtilDocWay(1) 				// util类的注释风格 (1=行尾位注释, 2=行上注释, 3=无注释) 
+            .setPackageUnderlineTo("_")		// 将包名中的下划线转换成指定内容，比如：$、2、4 或者空字符串"" 
             // .addTableName("sys_user")	// 添加要生成的表 
             .addTableAll()		// 添加所有表 (要生成的表) 
             .removeTableName("sf_role", "sf_role_permission", "sf_admin", "sf_apilog", "sf_cfg")	// 移除这些内置的表，不必生成代码   
@@ -54,7 +56,7 @@ public class SfCoreApplication {
 		
 		
 		System.out.println("\n\n * * * * * * * * * * * *  完结撒花   * * * * * * * * * * * *");
-		System.out.println("sa-fast快速开发平台,  当前版本v1.13.0，更新于2020-7-3 ");
+		System.out.println("sa-fast快速开发平台,  当前版本v1.14.0，更新于2020-8-19 ");
 		System.out.println("在线文档： http://sa-fast.dev33.cn/");
 		System.out.println("开源地址： https://github.com/click33/sa-fast\n\n");
 		

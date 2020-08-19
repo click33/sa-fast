@@ -32,10 +32,22 @@ public class GenCfg {
 
 	public int fileUploadWay = 1; 	// 文件上传方式 (1=普通文件上传, 2=阿里云oss文件服务器)
 	public int modelVisitWay = 1; 	// 实体类的访问权限修饰符 (1=private, 2=public) 
-	public int modelDocWay = 1; 	// 实体类的注释形式 (1=行位注释, 2=双星文档注释)
+	public int modelDocWay = 1; 	// 实体类的注释形式 (1=行尾注释, 2=双星文档注释)
+	public int utilDocWay = 1; 	// util类的注释风格 (1=行尾位注释, 2=行上注释, 3=无注释)
 	public int modelStyle = 1;		// 实体类字段风格 (1=保留下划线, 2=下划线转驼峰)  （如果打开下划线转驼峰，需采用resultMap手动映射模式，或打开yml配置文件的 map-underscore-to-camel-case=true 选项 ）
 	public int resultMapWay = 1; 	// resultMap映射模式  (1=自动模式, 2=手动模式)
 	
+	public String packageUnderlineTo = "_"; 	// 将包名中的下划线转换成指定内容，比如：$、2、4 或者空字符串"" 
+	
+	
+
+
+
+
+
+
+
+
 	// 后台相关 
 	public String adminPath = "";	// 后台管理项目地址
 	public String adminCodePath = "";	// 后台管理代码存放目录 
@@ -303,7 +315,31 @@ public class GenCfg {
 		this.resultMapWay = resultMapWay;
 		return this;
 	}
-
+	/**
+	 * @return packageUnderlineTo
+	 */
+	public String getPackageUnderlineTo() {
+		return packageUnderlineTo;
+	}
+	/**
+	 * @param packageUnderlineTo 要设置的 packageUnderlineTo
+	 */
+	public GenCfg setPackageUnderlineTo(String packageUnderlineTo) {
+		this.packageUnderlineTo = packageUnderlineTo;
+		return this;
+	}/**
+	 * @return utilDocWay
+	 */
+	public int getUtilDocWay() {
+		return utilDocWay;
+	}
+	/**
+	 * @param utilDocWay 要设置的 utilDocWay
+	 */
+	public GenCfg setUtilDocWay(int utilDocWay) {
+		this.utilDocWay = utilDocWay;
+		return this;
+	}
 	
 	
 	

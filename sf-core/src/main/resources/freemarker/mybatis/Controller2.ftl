@@ -18,49 +18,51 @@ import cn.dev33.satoken.stp.StpUtil;
 @RequestMapping("/${t.mkNameBig}/")
 public class ${t.mkNameBig}Controller {
 
+	/** 权限常量 */
+	static final String PERMISSION_CODE = "${t.kebabName}";
+
 	/** 底层 Mapper 对象 */
 	@Autowired
 	${t.mkNameBig}Mapper ${t.varName}Mapper;
 
-	// 增  
+	/** 增 */  
 	@RequestMapping("add")
 	AjaxJson add(${t.modelName} ${t.varNameSimple}){
-		StpUtil.checkPermission("${t.kebabName}");	// 鉴权 
+		StpUtil.checkPermission(PERMISSION_CODE);
 		int line = ${t.varName}Mapper.add(${t.varNameSimple});
 		return AjaxJson.getByLine(line);
 	}
 
-	// 删  
+	/** 删 */  
 	@RequestMapping("delete")
 	AjaxJson delete(${t.primaryKey.fieldType} id){
-		StpUtil.checkPermission("${t.kebabName}");	// 鉴权 
+		StpUtil.checkPermission(PERMISSION_CODE);
 		int line = ${t.varName}Mapper.delete(id);
 		return AjaxJson.getByLine(line);
 	}
 
-	// 改  
+	/** 改 */  
 	@RequestMapping("update")
 	AjaxJson update(${t.modelName} ${t.varNameSimple}){
-		StpUtil.checkPermission("${t.kebabName}");	// 鉴权 
+		StpUtil.checkPermission(PERMISSION_CODE);
 		int line = ${t.varName}Mapper.update(${t.varNameSimple});
 		return AjaxJson.getByLine(line);
 	}
 
-	// 查  
+	/** 查 */  
 	@RequestMapping("getById")
 	AjaxJson getById(${t.primaryKey.fieldType} id){
-		// StpUtil.checkPermission("${t.kebabName}");	// 鉴权 
+		// StpUtil.checkPermission(PERMISSION_CODE);
 		${t.modelName} ${t.varNameSimple} = ${t.varName}Mapper.getById(id);
 		return AjaxJson.getSuccessData(${t.varNameSimple});
 	}
 
-	// 查 - 集合（参数为null或0时默认忽略此条件）  
+	/** 查 - 集合（参数为null或0时默认忽略此条件） */  
 	@RequestMapping("getList")
 	AjaxJson getList() { 
-		// StpUtil.checkPermission("${t.kebabName}");	// 鉴权 
-		SoMap so = SoMap.getRequestSoMap();	// 获取本次请求参数 
-		so.startPage();	// 开启分页
-		List<${t.modelName}> list = ${t.varName}Mapper.getList(so);	// 查询数据 
+		// StpUtil.checkPermission(PERMISSION_CODE);
+		SoMap so = SoMap.getRequestSoMap().startPage();
+		List<${t.modelName}> list = ${t.varName}Mapper.getList(so);
 		return AjaxJson.getPageData(so.getDataCount(), list);
 	}
 	

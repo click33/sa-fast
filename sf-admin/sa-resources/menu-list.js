@@ -16,5 +16,44 @@
 
 // 定义菜单列表 
 var menuList =	[
-	
+	{
+		id: 'ser-goods',
+		name: '商品表',
+		icon: 'el-icon-folder-opened',
+		info: '商品表表数据的维护',
+		childList: [
+			{id: 'ser-goods-list', name: '商品表-列表', url: 'sa-html/ser-goods/ser-goods-list.html'},
+			{id: 'ser-goods-add', name: '商品表-添加', url: 'sa-html/ser-goods/ser-goods-add.html'},
+		]
+	},
+	{
+		id: 'sys-notice',
+		name: '公告表',
+		icon: 'el-icon-folder-opened',
+		info: '公告表表数据的维护',
+		childList: [
+			{id: 'sys-notice-list', name: '公告表-列表', url: 'sa-html/sys-notice/sys-notice-list.html'},
+			{id: 'sys-notice-add', name: '公告表-添加', url: 'sa-html/sys-notice/sys-notice-add.html'},
+		]
+	},
+	{
+		id: 'sys-redeem',
+		name: '兑换码表',
+		icon: 'el-icon-folder-opened',
+		info: '兑换码表表数据的维护',
+		childList: [
+			{id: 'sys-redeem-list', name: '兑换码表-列表', url: 'sa-html/sys-redeem/sys-redeem-list.html'},
+			{id: 'sys-redeem-add', name: '兑换码表-添加', url: 'sa-html/sys-redeem/sys-redeem-add.html'},
+		]
+	},
+	{
+		id: 'sys-type',
+		name: '商品分类表',
+		icon: 'el-icon-folder-opened',
+		info: '商品分类表表数据的维护',
+		childList: [
+			{id: 'sys-type-list', name: '商品分类表-列表', url: 'sa-html/sys-type/sys-type-list.html'},
+			{id: 'sys-type-add', name: '商品分类表-添加', url: 'sa-html/sys-type/sys-type-add.html'},
+		]
+	},
 ]
