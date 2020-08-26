@@ -4,6 +4,14 @@
 <h2 align="center" style="margin: 30px 0 30px;font-weight: bold;font-size:40px;">sa-fast 快速开发框架 v1.14.0</h2>
 <h4 align="center">一个基于springboot架构的快速开发框架，内置代码生成器</h4>
  
+ 
+ 
+ <br>
+ 
+ ## 本框架代码已转移，请移步最新地址：[https://github.com/click33/sa-plus](https://github.com/click33/sa-plus)
+ 
+ <br>
+ 
 
 ## 优点
 1. 集成常用功能：`文件上传`、`角色授权`、`全局异常处理`、`redis控制台`、`API日志统计` 等等，让你不再为项目的基础设施劳神费心 

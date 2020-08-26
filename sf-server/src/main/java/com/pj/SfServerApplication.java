@@ -1,10 +1,11 @@
 package com.pj;
 
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import com.pj.utils.sg.SoMap;
 
 import cn.dev33.satoken.spring.SaTokenSetup;
 
@@ -19,7 +20,17 @@ import cn.dev33.satoken.spring.SaTokenSetup;
 public class SfServerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SfServerApplication.class, args);
+//		SpringApplication.run(SfServerApplication.class, args);
+		
+		SoMap so = SoMap.getSoMap()
+				.set("a", null)
+				.set("b", 2)
+				.set("c", 3)
+				.set("d", 4)
+//				.clearIn("a", "c")
+				.deleteThis()
+				;
+		System.out.println(so.isNull("a")); 
 	}
 	
 	
